@@ -8,7 +8,7 @@
 
 /* ==========================================================================
    Base styles: opinionated defaults
-   ========================================================================== */
+============================================================================= */
 
 html,
 button,
@@ -80,7 +80,7 @@ textarea {
 
 /* ==========================================================================
    Chrome Frame prompt
-   ========================================================================== */
+============================================================================= */
 
 .chromeframe {
     margin: 0.2em 0;
@@ -91,11 +91,123 @@ textarea {
 
 /* ==========================================================================
    Author's custom styles
-   ========================================================================== */
+============================================================================= */
+
+/*
+	#8EC6C9 Blueish
+	#F2E96B Yellowish
+	#F2C894 Salmon
+	#F29877 Light-pink
+	#593831 Brown
+*/
+
+a {
+	text-decoration: none;
+	color: #034769;
+}
+
+a:hover {
+	color: #63ADD0;
+}
+   
+body {
+	background: url('../img/bg.jpg') #EEE repeat;
+}
+
+body > header {
+	padding: 0.5em 1em;
+}
+
+body > header  h1 {
+	display: inline-block;
+	margin: 0;
+}
+body > header  button#reset {
+	float: right;
+}
+
+#main {
+	padding: 0.5em 1.0em;
+}
+
+#main > nav ul {
+	margin: 0 0 1em 0;
+	padding: 0;
+}
+
+#main > nav li {
+	display: inline-block;
+	margin: 0 1em 0 0;
+	padding: 0.5em;
+	border: 1px solid #CCC;
+	background-color: #EEE;
+	opacity: 0.6;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+#main > nav li:last-child {
+	margin-left: 1em;
+}
+
+#main > nav li.active,
+#main > nav li:hover {
+	opacity: 1.0;
+}
+
+#main > nav #mode-setup		{ background-color: #8EC6C9; }
+#main > nav #mode-initiative	{ background-color: #F2E96B; }
+#main > nav #mode-hit-points	{ background-color: #F2C894; }
+#main > nav #mode-conditions	{ background-color: #F29877; }
 
 
+#initiative table  {
+	width: 30em;
+	padding: 0;
+	margin: 0.5em 0;
+	font-size: 0.9em;
+}
 
+#initiative th {
+	background-color: rgba(128, 128, 128, 0.5);
+	text-align: left;
+}
 
+#initiative tr {
+	border: 1px solid #AAA;
+	list-style-type: none;
+	padding: 0.5em;
+	background-color: rgba(255, 255, 255, 0.5);
+}
+
+#initiative tr.active {
+	background-color: rgba(242, 233, 107, 0.5);
+}
+
+#initiative td,
+#initiative th {
+	padding: 0.25em 0.5em;
+}
+
+#initiative .number{
+	text-align: right;
+}
+
+body > footer {
+	padding: 1.0em;
+	font-size: 0.75em;
+	color: #AAC;
+}
+
+body > footer ul {
+	margin: 0;
+	padding: 0;
+}
+
+body > footer li {
+	display: inline-block;
+	margin: 0 1em 0 0;
+}
 
 
 
@@ -111,7 +223,7 @@ textarea {
 
 /* ==========================================================================
    Helper classes
-   ========================================================================== */
+============================================================================= */
 
 /*
  * Image replacement
@@ -214,7 +326,7 @@ textarea {
    EXAMPLE Media Queries for Responsive Design.
    Theses examples override the primary ('mobile first') styles.
    Modify as content requires.
-   ========================================================================== */
+============================================================================= */
 
 @media only screen and (min-width: 35em) {
     /* Style adjustments for viewports that meet the condition */
@@ -230,7 +342,7 @@ textarea {
 /* ==========================================================================
    Print styles.
    Inlined to avoid required HTTP connection: h5bp.com/r
-   ========================================================================== */
+============================================================================= */
 
 @media print {
     * {
