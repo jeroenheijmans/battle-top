@@ -28,8 +28,8 @@
 		
 			<nav>
 				<ul id="edit-mode">
-					<li id="mode-setup">Setup</li>
-					<li id="mode-initiative" class="active">Initiative</li>
+					<li id="mode-setup" class="active">Setup</li>
+					<li id="mode-initiative">Initiative</li>
 					<li id="mode-hit-points">Hit Points</li>
 					<li id="mode-conditions">Conditions</li>
 					<li id="toggle-dm-mode">
@@ -43,77 +43,32 @@
 		<section id="main">
 		
 			<section id="initiative">
-				<div id="initiative-turn">
-					<div id="initative-current-turn">
-						Current turn: 
-						<span id="initiative-current-turn-number">3</span>
+				<div id="round">
+					<div id="current-round">
+						Current round: 
+						<span id="initiative-current-round-number">3</span>
 					</div>
-					<button id="set-current-turn">Set Turn No.</button>
+					<button id="set-current-round">Set Round No.</button>
+				</div>
+				<div id="initiative-controls">
+					<button id="initiative-ready">Ready</button>
+					<button id="initiative-delay">Delay</button>
+					<button id="initiative-next">Next Player</button>
 				</div>
 				<table>
-					<tr>
-						<th><button id="collapse-expand-all">&plusmn;</button></th>
-						<th>Character</th>
-						<th class="number">HP</th>
-						<th class="number">Init</th>
-						<th class="number">Mod</th>
-					</tr>
-					<tr>
-						<td class="actions"><button class="collapse-expand-row">+</button></td>
-						<td class="character">Skaak</td>
-						<td class="number hp">106 / 106</td>
-						<td class="number initiative-total">22</td>
-						<td class="number initiative-modifier">+5</td>
-					</tr>
-					<tr class="active">
-						<td class="actions"><button class="collapse-expand-row">-</button></td>
-						<td class="character">
-							Elcade
-							<div class="character info">
-								<ul class="conditions">
-									<li>Frightened (2 more rounds)</li>
-									<li>Dazed (1 more round)</li>
-								</ul>
-							</div>
-						</td>
-						<td class="number hp">24 / 89</td>
-						<td class="number initiative-total">21</td>
-						<td class="number initiative-modifier">+6</td>
-					</tr>
-					<tr>
-						<td class="actions"><button class="collapse-expand-row">+</button></td>
-						<td class="character">Oscar</td>
-						<td class="number hp">66 / 105</td>
-						<td class="number initiative-total">21</td>
-						<td class="number initiative-modifier">+4</td>
-					</tr>
-					<tr>
-						<td class="actions"><button class="collapse-expand-row">+</button></td>
-						<td class="character">Ancient red dragon</td>
-						<td class="number hp">-25 / ???</td>
-						<td class="number initiative-total">12</td>
-						<td class="number initiative-modifier">+1</td>
-					</tr>
-					<tr>
-						<td class="actions"><button class="collapse-expand-row">+</button></td>
-						<td class="character">Kagor</td>
-						<td class="number hp">82 / 82</td>
-						<td class="number initiative-total">-1</td>
-						<td class="number initiative-modifier">-2</td>
-					</tr>
-					<tr>
-						<td class="actions"><button class="collapse-expand-row">+</button></td>
-						<td class="character">Environment</td>
-						<td class="number hp">0 / ???</td>
-						<td class="number initiative-total">-20</td>
-						<td class="number initiative-modifier">-20</td>
-					</tr>
+					<thead>
+						<tr>
+							<th></th>
+							<th>Character</th>
+							<th class="number">HP</th>
+							<th class="number">Init</th>
+							<th class="number">Mod</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!-- contents built by JS -->
+					</tbody>
 				</table>
-				<div id="initiative-controls">
-					<button id="initiative-next">Ready</button>
-					<button id="initiative-next">Delay</button>
-					<button id="initiative-next">End Turn</button>
-				</div>
 			</section>
 		
 		</section>
@@ -127,5 +82,9 @@
 			</li>
 		</footer>
 		
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+		<script>$('#main').battleTop();</script>
 	</body>
 </html>

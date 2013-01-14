@@ -169,16 +169,21 @@ nav #mode-conditions	{ background-color: #F29877; }
 
 nav #toggle-dm-mode > * { vertical-align: top;}
 
-
-#main {
-	padding: 0.5em 1.0em 1.8em; /* padding-bottom is at least footer height */
+#round {
+	margin-bottom: 0.5em;
+	padding-bottom: 0.5em;
+	border-bottom: 1px solid #BBB;
 }
 
-#initative-current-turn {
+#current-round {
 	display: inline-block;
 	border: 1px solid #BBB;
 	background-color: rgba(255, 255, 255, 0.7);
 	padding: 0.2em 0.5em;
+}
+
+#main {
+	padding: 0.5em 1.0em 1.8em; /* padding-bottom is at least footer height */
 }
 
 #initiative table  {
@@ -210,8 +215,30 @@ nav #toggle-dm-mode > * { vertical-align: top;}
 	vertical-align: top;
 }
 
-#initiative .number{
+#initiative .number {
 	text-align: right;
+}
+
+#initiative tr button.collapse-expand-row {
+	width: 18px;
+	height: 18px;
+	background: url('../img/collapsed.png') no-repeat center;
+}
+
+#initiative tr.expanded button.collapse-expand-row {
+	background: url('../img/expanded.png') no-repeat center;
+}
+
+#initiative .conditions {
+	display: none;
+}
+
+#initiative tr.expanded .conditions {
+	display: block;
+}
+
+#initiative .conditions li:first-letter {
+	text-transform: uppercase;
 }
 
 body > footer {
