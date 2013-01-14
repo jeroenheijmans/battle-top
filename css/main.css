@@ -112,10 +112,13 @@ a:hover {
    
 body {
 	background: url('../img/bg.jpg') #EEE repeat;
+	font: 11px / 15px Arial, sans-serif;
 }
 
 body > header {
-	padding: 0.5em 1em;
+	padding: 0.5em 1.0em 0;
+	border-bottom: 1px solid #BBB;
+	background-color: rgba(240, 240, 240, 1.0);
 }
 
 body > header  h1 {
@@ -126,50 +129,67 @@ body > header  button#reset {
 	float: right;
 }
 
-#main {
-	padding: 0.5em 1.0em;
+nav {
 }
 
-#main > nav ul {
-	margin: 0 0 1em 0;
+nav ul {
+	margin: 0;
 	padding: 0;
 }
 
-#main > nav li {
+nav li {
 	display: inline-block;
 	margin: 0 1em 0 0;
 	padding: 0.5em;
-	border: 1px solid #CCC;
+	border: 1px solid #BBB;
+	border-bottom: none;
+	border-radius: 3px 3px 0 0;
 	background-color: #EEE;
 	opacity: 0.6;
-	border-radius: 3px;
 	cursor: pointer;
+	position: relative;
+	bottom: -1px;
 }
 
-#main > nav li:last-child {
-	margin-left: 1em;
+nav li#toggle-dm-mode {
+	background: none;
+	border: none;
 }
 
-#main > nav li.active,
-#main > nav li:hover {
+nav li.active,
+nav li:hover {
 	opacity: 1.0;
+	border-bottom: 1px solid transparent;
 }
 
-#main > nav #mode-setup		{ background-color: #8EC6C9; }
-#main > nav #mode-initiative	{ background-color: #F2E96B; }
-#main > nav #mode-hit-points	{ background-color: #F2C894; }
-#main > nav #mode-conditions	{ background-color: #F29877; }
+nav #mode-setup		{ background-color: #8EC6C9; }
+nav #mode-initiative	{ background-color: #F2E96B; }
+nav #mode-hit-points	{ background-color: #F2C894; }
+nav #mode-conditions	{ background-color: #F29877; }
 
+nav #toggle-dm-mode > * { vertical-align: top;}
+
+
+#main {
+	padding: 0.5em 1.0em 1.8em; /* padding-bottom is at least footer height */
+}
+
+#initative-current-turn {
+	display: inline-block;
+	border: 1px solid #BBB;
+	background-color: rgba(255, 255, 255, 0.7);
+	padding: 0.2em 0.5em;
+}
 
 #initiative table  {
-	width: 30em;
+	width: 100%;
+	max-width: 42em;
 	padding: 0;
 	margin: 0.5em 0;
-	font-size: 0.9em;
 }
 
 #initiative th {
-	background-color: rgba(128, 128, 128, 0.5);
+	background-color: rgba(128, 128, 128, 0.7);
 	text-align: left;
 }
 
@@ -177,16 +197,17 @@ body > header  button#reset {
 	border: 1px solid #AAA;
 	list-style-type: none;
 	padding: 0.5em;
-	background-color: rgba(255, 255, 255, 0.5);
+	background-color: rgba(255, 255, 255, 0.7);
 }
 
 #initiative tr.active {
-	background-color: rgba(242, 233, 107, 0.5);
+	background-color: rgba(242, 233, 107, 0.7);
 }
 
 #initiative td,
 #initiative th {
 	padding: 0.25em 0.5em;
+	vertical-align: top;
 }
 
 #initiative .number{
@@ -194,9 +215,14 @@ body > header  button#reset {
 }
 
 body > footer {
-	padding: 1.0em;
-	font-size: 0.75em;
+	height: 1.8em;
+	font-size: 0.8em;
 	color: #AAC;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	border-top: 1px solid #BBB;
+	background-color: #EEE;
 }
 
 body > footer ul {
@@ -206,7 +232,7 @@ body > footer ul {
 
 body > footer li {
 	display: inline-block;
-	margin: 0 1em 0 0;
+	margin: 0.2em 1em 0.5em;
 }
 
 

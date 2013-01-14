@@ -12,6 +12,7 @@
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
+		<link href='http://fonts.googleapis.com/css?family=Fresca' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
     </head>
@@ -23,10 +24,8 @@
 		
 		<header>
 			<h1 class="hidden">BattleTop!</h1>
-			<button id="reset">Reset</button>
-		</header>
+			<button id="reset">&#8634;</button>
 		
-		<section id="main">
 			<nav>
 				<ul id="edit-mode">
 					<li id="mode-setup">Setup</li>
@@ -35,14 +34,21 @@
 					<li id="mode-conditions">Conditions</li>
 					<li id="toggle-dm-mode">
 						<input type="checkbox" id="dm-mode" />
-						<label for="dm-mode">DM Mode</label>
+						<label for="dm-mode">DM</label>
 					</li>
 				</ul>
 			</nav>
+		</header>
+		
+		<section id="main">
 		
 			<section id="initiative">
 				<div id="initiative-turn">
-					Current turn: <span id="initiative-current-turn">3</span>
+					<div id="initative-current-turn">
+						Current turn: 
+						<span id="initiative-current-turn-number">3</span>
+					</div>
+					<button id="set-current-turn">Set Turn No.</button>
 				</div>
 				<table>
 					<tr>
@@ -54,28 +60,59 @@
 					</tr>
 					<tr>
 						<td class="actions"><button class="collapse-expand-row">+</button></td>
-						<td class="character">Elcade</td>
-						<td class="number hp">24 / 89</td>
-						<td class="number initiative-total">21</td>
-						<td class="number initiative-modifier">+6</td>
+						<td class="character">Skaak</td>
+						<td class="number hp">106 / 106</td>
+						<td class="number initiative-total">22</td>
+						<td class="number initiative-modifier">+5</td>
 					</tr>
 					<tr class="active">
-						<td class="actions"><button class="collapse-expand-row">+</button></td>
-						<td class="character">Elcade</td>
+						<td class="actions"><button class="collapse-expand-row">-</button></td>
+						<td class="character">
+							Elcade
+							<div class="character info">
+								<ul class="conditions">
+									<li>Frightened (2 more rounds)</li>
+									<li>Dazed (1 more round)</li>
+								</ul>
+							</div>
+						</td>
 						<td class="number hp">24 / 89</td>
 						<td class="number initiative-total">21</td>
 						<td class="number initiative-modifier">+6</td>
 					</tr>
 					<tr>
 						<td class="actions"><button class="collapse-expand-row">+</button></td>
-						<td class="character">Elcade</td>
-						<td class="number hp">24 / 89</td>
+						<td class="character">Oscar</td>
+						<td class="number hp">66 / 105</td>
 						<td class="number initiative-total">21</td>
-						<td class="number initiative-modifier">+6</td>
+						<td class="number initiative-modifier">+4</td>
+					</tr>
+					<tr>
+						<td class="actions"><button class="collapse-expand-row">+</button></td>
+						<td class="character">Ancient red dragon</td>
+						<td class="number hp">-25 / ???</td>
+						<td class="number initiative-total">12</td>
+						<td class="number initiative-modifier">+1</td>
+					</tr>
+					<tr>
+						<td class="actions"><button class="collapse-expand-row">+</button></td>
+						<td class="character">Kagor</td>
+						<td class="number hp">82 / 82</td>
+						<td class="number initiative-total">-1</td>
+						<td class="number initiative-modifier">-2</td>
+					</tr>
+					<tr>
+						<td class="actions"><button class="collapse-expand-row">+</button></td>
+						<td class="character">Environment</td>
+						<td class="number hp">0 / ???</td>
+						<td class="number initiative-total">-20</td>
+						<td class="number initiative-modifier">-20</td>
 					</tr>
 				</table>
 				<div id="initiative-controls">
-					<button id="initiative-next">Next Player</button>
+					<button id="initiative-next">Ready</button>
+					<button id="initiative-next">Delay</button>
+					<button id="initiative-next">End Turn</button>
 				</div>
 			</section>
 		
