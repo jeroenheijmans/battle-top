@@ -205,8 +205,17 @@ nav #toggle-dm-mode > * { vertical-align: top;}
 	background-color: rgba(255, 255, 255, 0.7);
 }
 
-#initiative tr.active {
+#initiative tr.current-player {
 	background-color: rgba(242, 233, 107, 0.7);
+}
+
+#initiative tr.readied {
+	background-color: rgba(200, 255, 200, 0.7);
+}
+
+#initiative tr.delayed {
+	color: #AAA;
+	background-color: rgba(226, 226, 226, 0.7);
 }
 
 #initiative td,

@@ -82,8 +82,8 @@
 	}
 	
 	function setActiveMode(mode) {
-		$('#edit-mode li').removeClass('active');
-		$('#mode-' + mode).addClass('active');
+		$('#edit-mode li').removeClass('current-player');
+		$('#mode-' + mode).addClass('current-player');
 	}
 	
 	function setcurrentRound(roundNumber) {
@@ -131,7 +131,7 @@
 				);
 		}
 		
-		$('#initiative tbody tr:first').addClass('active').addClass('expanded');
+		$('#initiative tbody tr:first').addClass('current-player').addClass('expanded');
 		$('#initiative tbody tr:first .collapse-expand-row');
 	}
 	
@@ -157,6 +157,11 @@
 			model.combat.characters.forEach(decrementConditionDurations);
 			setcurrentRound(model.combat.currentRound);
 			rebuildInitiativeList(model.combat.characters);
+		},
+		
+		setSpecificRound : function (roundNumber) {
+			model.combat.currentRound = roundNumber;
+			setcurrentRound(roundNumber);
 		}
 	};
 	
