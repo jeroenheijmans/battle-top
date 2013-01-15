@@ -52,6 +52,13 @@
 					initiativeModifier : 4,
 					conditions : []
 				},
+				{ 	name : 'Orc 3',
+					currentHitPoints : -9,
+					maxHitPoints : undefined,
+					currentInitiative : 21,
+					initiativeModifier : 4,
+					conditions : []
+				},
 				{ 	name : 'Kagor',
 					currentHitPoints : 82,
 					maxHitPoints : 82,
@@ -63,7 +70,7 @@
 				},
 				{ 	name : 'Ancient red dragon',
 					currentHitPoints : -25,
-					maxHitPoints : '???',
+					maxHitPoints : undefined,
 					currentInitiative : 12,
 					initiativeModifier : 1,
 					conditions : [
@@ -123,7 +130,7 @@
 						)
 						.after($('<td class="number hp">').text(characters[i].currentHitPoints))
 						.after($('<td class="number initiative-total">').text(characters[i].currentInitiative))
-						.after($('<td class="number initiative-modifier">').text(characters[i].initiativeModifier))
+						.after($('<td class="number initiative-modifier">').text(characters[i].initiativeModifier > 0 ? "+" + characters[i].initiativeModifier : characters[i].initiativeModifier))
 					)
 				);
 		}
