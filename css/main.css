@@ -109,10 +109,19 @@ a {
 a:hover {
 	color: #63ADD0;
 }
-   
+
+html {
+	/* Temporary styles, TODO: fix responsiveness */
+	max-width: 36em;
+	border-right: 1px solid #BBB;
+	height: 100%;
+	background-color: #FFF;
+}
+
 body {
 	background: url('../img/bg.jpg') #EEE repeat;
 	font: 11px / 15px Arial, sans-serif;
+	height: 100%;
 }
 
 body > header {
@@ -169,17 +178,13 @@ nav #mode-conditions	{ background-color: #F29877; }
 
 nav #toggle-dm-mode > * { vertical-align: top;}
 
-#round {
-	margin-bottom: 0.5em;
-	padding-bottom: 0.5em;
-	border-bottom: 1px solid #BBB;
-}
-
 #current-round {
 	display: inline-block;
+	float: right;
 	border: 1px solid #BBB;
 	background-color: rgba(255, 255, 255, 0.7);
 	padding: 0.2em 0.5em;
+	cursor: pointer;
 }
 
 #main {
@@ -188,7 +193,6 @@ nav #toggle-dm-mode > * { vertical-align: top;}
 
 #initiative table  {
 	width: 100%;
-	max-width: 42em;
 	padding: 0;
 	margin: 0.5em 0;
 }

@@ -32,11 +32,16 @@
 		$(this).closest('tr').toggleClass('expanded');
 	});
 	
-	$('#set-current-round').on('click', function() {
+	$('#current-round').on('click', function() {
 		var roundNumber = prompt('Specify round number');
 		if (!isNaN(parseFloat(roundNumber)) && isFinite(roundNumber))
 			$().battleTop('setSpecificRound', roundNumber);
 		else
 			alert('You didn\'t specifiy a number, silly!');
 	});
+	
+	$('#reset, ul#edit-mode li').on('click', function() {
+		alert('Not available yet');
+	});
+	
 })( jQuery );

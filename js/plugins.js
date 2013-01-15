@@ -82,8 +82,8 @@
 	}
 	
 	function setActiveMode(mode) {
-		$('#edit-mode li').removeClass('current-player');
-		$('#mode-' + mode).addClass('current-player');
+		$('#edit-mode li').removeClass('active');
+		$('#mode-' + mode).addClass('active');
 	}
 	
 	function setcurrentRound(roundNumber) {
