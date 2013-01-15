@@ -28,13 +28,17 @@
 		
 			<nav>
 				<ul id="edit-mode">
-					<li id="mode-setup" class="active">Setup</li>
-					<li id="mode-initiative">Initiative</li>
-					<li id="mode-hit-points">Hit Points</li>
-					<li id="mode-conditions">Conditions</li>
-					<li id="toggle-dm-mode">
-						<input type="checkbox" id="dm-mode" />
-						<label for="dm-mode">DM</label>
+					<li id="setup-mode">
+						<input type="checkbox" id="setup-mode-toggle" />
+						<label for="setup-mode-toggle">Setup</label>					
+					</li>
+					<li id="initiative-mode">
+						<input type="checkbox" id="initiative-mode-toggle" />
+						<label for="initiative-mode-toggle">Init</label>					
+					</li>
+					<li id="dm-mode">
+						<input type="checkbox" id="dm-mode-toggle" />
+						<label for="dm-mode-toggle">DM</label>
 					</li>
 				</ul>
 			</nav>
@@ -46,10 +50,10 @@
 				<div id="initiative-controls">
 					<button id="initiative-ready">Ready</button>
 					<button id="initiative-delay">Delay</button>
-					<button id="initiative-next">Next Player</button>
+					<button id="initiative-next">Next</button>
 					
 					<div id="current-round">
-						Current round: 
+						Round: 
 						<span id="initiative-current-round-number">3</span>
 					</div>
 				</div>

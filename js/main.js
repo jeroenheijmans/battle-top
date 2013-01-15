@@ -39,9 +39,5 @@
 		else
 			alert('You didn\'t specifiy a number, silly!');
 	});
-	
-	$('#reset, ul#edit-mode li').on('click', function() {
-		alert('Not available yet');
-	});
-	
+		
 })( jQuery );

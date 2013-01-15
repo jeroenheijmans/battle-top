@@ -73,17 +73,14 @@
 			],
 			currentRound : 1
 		},
-		isInDmMode : false,
-		currentMode : 'initiative'
+		currentModes : ['initiative']
 	};
 	
-	function setModelDmMode(isInDmMode) {
-		$('#dm-mode').prop('checked', isInDmMode);		
-	}
-	
-	function setActiveMode(mode) {
-		$('#edit-mode li').removeClass('active');
-		$('#mode-' + mode).addClass('active');
+	function setActiveModes(modes) {
+		for (i = 0; i < modes.length; i++) {
+			$('#' + modes[i] + '-mode').addClass('active');
+			$('#' + modes[i] + '-mode-toggle').prop('checked', true);
+		}
 	}
 	
 	function setcurrentRound(roundNumber) {
@@ -107,9 +104,9 @@
 			for (j = 0; j < characters[i].conditions.length; j++) {
 				conditions.append($('<li>')
 					.text(characters[i].conditions[j].name
-							+ ' ('
+							+ ', '
 							+ characters[i].conditions[j].roundsLeft
-							+ ' round(s) left)'
+							+ ' more round(s)'
 						)
 					);
 			}
@@ -145,9 +142,8 @@
 	}
 	
 	var methods = {
-		init : function () {	
-			setModelDmMode(model.isInDmMode);
-			setActiveMode(model.currentMode);
+		init : function () {
+			setActiveModes(model.currentModes);
 			setcurrentRound(model.combat.currentRound);
 			rebuildInitiativeList(model.combat.characters);
 		},

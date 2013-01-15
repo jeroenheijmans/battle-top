@@ -110,6 +110,10 @@ a:hover {
 	color: #63ADD0;
 }
 
+button {
+	padding: 0.2em 0.5em;
+}
+
 html {
 	/* Temporary styles, TODO: fix responsiveness */
 	max-width: 36em;
@@ -120,7 +124,7 @@ html {
 
 body {
 	background: url('../img/bg.jpg') #EEE repeat;
-	font: 11px / 15px Arial, sans-serif;
+	font: 13px / 18px Arial, sans-serif;
 	height: 100%;
 }
 
@@ -148,35 +152,24 @@ nav ul {
 
 nav li {
 	display: inline-block;
-	margin: 0 1em 0 0;
-	padding: 0.5em;
+	margin: 0 0 0.5em;
+	padding: 0.2em 0.5em;
 	border: 1px solid #BBB;
-	border-bottom: none;
-	border-radius: 3px 3px 0 0;
+	border-radius: 2px;
 	background-color: #EEE;
 	opacity: 0.6;
 	cursor: pointer;
-	position: relative;
-	bottom: -1px;
-}
-
-nav li#toggle-dm-mode {
-	background: none;
-	border: none;
 }
 
 nav li.active,
 nav li:hover {
 	opacity: 1.0;
-	border-bottom: 1px solid transparent;
 }
 
-nav #mode-setup		{ background-color: #8EC6C9; }
-nav #mode-initiative	{ background-color: #F2E96B; }
-nav #mode-hit-points	{ background-color: #F2C894; }
-nav #mode-conditions	{ background-color: #F29877; }
-
-nav #toggle-dm-mode > * { vertical-align: top;}
+nav #setup-mode		{ background-color: #8EC6C9; }
+nav #initiative-mode	{ background-color: #F2E96B; }
+nav #dm-mode			{ background-color: #F2C894; }
+nav #mode-xxxxxx		{ background-color: #F29877; }
 
 #current-round {
 	display: inline-block;
@@ -233,9 +226,9 @@ nav #toggle-dm-mode > * { vertical-align: top;}
 }
 
 #initiative tr button.collapse-expand-row {
-	width: 18px;
-	height: 18px;
-	background: url('../img/collapsed.png') no-repeat center;
+	width: 1.75em;
+	height: 1.75em;
+	background: #FFF url('../img/collapsed.png') no-repeat center;
 }
 
 #initiative tr.expanded button.collapse-expand-row {
