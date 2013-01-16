@@ -86,11 +86,17 @@
 								</ul>
 							</td>
 							<td class="number hp">
-								<span data-bind="text: currentHitPoints"></span>
-								<span data-bind="visible: maxHitPoints() > 0">
-									/
-									<span data-bind="text: maxHitPoints"></span>
-								</span>
+								<div class="hp-readonly">
+									<span data-bind="text: currentHitPoints"></span>
+									<span data-bind="visible: maxHitPoints() > 0">
+										/
+										<span data-bind="text: maxHitPoints"></span>
+									</span>
+								</div>
+								<div class="hp-edit hidden">
+									<input type="number" data-bind="value: currentHitPoints" />
+									<button class="finish-editing">&#10003;</button>
+								</div>
 							</td>
 							<td class="number initiative-total" data-bind="text: currentInitiative"></td>
 							<td class="number initiative-modifier">

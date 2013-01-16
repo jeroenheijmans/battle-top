@@ -114,6 +114,10 @@ button {
 	padding: 0.2em 0.5em;
 }
 
+input[type="number"] {
+	width: 3.5em;
+}
+
 html {
 	/* Temporary styles, TODO: fix responsiveness */
 	max-width: 36em;
