@@ -22,7 +22,82 @@
 }());
 
 (function( $ ) {
-		
+
+	// TODO: stub code
+	// TODO: this is now completely auto-mapped, but perhaps the ViewModels (at least
+	//       at a high level) should have some view logic?
+	var model = {
+		combat : {	
+			characters : [
+				{ 	name : 'Skaak',
+					currentHitPoints : 106,
+					maxHitPoints : 106,
+					currentInitiative : 12,
+					initiativeModifier : 5,
+					initiativeState : 'normal',
+					conditions : [
+						{ name : 'haste', roundsLeft : 16 }
+					]
+				},
+				{	name : 'Elcade',
+					currentHitPoints : 24,
+					maxHitPoints : 89,
+					currentInitiative : 21,
+					initiativeModifier : 6,
+					initiativeState : 'delayed',
+					conditions : [
+						{ name : 'frightened', roundsLeft : 2 },
+						{ name : 'dazed', roundsLeft : 1 }
+					]
+				},
+				{ 	name : 'Oscar',
+					currentHitPoints : 66,
+					maxHitPoints : 105,
+					currentInitiative : 21,
+					initiativeModifier : 4,
+					initiativeState : 'normal',
+					conditions : []
+				},
+				{ 	name : 'Orc 3',
+					currentHitPoints : -9,
+					maxHitPoints : undefined,
+					currentInitiative : 21,
+					initiativeModifier : 4,
+					initiativeState : 'normal',
+					conditions : []
+				},
+				{ 	name : 'Kagor',
+					currentHitPoints : 82,
+					maxHitPoints : 82,
+					currentInitiative : -1,
+					initiativeModifier : -2,
+					initiativeState : 'readied',
+					conditions : [
+						{ name : 'frightened', roundsLeft : 1 }
+					]
+				},
+				{ 	name : 'Ancient red dragon',
+					currentHitPoints : -25,
+					maxHitPoints : undefined,
+					currentInitiative : 12,
+					initiativeModifier : 1,
+					initiativeState : 'normal',
+					conditions : [
+						{ name : 'slowed', roundsLeft : 8 }
+					]
+				}
+			],
+			currentRound : 1,
+			activeCharacter : 'Skaak'
+		},
+		isInSetupMode : false,
+		isInInitiativeMode : true,
+		isInDmMode : false,
+		isInDebugMode : true
+	};
+	model.combat.characters.sort(function(a,b) { return b.currentInitiative - a.currentInitiative; });
+	var viewModel = ko.mapping.fromJS(model);
+	
 	function animateCurrentRound() {
 		$('#current-round')
 			.css('opacity', '0.2')
@@ -33,35 +108,28 @@
 			.animate({ opacity: '1.0' }, 500);
 	}
 	
-	
-	function decrementConditionDurations(character) {
-		for (i = character.conditions.length - 1; i >= 0; i--) {
-			character.conditions[i].roundsLeft--;
-			if (character.conditions[i].roundsLeft < 0) {
-				character.conditions.splice(i,1);
-			}
-		}				
-	}
-	
 	var methods = {
 		init : function () {
+			ko.applyBindings(viewModel);
 		},
 		
 		nextRound : function () {
-			$('#current-round-field').val(parseInt($('#current-round-field').val()) + 1).change();
+			viewModel.combat.currentRound(viewModel.combat.currentRound() + 1);
 			animateCurrentRound();
 		},
 		
-		nextTurn : function () {			
-			var current = $('#initiative table tbody .current-player');
-			var next = current.next('tr');
+		nextTurn : function () {
+			var next = $('#initiative table tbody .current-player').next('tr');
 			
 			if (next.size() === 0) {
 				next = $('#initiative table tbody tr:first');
 				methods.nextRound();
 			}
 			
-			$('#current-active-character').val(next.find('.character-name').text()).change();
+			var nextData = ko.dataFor(next[0]);
+			if (nextData.initiativeState() == 'delayed') nextData.initiativeState('normal');
+			
+			viewModel.combat.activeCharacter(nextData.name());
 		}
 	};
 	

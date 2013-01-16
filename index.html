@@ -54,8 +54,6 @@
 					<button id="initiative-delay" title="Take the 'Delay' action (go to next initiative)">Delay</button>
 					
 					<div id="current-round">
-						<input type="hidden" id="current-round-field" data-bind="value: combat.currentRound" />
-						<input type="hidden" id="current-active-character" data-bind="value: combat.activeCharacter" />
 						Round: 
 						<span id="initiative-current-round-number" data-bind="text: combat.currentRound"></span>
 					</div>
@@ -72,7 +70,10 @@
 						</tr>
 					</thead>
 					<tbody data-bind="foreach: combat.characters">
-						<tr data-bind="css: { 'current-player, expanded' : name() == $root.combat.activeCharacter() }">
+						<tr data-bind="css: { 'current-player, expanded' : name() == $root.combat.activeCharacter(),
+												readied : initiativeState() == 'readied',
+												delayed : initiativeState() == 'delayed'
+											}">
 							<td class="actions">
 								<button class="collapse-expand-row"></button>
 							</td>
@@ -110,7 +111,7 @@
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
 		<script>
-			$('#main').battleTop();
+			
 		</script>
 	</body>
 </html>
