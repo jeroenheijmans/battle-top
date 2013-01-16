@@ -24,20 +24,20 @@
 		
 		<header>
 			<h1 class="hidden">BattleTop!</h1>
-			<button id="reset">&#8634;</button>
+			<button id="reset" title="Reset the entire battle!">&#8634;</button>
 		
 			<nav>
 				<ul id="edit-mode">
-					<li id="setup-mode">
-						<input type="checkbox" id="setup-mode-toggle" />
+					<li id="setup-mode" data-bind="css: { active : isInSetupMode }">
+						<input type="checkbox" id="setup-mode-toggle" data-bind="checked: isInSetupMode" />
 						<label for="setup-mode-toggle">Setup</label>					
 					</li>
-					<li id="initiative-mode">
-						<input type="checkbox" id="initiative-mode-toggle" />
+					<li id="initiative-mode" data-bind="css: { active : isInInitiativeMode }">
+						<input type="checkbox" id="initiative-mode-toggle" data-bind="checked: isInInitiativeMode" />
 						<label for="initiative-mode-toggle">Init</label>					
 					</li>
-					<li id="dm-mode">
-						<input type="checkbox" id="dm-mode-toggle" />
+					<li id="dm-mode" data-bind="css: { active : isInDmMode }">
+						<input type="checkbox" id="dm-mode-toggle" data-bind="checked: isInDmMode" />
 						<label for="dm-mode-toggle">DM</label>
 					</li>
 				</ul>
@@ -48,16 +48,17 @@
 		
 			<section id="initiative">
 				<div id="initiative-controls">
-					<button id="initiative-next">Next</button>
+					<button id="initiative-next" title="Finish current turn, go to next initiative">Next</button>
 					Or:
-					<button id="initiative-ready">Ready</button>
-					<button id="initiative-delay">Delay</button>
+					<button id="initiative-ready" title="Take the 'Ready' action (finishes turn)">Ready</button>
+					<button id="initiative-delay" title="Take the 'Delay' action (go to next initiative)">Delay</button>
 					
 					<div id="current-round">
 						Round: 
-						<span id="initiative-current-round-number">3</span>
+						<span id="initiative-current-round-number" data-bind="text: combat.currentRound"></span>
 					</div>
 				</div>
+				
 				<table>
 					<thead>
 						<tr>
@@ -68,8 +69,28 @@
 							<th class="number">Mod</th>
 						</tr>
 					</thead>
-					<tbody>
-						<!-- contents built by JS -->
+					<tbody data-bind="foreach: combat.characters">
+						<tr data-bind="css: { 'current-player, expanded' : name() == $root.combat.activeCharacter(),
+												readied : initiativeState() == 'readied',
+												delayed : initiativeState() == 'delayed'
+											}">
+							<td class="actions">
+								<button class="collapse-expand-row"></button>
+							</td>
+							<td class="character">
+								<span class="character-name" data-bind="text: name"></span>
+								<ul class="conditions" data-bind="visible: conditions().length != 0, foreach: conditions">
+									<li>
+										<span data-bind="text: name"></span>,
+										<span data-bind="text: roundsLeft"></span>
+										more round(s)
+									</li>
+								</ul>
+							</td>
+							<td class="number hp" data-bind="text: currentHitPoints"></td>
+							<td class="number initiative-total" data-bind="text: currentInitiative"></td>
+							<td class="number initiative-modifier" data-bind="text: initiativeModifier"></td>
+						</tr>
 					</tbody>
 				</table>
 			</section>
@@ -85,8 +106,12 @@
 		</footer>
 		
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+		<script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.0.js"></script>
+		<script src="js/vendor/knockout.mapping-2.3.5.js"></script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
-		<script>$('#main').battleTop();</script>
+		<script>
+			
+		</script>
 	</body>
 </html>

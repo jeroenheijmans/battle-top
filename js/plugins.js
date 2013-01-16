@@ -22,15 +22,19 @@
 }());
 
 (function( $ ) {
-	
+
+	// TODO: stub code
+	// TODO: this is now completely auto-mapped, but perhaps the ViewModels (at least
+	//       at a high level) should have some view logic?
 	var model = {
 		combat : {	
 			characters : [
 				{ 	name : 'Skaak',
 					currentHitPoints : 106,
 					maxHitPoints : 106,
-					currentInitiative : 22,
+					currentInitiative : 12,
 					initiativeModifier : 5,
+					initiativeState : 'normal',
 					conditions : [
 						{ name : 'haste', roundsLeft : 16 }
 					]
@@ -40,6 +44,7 @@
 					maxHitPoints : 89,
 					currentInitiative : 21,
 					initiativeModifier : 6,
+					initiativeState : 'delayed',
 					conditions : [
 						{ name : 'frightened', roundsLeft : 2 },
 						{ name : 'dazed', roundsLeft : 1 }
@@ -50,6 +55,7 @@
 					maxHitPoints : 105,
 					currentInitiative : 21,
 					initiativeModifier : 4,
+					initiativeState : 'normal',
 					conditions : []
 				},
 				{ 	name : 'Orc 3',
@@ -57,6 +63,7 @@
 					maxHitPoints : undefined,
 					currentInitiative : 21,
 					initiativeModifier : 4,
+					initiativeState : 'normal',
 					conditions : []
 				},
 				{ 	name : 'Kagor',
@@ -64,6 +71,7 @@
 					maxHitPoints : 82,
 					currentInitiative : -1,
 					initiativeModifier : -2,
+					initiativeState : 'readied',
 					conditions : [
 						{ name : 'frightened', roundsLeft : 1 }
 					]
@@ -73,98 +81,76 @@
 					maxHitPoints : undefined,
 					currentInitiative : 12,
 					initiativeModifier : 1,
+					initiativeState : 'normal',
 					conditions : [
-						{ name : 'slowed', roundsLeft : 8 }
+						{ name : 'slowed', roundsLeft : 0 }
 					]
 				}
 			],
-			currentRound : 1
+			currentRound : 1,
+			activeCharacter : 'Skaak'
 		},
-		currentModes : ['initiative']
+		isInSetupMode : false,
+		isInInitiativeMode : true,
+		isInDmMode : false,
+		isInDebugMode : true
 	};
+	model.combat.characters.sort(function(a,b) { return b.currentInitiative - a.currentInitiative; });
+	var viewModel = ko.mapping.fromJS(model);
 	
-	function setActiveModes(modes) {
-		for (i = 0; i < modes.length; i++) {
-			$('#' + modes[i] + '-mode').addClass('active');
-			$('#' + modes[i] + '-mode-toggle').prop('checked', true);
-		}
-	}
-	
-	function setcurrentRound(roundNumber) {
-		$('#initiative-current-round-number').text(roundNumber);
+	function animateCurrentRound() {
 		$('#current-round')
 			.css('opacity', '0.2')
+			.animate({ opacity: '1.0' }, 500)
+			.animate({ opacity: '0.2' }, 500)
 			.animate({ opacity: '1.0' }, 500)
 			.animate({ opacity: '0.2' }, 500)
 			.animate({ opacity: '1.0' }, 500);
 	}
 	
-	function rebuildInitiativeList(characters) {
-		// TODO: Refactor to some fancy pattern like MVVM? Anyways, here goes rapid prototyping:
+	function endTurnForCurrentCharacter() {
+		var current = $('#initiative table tbody .current-player');
+		var data = ko.dataFor(current[0]);
 		
-		$('#initiative table tbody').empty();
+		var conditions = data.conditions();
 		
-		characters.sort(function(a,b) { return b.currentInitiative - a.currentInitiative; });
-	
-		for (i = 0; i < characters.length; i++) {
-			var conditions = characters[i].conditions.length > 0 ? $('<ul class="conditions">') : "";
-			for (j = 0; j < characters[i].conditions.length; j++) {
-				conditions.append($('<li>')
-					.text(characters[i].conditions[j].name
-							+ ', '
-							+ characters[i].conditions[j].roundsLeft
-							+ ' more round(s)'
-						)
-					);
-			}
-		
-			$('#initiative tbody')
-				.append(
-					$('<tr>')
-					.append(
-						$('<td class="actions"><button class="collapse-expand-row"></button></td>')
-						.after(
-							$('<td class="character">')
-							.text(characters[i].name)
-							.append(conditions)
-						)
-						.after($('<td class="number hp">').text(characters[i].currentHitPoints))
-						.after($('<td class="number initiative-total">').text(characters[i].currentInitiative))
-						.after($('<td class="number initiative-modifier">').text(characters[i].initiativeModifier > 0 ? "+" + characters[i].initiativeModifier : characters[i].initiativeModifier))
-					)
-				);
-		}
-		
-		$('#initiative tbody tr:first').addClass('current-player').addClass('expanded');
-		$('#initiative tbody tr:first .collapse-expand-row');
+		for (i = conditions.length-1; i >= 0; i--) {
+			conditions[i].roundsLeft(conditions[i].roundsLeft() - 1);
+		}		
 	}
 	
-	function decrementConditionDurations(character) {
-		for (i = character.conditions.length - 1; i >= 0; i--) {
-			character.conditions[i].roundsLeft--;
-			if (character.conditions[i].roundsLeft < 0) {
-				character.conditions.splice(i,1);
-			}
-		}				
+	function activateNextCharacter() {
+		var next = $('#initiative table tbody .current-player').next('tr');
+		
+		if (next.size() === 0) {
+			next = $('#initiative table tbody tr:first');
+			methods.nextRound();
+		}
+				
+		viewModel.combat.activeCharacter(ko.dataFor(next[0]).name());
+	}
+	
+	function prepareTurnForCurrentCharacter() {
+		var data = ko.dataFor($('#initiative table tbody .current-player')[0]);
+		data.initiativeState('normal');
+		
+		data.conditions.remove(function(item) { return item.roundsLeft() <= 0; });
 	}
 	
 	var methods = {
 		init : function () {
-			setActiveModes(model.currentModes);
-			setcurrentRound(model.combat.currentRound);
-			rebuildInitiativeList(model.combat.characters);
+			ko.applyBindings(viewModel);
 		},
 		
 		nextRound : function () {
-			model.combat.currentRound++;
-			model.combat.characters.forEach(decrementConditionDurations);
-			setcurrentRound(model.combat.currentRound);
-			rebuildInitiativeList(model.combat.characters);
+			viewModel.combat.currentRound(viewModel.combat.currentRound() + 1);
+			animateCurrentRound();
 		},
 		
-		setSpecificRound : function (roundNumber) {
-			model.combat.currentRound = roundNumber;
-			setcurrentRound(roundNumber);
+		nextTurn : function () {
+			endTurnForCurrentCharacter();
+			activateNextCharacter();
+			prepareTurnForCurrentCharacter();
 		}
 	};
 	
@@ -179,3 +165,7 @@
 	};
 	
 })( jQuery );
+
+
+
+
