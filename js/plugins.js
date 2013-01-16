@@ -30,6 +30,7 @@
 		combat : {	
 			characters : [
 				{ 	name : 'Skaak',
+					isPlayerCharacter : true,
 					currentHitPoints : 106,
 					maxHitPoints : 106,
 					currentInitiative : 12,
@@ -40,6 +41,7 @@
 					]
 				},
 				{	name : 'Elcade',
+					isPlayerCharacter : true,
 					currentHitPoints : 24,
 					maxHitPoints : 89,
 					currentInitiative : 21,
@@ -51,6 +53,7 @@
 					]
 				},
 				{ 	name : 'Oscar',
+					isPlayerCharacter : true,
 					currentHitPoints : 66,
 					maxHitPoints : 105,
 					currentInitiative : 21,
@@ -59,14 +62,16 @@
 					conditions : []
 				},
 				{ 	name : 'Orc 3',
+					isPlayerCharacter : false,
 					currentHitPoints : -9,
 					maxHitPoints : undefined,
-					currentInitiative : 21,
-					initiativeModifier : 4,
+					currentInitiative : 12,
+					initiativeModifier : 0,
 					initiativeState : 'normal',
 					conditions : []
 				},
 				{ 	name : 'Kagor',
+					isPlayerCharacter : true,
 					currentHitPoints : 82,
 					maxHitPoints : 82,
 					currentInitiative : -1,
@@ -77,6 +82,7 @@
 					]
 				},
 				{ 	name : 'Ancient red dragon',
+					isPlayerCharacter : false,
 					currentHitPoints : -25,
 					maxHitPoints : undefined,
 					currentInitiative : 12,
@@ -95,7 +101,11 @@
 		isInDmMode : false,
 		isInDebugMode : true
 	};
-	model.combat.characters.sort(function(a,b) { return b.currentInitiative - a.currentInitiative; });
+	model.combat.characters.sort(function(a,b) { 
+		return b.currentInitiative == a.currentInitiative ?
+				b.initiativeModifier - a.initiativeModifier :
+				b.currentInitiative - a.currentInitiative; 
+	});
 	var viewModel = ko.mapping.fromJS(model);
 	
 	function animateCurrentRound() {

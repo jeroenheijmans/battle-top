@@ -10,9 +10,6 @@
         <meta name="description" content="Bookkeeping enhancements for table-top battles">
         <meta name="viewport" content="width=device-width">
 
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-
-		<link href='http://fonts.googleapis.com/css?family=Fresca' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
     </head>
@@ -72,7 +69,8 @@
 					<tbody data-bind="foreach: combat.characters">
 						<tr data-bind="css: { 'current-player, expanded' : name() == $root.combat.activeCharacter(),
 												readied : initiativeState() == 'readied',
-												delayed : initiativeState() == 'delayed'
+												delayed : initiativeState() == 'delayed',
+												'is-player-character' : isPlayerCharacter
 											}">
 							<td class="actions">
 								<button class="collapse-expand-row"></button>
@@ -87,9 +85,17 @@
 									</li>
 								</ul>
 							</td>
-							<td class="number hp" data-bind="text: currentHitPoints"></td>
+							<td class="number hp">
+								<span data-bind="text: currentHitPoints"></span>
+								<span data-bind="visible: maxHitPoints() > 0">
+									/
+									<span data-bind="text: maxHitPoints"></span>
+								</span>
+							</td>
 							<td class="number initiative-total" data-bind="text: currentInitiative"></td>
-							<td class="number initiative-modifier" data-bind="text: initiativeModifier"></td>
+							<td class="number initiative-modifier">
+								<span data-bind="visible: initiativeModifier() > 0">+</span><span data-bind="text: initiativeModifier"></span>
+							</td>
 						</tr>
 					</tbody>
 				</table>
