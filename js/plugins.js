@@ -23,7 +23,7 @@
 
 (function( $ ) {
 		
-	function animateCurrentRound(roundNumber) {
+	function animateCurrentRound() {
 		$('#current-round')
 			.css('opacity', '0.2')
 			.animate({ opacity: '1.0' }, 500)
@@ -49,14 +49,19 @@
 		
 		nextRound : function () {
 			$('#current-round-field').val(parseInt($('#current-round-field').val()) + 1).change();
-			model.combat.currentRound++; // TODO combine with Knockout
-			model.combat.characters.forEach(decrementConditionDurations); // TODO combine with Knockout
-			animateCurrentRound(model.combat.currentRound);
+			animateCurrentRound();
 		},
 		
-		setSpecificRound : function (roundNumber) {
-			model.combat.currentRound = roundNumber; // TODO combine with Knockout
-			animateCurrentRound(roundNumber);
+		nextTurn : function () {			
+			var current = $('#initiative table tbody .current-player');
+			var next = current.next('tr');
+			
+			if (next.size() === 0) {
+				next = $('#initiative table tbody tr:first');
+				methods.nextRound();
+			}
+			
+			$('#current-active-character').val(next.find('.character-name').text()).change();
 		}
 	};
 	
