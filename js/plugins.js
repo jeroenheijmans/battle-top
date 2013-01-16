@@ -83,7 +83,7 @@
 					initiativeModifier : 1,
 					initiativeState : 'normal',
 					conditions : [
-						{ name : 'slowed', roundsLeft : 8 }
+						{ name : 'slowed', roundsLeft : 0 }
 					]
 				}
 			],
@@ -108,6 +108,35 @@
 			.animate({ opacity: '1.0' }, 500);
 	}
 	
+	function endTurnForCurrentCharacter() {
+		var current = $('#initiative table tbody .current-player');
+		var data = ko.dataFor(current[0]);
+		
+		var conditions = data.conditions();
+		
+		for (i = conditions.length-1; i >= 0; i--) {
+			conditions[i].roundsLeft(conditions[i].roundsLeft() - 1);
+		}		
+	}
+	
+	function activateNextCharacter() {
+		var next = $('#initiative table tbody .current-player').next('tr');
+		
+		if (next.size() === 0) {
+			next = $('#initiative table tbody tr:first');
+			methods.nextRound();
+		}
+				
+		viewModel.combat.activeCharacter(ko.dataFor(next[0]).name());
+	}
+	
+	function prepareTurnForCurrentCharacter() {
+		var data = ko.dataFor($('#initiative table tbody .current-player')[0]);
+		data.initiativeState('normal');
+		
+		data.conditions.remove(function(item) { return item.roundsLeft() <= 0; });
+	}
+	
 	var methods = {
 		init : function () {
 			ko.applyBindings(viewModel);
@@ -119,17 +148,9 @@
 		},
 		
 		nextTurn : function () {
-			var next = $('#initiative table tbody .current-player').next('tr');
-			
-			if (next.size() === 0) {
-				next = $('#initiative table tbody tr:first');
-				methods.nextRound();
-			}
-			
-			var nextData = ko.dataFor(next[0]);
-			if (nextData.initiativeState() == 'delayed') nextData.initiativeState('normal');
-			
-			viewModel.combat.activeCharacter(nextData.name());
+			endTurnForCurrentCharacter();
+			activateNextCharacter();
+			prepareTurnForCurrentCharacter();
 		}
 	};
 	
