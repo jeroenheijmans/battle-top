@@ -86,25 +86,41 @@
 								</ul>
 							</td>
 							<td class="number hp">
-								<div class="hp-readonly">
+								<div class="readonly-pane">
 									<span data-bind="text: currentHitPoints"></span>
 									<span data-bind="visible: maxHitPoints() > 0">
 										/
 										<span data-bind="text: maxHitPoints"></span>
 									</span>
 								</div>
-								<div class="hp-edit hidden">
+								<div class="edit-pane hidden">
 									<input type="number" data-bind="value: currentHitPoints" />
 									<button class="finish-editing">&#10003;</button>
 								</div>
 							</td>
-							<td class="number initiative-total" data-bind="text: currentInitiative"></td>
+							<td class="number initiative-total">
+								<div class="readonly-pane">
+									<span data-bind="text: currentInitiative" />
+								</div>
+								<div class="edit-pane hidden">
+									<input type="number" data-bind="value: currentInitiative" />
+									<button class="finish-editing">&#10003;</button>
+								</div>								
+							</td>
 							<td class="number initiative-modifier">
-								<span data-bind="visible: initiativeModifier() > 0">+</span><span data-bind="text: initiativeModifier"></span>
+								<div class="readonly-pane">
+									<span data-bind="visible: initiativeModifier() > 0">+</span><span data-bind="text: initiativeModifier"></span>
+								</div>
+								<div class="edit-pane hidden">
+									<input type="number" data-bind="value: initiativeModifier" />
+									<button class="finish-editing">&#10003;</button>
+								</div>		
 							</td>
 						</tr>
 					</tbody>
 				</table>
+					
+				<button id="initiative-sort" title="Sort the initiative list again">Sort by initiative</button>
 			</section>
 		
 		</section>

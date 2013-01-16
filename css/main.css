@@ -206,6 +206,10 @@ nav #mode-xxxxxx		{ background-color: #F29877; }
 	background-color: rgba(255, 255, 255, 0.7);
 }
 
+#initiative tr.is-player-character {
+	color: #060;
+}
+
 #initiative tr.readied {
 	background-color: rgba(200, 255, 200, 0.7);
 }
@@ -217,10 +221,6 @@ nav #mode-xxxxxx		{ background-color: #F29877; }
 
 #initiative tr.current-player {
 	background-color: rgba(242, 233, 107, 0.7);
-}
-
-#initiative tr.is-player-character {
-	color: #060;
 }
 
 #initiative td,

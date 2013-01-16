@@ -101,11 +101,6 @@
 		isInDmMode : false,
 		isInDebugMode : true
 	};
-	model.combat.characters.sort(function(a,b) { 
-		return b.currentInitiative == a.currentInitiative ?
-				b.initiativeModifier - a.initiativeModifier :
-				b.currentInitiative - a.currentInitiative; 
-	});
 	var viewModel = ko.mapping.fromJS(model);
 	
 	function animateCurrentRound() {
@@ -149,7 +144,16 @@
 	
 	var methods = {
 		init : function () {
+			methods.initiativeSort();
 			ko.applyBindings(viewModel);
+		},
+		
+		initiativeSort : function () {
+			viewModel.combat.characters.sort(function(a,b) { 
+				return b.currentInitiative() == a.currentInitiative() ?
+						b.initiativeModifier() - a.initiativeModifier() :
+						b.currentInitiative() - a.currentInitiative();
+			});
 		},
 		
 		nextRound : function () {

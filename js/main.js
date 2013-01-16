@@ -13,18 +13,22 @@
 		$().battleTop('nextTurn');
 	});	
 	
+	$('#initiative-sort').on('click', function() {
+		$().battleTop('initiativeSort');
+	});	
+	
 	$(document).on('click', '.collapse-expand-row', function() {
 		$(this).closest('tr').toggleClass('expanded');
 	});
 	
-	$(document).on('click', '.hp-readonly', function() {
+	$(document).on('click', '.readonly-pane', function() {
 		$(this).addClass('hidden');
-		$(this).siblings('.hp-edit').removeClass('hidden');
+		$(this).siblings('.edit-pane').removeClass('hidden');
 	});	
 	
-	$(document).on('click', '.hp-edit .finish-editing', function() {
-		$(this).parent('.hp-edit').addClass('hidden');
-		$(this).parent('.hp-edit').siblings('.hp-readonly').removeClass('hidden');
+	$(document).on('click', '.edit-pane .finish-editing', function() {
+		$(this).parent('.edit-pane').addClass('hidden');
+		$(this).parent('.edit-pane').siblings('.readonly-pane').removeClass('hidden');
 	});
 	
 })( jQuery );
