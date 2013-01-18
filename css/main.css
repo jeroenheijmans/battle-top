@@ -9,7 +9,6 @@
 /* ==========================================================================
    Base styles: opinionated defaults
 ============================================================================= */
-
 html,
 button,
 input,
@@ -119,21 +118,23 @@ input[type="number"] {
 }
 
 html {
-	/* Temporary styles, TODO: fix responsiveness */
-	max-width: 36em;
-	border-right: 1px solid #BBB;
-	height: 100%;
 	background-color: #FFF;
 }
 
 body {
+	/* Temporary styles, TODO: fix responsiveness */
+	max-width: 22em;
+	min-height: 32em;
+	border-right: 1px solid #BBB;
+	border-bottom: 1px solid #BBB;
 	background: url('../img/bg.jpg') #EEE repeat;
-	font: 13px / 18px Arial, sans-serif;
-	height: 100%;
+	font: 13px / 17px 'Arial', sans-serif;
+	padding-bottom: 2em;
+	position: relative;
 }
 
 body > header {
-	padding: 0.5em 1.0em 0;
+	padding: 0.5em;
 	border-bottom: 1px solid #BBB;
 	background-color: rgba(240, 240, 240, 1.0);
 }
@@ -141,9 +142,6 @@ body > header {
 body > header  h1 {
 	display: inline-block;
 	margin: 0;
-}
-body > header  button#reset {
-	float: right;
 }
 
 nav {
@@ -156,8 +154,7 @@ nav ul {
 
 nav li {
 	display: inline-block;
-	margin: 0 0 0.5em;
-	padding: 0.2em 0.5em;
+	padding: 0.2em 0.4em;
 	border: 1px solid #BBB;
 	border-radius: 2px;
 	background-color: #EEE;
@@ -181,11 +178,10 @@ nav #mode-xxxxxx		{ background-color: #F29877; }
 	border: 1px solid #BBB;
 	background-color: rgba(255, 255, 255, 0.7);
 	padding: 0.2em 0.5em;
-	cursor: pointer;
 }
 
 #main {
-	padding: 0.5em 1.0em 1.8em; /* padding-bottom is at least footer height */
+	padding: 0.5em 0.5em 0;
 }
 
 #initiative table  {
@@ -230,40 +226,34 @@ nav #mode-xxxxxx		{ background-color: #F29877; }
 }
 
 #initiative .number {
+	white-space: nowrap;
 	text-align: right;
 }
 
-#initiative tr button.collapse-expand-row {
-	width: 1.75em;
-	height: 1.75em;
-	background: #FFF url('../img/collapsed.png') no-repeat center;
+#initiative .number .readonly-pane, #initiative .initiative-part {
+	display: inline-block;
 }
 
-#initiative tr.expanded button.collapse-expand-row {
-	background: url('../img/expanded.png') no-repeat center;
-}
+#initiative .conditions { display: none; }
+#initiative tr.expanded .conditions { display: block; }
 
-#initiative .conditions {
-	display: none;
-}
-
-#initiative tr.expanded .conditions {
-	display: block;
-}
+#initiative tr.expanded .collapse { display: none; }
+#initiative tr:not(.expanded) .expand { display: none; }
 
 #initiative .conditions li:first-letter {
 	text-transform: uppercase;
 }
 
 body > footer {
-	height: 1.8em;
+	height: 1.5em;
 	font-size: 0.8em;
+	line-height: 1.2em;
 	color: #AAC;
-	position: fixed;
+	position: absolute;
 	bottom: 0;
-	width: 100%;
-	border-top: 1px solid #BBB;
 	background-color: #EEE;
+	border-top: 1px solid #CCC;
+	width: 100%;
 }
 
 body > footer ul {

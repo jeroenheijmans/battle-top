@@ -21,7 +21,6 @@
 		
 		<header>
 			<h1 class="hidden">BattleTop!</h1>
-			<button id="reset" title="Reset the entire battle!">&#8634;</button>
 		
 			<nav>
 				<ul id="edit-mode">
@@ -63,7 +62,6 @@
 							<th>Character</th>
 							<th class="number">HP</th>
 							<th class="number">Init</th>
-							<th class="number">Mod</th>
 						</tr>
 					</thead>
 					<tbody data-bind="foreach: combat.characters">
@@ -73,25 +71,21 @@
 												'is-player-character' : isPlayerCharacter
 											}">
 							<td class="actions">
-								<button class="collapse-expand-row"></button>
+								<a class="collapse-expand-row collapse" href="#">&#9655;</a>
+								<a class="collapse-expand-row expand" href="#">&#9661;</a>
 							</td>
 							<td class="character">
 								<span class="character-name" data-bind="text: name"></span>
 								<ul class="conditions" data-bind="visible: conditions().length != 0, foreach: conditions">
 									<li>
-										<span data-bind="text: name"></span>,
-										<span data-bind="text: roundsLeft"></span>
-										more round(s)
+										<span data-bind="text: name"></span>
+										(<span data-bind="text: roundsLeft"></span>&#8634;)
 									</li>
 								</ul>
 							</td>
 							<td class="number hp">
 								<div class="readonly-pane">
-									<span data-bind="text: currentHitPoints"></span>
-									<span data-bind="visible: maxHitPoints() > 0">
-										/
-										<span data-bind="text: maxHitPoints"></span>
-									</span>
+									<span data-bind="text: currentHitPoints"></span><span data-bind="visible: maxHitPoints() > 0">/<span data-bind="text: maxHitPoints"></span></span>
 								</div>
 								<div class="edit-pane hidden">
 									<input type="number" data-bind="value: currentHitPoints" />
@@ -99,22 +93,24 @@
 								</div>
 							</td>
 							<td class="number initiative-total">
-								<div class="readonly-pane">
-									<span data-bind="text: currentInitiative" />
+								<div class="initiative-part">
+									<div class="readonly-pane">
+										<span data-bind="text: currentInitiative" />
+									</div>
+									<div class="edit-pane hidden">
+										<input type="number" data-bind="value: currentInitiative" />
+										<button class="finish-editing">&#10003;</button>
+									</div>
 								</div>
-								<div class="edit-pane hidden">
-									<input type="number" data-bind="value: currentInitiative" />
-									<button class="finish-editing">&#10003;</button>
-								</div>								
-							</td>
-							<td class="number initiative-modifier">
-								<div class="readonly-pane">
-									<span data-bind="visible: initiativeModifier() > 0">+</span><span data-bind="text: initiativeModifier"></span>
+								<div class="initiative-part">
+									<div class="readonly-pane">
+										(<span data-bind="visible: initiativeModifier() > 0">+</span><span data-bind="text: initiativeModifier"></span>)
+									</div>
+									<div class="edit-pane hidden">
+										<input type="number" data-bind="value: initiativeModifier" />
+										<button class="finish-editing">&#10003;</button>
+									</div>
 								</div>
-								<div class="edit-pane hidden">
-									<input type="number" data-bind="value: initiativeModifier" />
-									<button class="finish-editing">&#10003;</button>
-								</div>		
 							</td>
 						</tr>
 					</tbody>
@@ -127,9 +123,8 @@
 		
 		<footer>
 			<ul>
-				<li><a href="http://code.google.com/p/battle-top/">More Info</a></li>
-				<li><a href="http://code.google.com/p/battle-top/source">Source Code</a></li>			
-				<li>&copy; Copyright Jeroen Heijmans 2012. All Rights Reserved.</li>
+				<li><a href="http://code.google.com/p/battle-top/">More Info</a></li>		
+				<li>&copy; Copyright Jeroen Heijmans 2012.</li>
 			</li>
 		</footer>
 		
