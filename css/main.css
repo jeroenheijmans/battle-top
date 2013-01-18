@@ -240,10 +240,6 @@ nav #mode-xxxxxx		{ background-color: #F29877; }
 #initiative tr.expanded .collapse { display: none; }
 #initiative tr:not(.expanded) .expand { display: none; }
 
-#initiative .conditions li:first-letter {
-	text-transform: uppercase;
-}
-
 body > footer {
 	height: 1.5em;
 	font-size: 0.8em;

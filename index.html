@@ -76,7 +76,8 @@
 							</td>
 							<td class="character">
 								<span class="character-name" data-bind="text: name"></span>
-								<ul class="conditions" data-bind="visible: conditions().length != 0, foreach: conditions">
+								<ul class="conditions">
+									<!-- ko foreach: conditions -->
 									<li>
 										<div class="condition-part">
 											<div class="readonly-pane">
@@ -96,6 +97,10 @@
 												<button class="finish-editing">&#10003;</button>
 											</div>
 										</div>
+									</li>
+									<!-- /ko -->
+									<li class="add-condition">
+										<a href="#">add condition...</a>
 									</li>
 								</ul>
 							</td>
