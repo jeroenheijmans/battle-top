@@ -122,8 +122,6 @@ html {
 }
 
 body {
-	/* Temporary styles, TODO: fix responsiveness */
-	max-width: 22em;
 	min-height: 32em;
 	border-right: 1px solid #BBB;
 	border-bottom: 1px solid #BBB;
