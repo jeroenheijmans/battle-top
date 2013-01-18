@@ -228,7 +228,9 @@ nav #mode-xxxxxx		{ background-color: #F29877; }
 	text-align: right;
 }
 
-#initiative .number .readonly-pane, #initiative .initiative-part {
+#initiative .readonly-pane,
+#initiative .initiative-part,
+#initiative .condition-part {
 	display: inline-block;
 }
 

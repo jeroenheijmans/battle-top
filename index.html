@@ -78,8 +78,24 @@
 								<span class="character-name" data-bind="text: name"></span>
 								<ul class="conditions" data-bind="visible: conditions().length != 0, foreach: conditions">
 									<li>
-										<span data-bind="text: name"></span>
-										(<span data-bind="text: roundsLeft"></span>&#8634;)
+										<div class="condition-part">
+											<div class="readonly-pane">
+												<span data-bind="text: name"></span>
+											</div>
+											<div class="edit-pane hidden">
+												<input type="text" data-bind="value: name" />
+												<button class="finish-editing">&#10003;</button>
+											</div>
+										</div>
+										<div class="condition-part">
+											<div class="readonly-pane">
+												(<span data-bind="text: roundsLeft"></span>&#8634;)
+											</div>
+											<div class="edit-pane hidden">
+												<input type="number" data-bind="value: roundsLeft" />
+												<button class="finish-editing">&#10003;</button>
+											</div>
+										</div>
 									</li>
 								</ul>
 							</td>
