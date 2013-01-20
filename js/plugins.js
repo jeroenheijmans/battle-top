@@ -22,86 +22,134 @@
 }());
 
 (function( $ ) {
-
-	// TODO: stub code
-	// TODO: this is now completely auto-mapped, but perhaps the ViewModels (at least
-	//       at a high level) should have some view logic?
-	var model = {
-		combat : {	
-			characters : [
-				{ 	name : 'Skaak',
-					isPlayerCharacter : true,
-					currentHitPoints : 106,
-					maxHitPoints : 106,
-					currentInitiative : 12,
-					initiativeModifier : 5,
-					initiativeState : 'normal',
-					conditions : [
-						{ name : 'haste', roundsLeft : 16 }
-					]
-				},
-				{	name : 'Elcade',
-					isPlayerCharacter : true,
-					currentHitPoints : 24,
-					maxHitPoints : 89,
-					currentInitiative : 21,
-					initiativeModifier : 6,
-					initiativeState : 'delayed',
-					conditions : [
-						{ name : 'frightened', roundsLeft : 2 },
-						{ name : 'dazed', roundsLeft : 1 }
-					]
-				},
-				{ 	name : 'Oscar',
-					isPlayerCharacter : true,
-					currentHitPoints : 66,
-					maxHitPoints : 105,
-					currentInitiative : 21,
-					initiativeModifier : 4,
-					initiativeState : 'normal',
-					conditions : []
-				},
-				{ 	name : 'Orc 3',
-					isPlayerCharacter : false,
-					currentHitPoints : -9,
-					maxHitPoints : undefined,
-					currentInitiative : 12,
-					initiativeModifier : 0,
-					initiativeState : 'normal',
-					conditions : []
-				},
-				{ 	name : 'Kagor',
-					isPlayerCharacter : true,
-					currentHitPoints : 82,
-					maxHitPoints : 82,
-					currentInitiative : -1,
-					initiativeModifier : -2,
-					initiativeState : 'readied',
-					conditions : [
-						{ name : 'frightened', roundsLeft : 1 }
-					]
-				},
-				{ 	name : 'Ancient red dragon',
-					isPlayerCharacter : false,
-					currentHitPoints : -25,
-					maxHitPoints : undefined,
-					currentInitiative : 12,
-					initiativeModifier : 1,
-					initiativeState : 'normal',
-					conditions : [
-						{ name : 'slowed', roundsLeft : 0 }
-					]
-				}
-			],
-			currentRound : 1,
-			activeCharacter : 'Skaak'
-		},
-		isInSetupMode : false,
-		isInInitiativeMode : true,
-		isInDmMode : false,
-		isInDebugMode : true
+	var viewModel = {};
+	
+	var battleTopViewModel = function (data) {
+		var self = this;
+		ko.mapping.fromJS(data, {}, self);
+		
+		// Augment view model:
+		// TODO
 	};
-	var viewModel = ko.mapping.fromJS(model);
+	
+	var combatViewModel = function (data) {
+		var self = this;
+		ko.mapping.fromJS(data, {}, self);
+		
+		// Augment view model:
+		// TODO
+	};
+	
+	var characterViewModel = function (data) {
+		var self = this;
+		var extraMappingInfo = {
+			'conditions' : {
+				create : function(options) {
+					return new conditionViewModel(options.data);
+				}
+			}
+		};
+		ko.mapping.fromJS(data, extraMappingInfo, self);
+		
+		self.initiativeModifierAsAside = ko.computed(function() {
+			var plusOrMinus = self.initiativeModifier >= 0 ? '+' : '';
+			return '(' + plusOrMinus + self.initiativeModifier() + ')';
+		}, self);
+		
+		self.hitPoints = ko.computed(function() {
+			return self.currentHitPoints() + (!self.maxHitPoints() || '/' + self.maxHitPoints());
+		}, self);
+	};
+	
+	var conditionViewModel = function (data) {
+		var self = this;
+		ko.mapping.fromJS(data, {}, self);
+		
+		self.roundsLeftIndication = ko.computed(function() {
+			return '(' + self.roundsLeft() + ' left)';
+		}, self);
+	};
+		
+
+	function getModelData() {
+		// TODO This function should get data from a server, storage, or whatever (as opposed to hard-coding it :D)
+		var model = {
+			combat : {	
+				characters : [
+					{ 	name : 'Skaak',
+						isPlayerCharacter : true,
+						currentHitPoints : 106,
+						maxHitPoints : 106,
+						currentInitiative : 12,
+						initiativeModifier : 5,
+						initiativeState : 'normal',
+						conditions : [
+							{ name : 'haste', roundsLeft : 16 }
+						]
+					},
+					{	name : 'Elcade',
+						isPlayerCharacter : true,
+						currentHitPoints : 24,
+						maxHitPoints : 89,
+						currentInitiative : 21,
+						initiativeModifier : 6,
+						initiativeState : 'delayed',
+						conditions : [
+							{ name : 'frightened', roundsLeft : 2 },
+							{ name : 'dazed', roundsLeft : 1 }
+						]
+					},
+					{ 	name : 'Oscar',
+						isPlayerCharacter : true,
+						currentHitPoints : 66,
+						maxHitPoints : 105,
+						currentInitiative : 21,
+						initiativeModifier : 4,
+						initiativeState : 'normal',
+						conditions : []
+					},
+					{ 	name : 'Orc 3',
+						isPlayerCharacter : false,
+						currentHitPoints : -9,
+						maxHitPoints : undefined,
+						currentInitiative : 12,
+						initiativeModifier : 0,
+						initiativeState : 'normal',
+						conditions : []
+					},
+					{ 	name : 'Kagor',
+						isPlayerCharacter : true,
+						currentHitPoints : 82,
+						maxHitPoints : 82,
+						currentInitiative : -1,
+						initiativeModifier : -2,
+						initiativeState : 'readied',
+						conditions : [
+							{ name : 'frightened', roundsLeft : 1 }
+						]
+					},
+					{ 	name : 'Ancient red dragon',
+						isPlayerCharacter : false,
+						currentHitPoints : -25,
+						maxHitPoints : undefined,
+						currentInitiative : 12,
+						initiativeModifier : 1,
+						initiativeState : 'normal',
+						conditions : [
+							{ name : 'slowed', roundsLeft : 0 }
+						]
+					}
+				],
+				currentRound : 1,
+				activeCharacter : 'Skaak'
+			},
+			isInSetupMode : false,
+			isInInitiativeMode : true,
+			isInDmMode : false,
+			isInDebugMode : true
+		};
+		return model;
+	}
 	
 	function animateCurrentRound() {
 		$('#current-round')
@@ -144,6 +192,15 @@
 	
 	var methods = {
 		init : function () {
+			var model = getModelData();
+			var extraMappingInfo = {
+				'characters' : {
+					create : function(options) {
+						return new characterViewModel(options.data);
+					}
+				}
+			};
+			viewModel = ko.mapping.fromJS(model, extraMappingInfo);
 			methods.initiativeSort();
 			ko.applyBindings(viewModel);
 		},

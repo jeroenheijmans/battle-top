@@ -123,7 +123,6 @@ html {
 
 body {
 	min-height: 32em;
-	border-right: 1px solid #BBB;
 	border-bottom: 1px solid #BBB;
 	background: url('../img/bg.jpg') #EEE repeat;
 	font: 13px / 17px 'Arial', sans-serif;

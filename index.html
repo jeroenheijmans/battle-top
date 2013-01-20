@@ -91,7 +91,7 @@
 										</div>
 										<div class="condition-part">
 											<div class="readonly-pane">
-												(<span data-bind="text: roundsLeft"></span>&#8634;)
+												<span data-bind="text: roundsLeftIndication"></span>
 											</div>
 											<div class="edit-pane hidden">
 												<input type="number" data-bind="value: roundsLeft" />
@@ -107,7 +107,7 @@
 							</td>
 							<td class="number hp">
 								<div class="readonly-pane">
-									<span data-bind="text: currentHitPoints"></span><span data-bind="visible: maxHitPoints() > 0">/<span data-bind="text: maxHitPoints"></span></span>
+									<span data-bind="text: hitPoints"></span>
 								</div>
 								<div class="edit-pane hidden">
 									<input type="number" data-bind="value: currentHitPoints" />
@@ -126,7 +126,7 @@
 								</div>
 								<div class="initiative-part">
 									<div class="readonly-pane">
-										(<span data-bind="visible: initiativeModifier() > 0">+</span><span data-bind="text: initiativeModifier"></span>)
+										<span data-bind="text: initiativeModifierAsAside"></span>
 									</div>
 									<div class="edit-pane hidden">
 										<input type="number" data-bind="value: initiativeModifier" />
