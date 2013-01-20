@@ -66,7 +66,7 @@
 		ko.mapping.fromJS(data, {}, self);
 		
 		self.roundsLeftIndication = ko.computed(function() {
-			return '(' + self.roundsLeft() + ' left)';
+			return '(' + self.roundsLeft() + '↺)';
 		}, self);
 	};
 		
