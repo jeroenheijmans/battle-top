@@ -1,4 +1,4 @@
-(function( $ ) {
+﻿(function( $ ) {
 	$('#initiative-next').on('click', function() {
 		$().battleTop('nextTurn');
 	});

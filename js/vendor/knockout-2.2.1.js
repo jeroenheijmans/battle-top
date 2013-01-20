@@ -1,4 +1,4 @@
-// Knockout JavaScript library v2.2.1
+﻿// Knockout JavaScript library v2.2.1
 // (c) Steven Sanderson - http://knockoutjs.com/
 // License: MIT (http://www.opensource.org/licenses/mit-license.php)
 
