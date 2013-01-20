@@ -82,6 +82,7 @@
 		self.nextTurn = function() {
 			var nextCharacter = self.nextCharacter();
 			self.activeCharacter().endTurn();
+			// TODO: detect going to next round, call animateCurrentRound
 			self.activeCharacterName(nextCharacter.name());
 			nextCharacter.beginTurn();
 		};
@@ -141,11 +142,29 @@
 		self.hitPoints = ko.computed(function() {
 			return self.currentHitPoints() + (!self.maxHitPoints() || '/' + self.maxHitPoints());
 		}, self);
+		
+		self.conditionToAdd = ko.observable(new conditionViewModel());
+		
+		self.addCondition = function() {
+			if (self.conditionToAdd().name() !== "" && self.conditionToAdd().roundsLeft() > 0) {
+				self.conditions.push(self.conditionToAdd());
+				self.conditionToAdd(new conditionViewModel());
+			}
+		};
+		
+		self.removeCondition = function(condition) {
+			self.conditions.remove(condition);
+		};
 	};
 	
 	var conditionViewModel = function (data) {
 		var self = this;
 		ko.mapping.fromJS(data, {}, self);
+		
+		if (!data) {
+			self.name = ko.observable("");
+			self.roundsLeft = ko.observable(1);
+		}
 		
 		self.roundsLeftIndication = ko.computed(function() {
 			return '(' + self.roundsLeft() + '↺)';

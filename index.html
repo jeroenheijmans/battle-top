@@ -100,6 +100,7 @@
 										<div class="condition-part">
 											<div class="readonly-pane">
 												<span data-bind="text: roundsLeftIndication"></span>
+												<a href="#" data-bind="click: $parent.removeCondition">✘</a>
 											</div>
 											<div class="edit-pane hidden">
 												<input type="number" data-bind="value: roundsLeft" />
@@ -109,7 +110,11 @@
 									</li>
 									<!-- /ko -->
 									<li class="add-condition">
-										<a href="#">add condition...</a>
+										<form data-bind="submit: addCondition">
+											<input type="text" data-bind="value: conditionToAdd().name" />
+											<input type="number" data-bind="value: conditionToAdd().roundsLeft" />
+											<button type="submit">Add</button>
+										</form>
 									</li>
 								</ul>
 							</td>
