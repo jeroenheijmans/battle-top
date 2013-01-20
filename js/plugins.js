@@ -85,11 +85,16 @@
 						b.currentInitiative() - a.currentInitiative();
 			});
 		};
-				
+
+		self.nextRound = function() {
+			self.currentRound(self.currentRound() + 1);
+			animateCurrentRound();
+		};
+		
 		self.nextTurn = function() {
 			var nextCharacter = self.nextCharacter();
 			self.activeCharacter().endTurn();
-			// TODO: detect going to next round, call animateCurrentRound
+			if (nextCharacter.name() == self.characters()[0].name()) self.nextRound();
 			self.activeCharacterName(nextCharacter.name());
 			nextCharacter.beginTurn();
 		};
