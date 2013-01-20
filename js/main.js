@@ -12,15 +12,7 @@
 		ko.dataFor($('#initiative table tbody .current-player')[0]).initiativeState('delayed');
 		$().battleTop('nextTurn');
 	});	
-	
-	$('#initiative-sort').on('click', function() {
-		$().battleTop('initiativeSort');
-	});	
-	
-	$(document).on('click', '.collapse-expand-row', function() {
-		$(this).closest('tr').toggleClass('expanded');
-	});
-	
+		
 	$(document).on('click', '.readonly-pane', function() {
 		$(this).addClass('hidden');
 		$(this).siblings('.edit-pane').removeClass('hidden');

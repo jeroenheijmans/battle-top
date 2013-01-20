@@ -201,7 +201,6 @@ nav #mode-xxxxxx		{ background-color: #F29877; }
 
 #initiative tr:not(.is-player-character):not(.header) {
 	font-family: 'Risque';
-	color: #C00;
 }
 
 #initiative tr.readied {
@@ -236,9 +235,6 @@ nav #mode-xxxxxx		{ background-color: #F29877; }
 
 #initiative .conditions { display: none; }
 #initiative tr.expanded .conditions { display: block; }
-
-#initiative tr.expanded .collapse { display: none; }
-#initiative tr:not(.expanded) .expand { display: none; }
 
 body > footer {
 	height: 1.5em;

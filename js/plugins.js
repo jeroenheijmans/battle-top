@@ -34,10 +34,24 @@
 	
 	var combatViewModel = function (data) {
 		var self = this;
-		ko.mapping.fromJS(data, {}, self);
+		var extraMappingInfo = {
+			'characters' : {
+				create : function(options) {
+					return new characterViewModel(options.data);
+				}
+			}
+		};
+		ko.mapping.fromJS(data, extraMappingInfo, self);
+				
+		self.initiativeSort = function () {
+			self.characters.sort(function(a,b) { 
+				return b.currentInitiative() == a.currentInitiative() ?
+						b.initiativeModifier() - a.initiativeModifier() :
+						b.currentInitiative() - a.currentInitiative();
+			});
+		};
 		
-		// Augment view model:
-		// TODO
+		self.initiativeSort();
 	};
 	
 	var characterViewModel = function (data) {
@@ -51,8 +65,14 @@
 		};
 		ko.mapping.fromJS(data, extraMappingInfo, self);
 		
+		self.isExpanded = ko.observable(false);
+		
+		self.toggleExpandedState = function() {
+			self.isExpanded(!self.isExpanded());
+		};
+				
 		self.initiativeModifierAsAside = ko.computed(function() {
-			var plusOrMinus = self.initiativeModifier >= 0 ? '+' : '';
+			var plusOrMinus = self.initiativeModifier() >= 0 ? '+' : '';
 			return '(' + plusOrMinus + self.initiativeModifier() + ')';
 		}, self);
 		
@@ -194,23 +214,14 @@
 		init : function () {
 			var model = getModelData();
 			var extraMappingInfo = {
-				'characters' : {
+				'combat' : {
 					create : function(options) {
-						return new characterViewModel(options.data);
+						return new combatViewModel(options.data);
 					}
 				}
 			};
 			viewModel = ko.mapping.fromJS(model, extraMappingInfo);
-			methods.initiativeSort();
 			ko.applyBindings(viewModel);
-		},
-		
-		initiativeSort : function () {
-			viewModel.combat.characters.sort(function(a,b) { 
-				return b.currentInitiative() == a.currentInitiative() ?
-						b.initiativeModifier() - a.initiativeModifier() :
-						b.currentInitiative() - a.currentInitiative();
-			});
 		},
 		
 		nextRound : function () {

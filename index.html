@@ -66,14 +66,15 @@
 						</tr>
 					</thead>
 					<tbody data-bind="foreach: combat.characters">
-						<tr data-bind="css: { 'current-player, expanded' : name() == $root.combat.activeCharacter(),
+						<tr data-bind="css: { 'current-player' : name() == $root.combat.activeCharacter(),
 												readied : initiativeState() == 'readied',
 												delayed : initiativeState() == 'delayed',
-												'is-player-character' : isPlayerCharacter
+												'is-player-character' : isPlayerCharacter,
+												expanded : name() == $root.combat.activeCharacter() || isExpanded()
 											}">
 							<td class="actions">
-								<a class="collapse-expand-row collapse" href="#">&#9655;</a>
-								<a class="collapse-expand-row expand" href="#">&#9661;</a>
+								<a href="#" data-bind="visible: !(name() == $root.combat.activeCharacter() || isExpanded()), click: toggleExpandedState">&#9655;</a>
+								<a href="#" data-bind="visible:  (name() == $root.combat.activeCharacter() || isExpanded()), click: toggleExpandedState">&#9661;</a>
 							</td>
 							<td class="character">
 								<span class="character-name" data-bind="text: name"></span>
@@ -138,7 +139,9 @@
 					</tbody>
 				</table>
 					
-				<button id="initiative-sort" title="Sort the initiative list again">Sort by initiative</button>
+				<button id="initiative-sort" 
+						title="Sort the initiative list again"
+						data-bind="click: combat.initiativeSort">Sort by initiative</button>
 			</section>
 		
 		</section>
