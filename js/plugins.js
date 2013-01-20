@@ -42,6 +42,34 @@
 			}
 		};
 		ko.mapping.fromJS(data, extraMappingInfo, self);
+		
+		self.activeCharacter = ko.computed(function() {
+			var activeCharacters = self.characters().filter(function(item) { return item.name() == self.activeCharacterName(); });
+			if (activeCharacters.length === 1) {
+				return activeCharacters[0];
+			}
+			return undefined;
+		}, self);
+		
+		self.nextCharacter = ko.computed(function() {
+			// TODO: Refactor this ugly, ugly bit of code:
+			var characters = self.characters();
+			var nextCharacter = undefined;
+			var currentCharacterIndex = undefined;
+			for (i = 0; i <  characters.length; i++) {
+				if (characters[i].name() == self.activeCharacter().name()) {
+					currentCharacterIndex = i;
+				}
+			}
+			
+			if (currentCharacterIndex == undefined || currentCharacterIndex == characters.length-1) {
+				nextCharacter = characters[0];
+			}
+			else {
+				nextCharacter = characters[currentCharacterIndex+1];
+			}
+			return nextCharacter;
+		}, self);
 				
 		self.initiativeSort = function () {
 			self.characters.sort(function(a,b) { 
@@ -49,6 +77,23 @@
 						b.initiativeModifier() - a.initiativeModifier() :
 						b.currentInitiative() - a.currentInitiative();
 			});
+		};
+				
+		self.nextTurn = function() {
+			var nextCharacter = self.nextCharacter();
+			self.activeCharacter().endTurn();
+			self.activeCharacterName(nextCharacter.name());
+			nextCharacter.beginTurn();
+		};
+		
+		self.delayTurn = function() {
+			self.activeCharacter().initiativeState('delayed');
+			self.nextTurn();
+		};
+		
+		self.readyTurn = function() {
+			self.activeCharacter().initiativeState('readied');
+			self.nextTurn();
 		};
 		
 		self.initiativeSort();
@@ -69,6 +114,23 @@
 		
 		self.toggleExpandedState = function() {
 			self.isExpanded(!self.isExpanded());
+		};
+		
+		self.beginTurn = function() {
+			// TODO: Conditions should get their own initiative when they're entered, and
+			// they should "tick" and "expire" on that initiative. See:
+			// http://www.d20srd.org/srd/combat/actionsInCombat.htm#theCombatRound
+			// For now though, let's just do it here:
+			self.conditions.remove(function(item) { return item.roundsLeft() <= 0; });
+			
+			self.initiativeState('normal');
+		};
+	
+		self.endTurn = function() {
+			var conditions = self.conditions();
+			for (i = conditions.length-1; i >= 0; i--) {
+				conditions[i].roundsLeft(conditions[i].roundsLeft() - 1);
+			}
 		};
 				
 		self.initiativeModifierAsAside = ko.computed(function() {
@@ -161,7 +223,7 @@
 					}
 				],
 				currentRound : 1,
-				activeCharacter : 'Skaak'
+				activeCharacterName : 'Skaak'
 			},
 			isInSetupMode : false,
 			isInInitiativeMode : true,
@@ -181,35 +243,6 @@
 			.animate({ opacity: '1.0' }, 500);
 	}
 	
-	function endTurnForCurrentCharacter() {
-		var current = $('#initiative table tbody .current-player');
-		var data = ko.dataFor(current[0]);
-		
-		var conditions = data.conditions();
-		
-		for (i = conditions.length-1; i >= 0; i--) {
-			conditions[i].roundsLeft(conditions[i].roundsLeft() - 1);
-		}		
-	}
-	
-	function activateNextCharacter() {
-		var next = $('#initiative table tbody .current-player').next('tr');
-		
-		if (next.size() === 0) {
-			next = $('#initiative table tbody tr:first');
-			methods.nextRound();
-		}
-				
-		viewModel.combat.activeCharacter(ko.dataFor(next[0]).name());
-	}
-	
-	function prepareTurnForCurrentCharacter() {
-		var data = ko.dataFor($('#initiative table tbody .current-player')[0]);
-		data.initiativeState('normal');
-		
-		data.conditions.remove(function(item) { return item.roundsLeft() <= 0; });
-	}
-	
 	var methods = {
 		init : function () {
 			var model = getModelData();
@@ -224,16 +257,6 @@
 			ko.applyBindings(viewModel);
 		},
 		
-		nextRound : function () {
-			viewModel.combat.currentRound(viewModel.combat.currentRound() + 1);
-			animateCurrentRound();
-		},
-		
-		nextTurn : function () {
-			endTurnForCurrentCharacter();
-			activateNextCharacter();
-			prepareTurnForCurrentCharacter();
-		}
 	};
 	
 	$.fn.battleTop = function(method) {
