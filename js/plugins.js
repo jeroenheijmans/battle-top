@@ -118,20 +118,20 @@
 		};
 		
 		self.beginTurn = function() {
-			// TODO: Conditions should get their own initiative when they're entered, and
-			// they should "tick" and "expire" on that initiative. See:
-			// http://www.d20srd.org/srd/combat/actionsInCombat.htm#theCombatRound
-			// For now though, let's just do it here:
-			self.conditions.remove(function(item) { return item.roundsLeft() <= 0; });
+			var conditions = self.conditions();
+			for (i = conditions.length-1; i >= 0; i--) {
+				conditions[i].roundsLeft(conditions[i].roundsLeft() - 1);
+			}
 			
 			self.initiativeState('normal');
 		};
 	
 		self.endTurn = function() {
-			var conditions = self.conditions();
-			for (i = conditions.length-1; i >= 0; i--) {
-				conditions[i].roundsLeft(conditions[i].roundsLeft() - 1);
-			}
+			// TODO: Conditions should get their own initiative when they're entered, and
+			// they should "tick" and "expire" on that initiative. See:
+			// http://www.d20srd.org/srd/combat/actionsInCombat.htm#theCombatRound
+			// For now though, let's just do it here:
+			self.conditions.remove(function(item) { return item.roundsLeft() <= 0; });
 		};
 				
 		self.initiativeModifierAsAside = ko.computed(function() {
