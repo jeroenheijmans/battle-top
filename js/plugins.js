@@ -43,6 +43,13 @@
 		};
 		ko.mapping.fromJS(data, extraMappingInfo, self);
 		
+		self.isExpanded = ko.observable(false);
+		
+		self.toggleExpandedState = function() {
+			self.isExpanded(!self.isExpanded());
+			self.characters().forEach(function (character) { character.isExpanded(self.isExpanded()); });
+		};
+		
 		self.activeCharacter = ko.computed(function() {
 			var activeCharacters = self.characters().filter(function(item) { return item.name() == self.activeCharacterName(); });
 			if (activeCharacters.length === 1) {

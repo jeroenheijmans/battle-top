@@ -66,7 +66,10 @@
 				<table>
 					<thead>
 						<tr class="header">
-							<th></th>
+							<th>
+								<a href="#" data-bind="visible: !combat.isExpanded(), click: combat.toggleExpandedState">&#9658;</a>
+								<a href="#" data-bind="visible:  combat.isExpanded(), click: combat.toggleExpandedState">&#9660;</a>
+							</th>
 							<th>Character</th>
 							<th class="number">HP</th>
 							<th class="number">Init</th>
