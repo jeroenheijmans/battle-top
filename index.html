@@ -113,11 +113,17 @@
 									</li>
 									<!-- /ko -->
 									<li class="add-condition">
-										<form data-bind="submit: addCondition">
-											<input type="text" data-bind="value: conditionToAdd().name" />
-											<input type="number" data-bind="value: conditionToAdd().roundsLeft" />
-											<button type="submit">Add</button>
-										</form>
+										<div class="edit-pane hidden">
+											<form data-bind="submit: addCondition">
+												<input type="text" required data-bind="value: conditionToAdd().name" />
+												<input type="number" required data-bind="value: conditionToAdd().roundsLeft" />
+												<button type="submit">Add</button>
+											</form>
+											<a href="#" class="finish-editing">Done...</a>
+										</div>
+										<div class="readonly-pane">
+											<a href="#">Add condition...</a>
+										</div>
 									</li>
 								</ul>
 							</td>
