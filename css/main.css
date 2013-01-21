@@ -194,7 +194,6 @@ nav #mode-xxxxxx		{ background-color: #F29877; }
 
 #initiative tr {
 	border: 1px solid #AAA;
-	list-style-type: none;
 	padding: 0.5em;
 	background-color: rgba(255, 255, 255, 0.7);
 }
@@ -235,6 +234,12 @@ nav #mode-xxxxxx		{ background-color: #F29877; }
 
 #initiative .conditions { display: none; }
 #initiative tr.expanded .conditions { display: block; }
+
+#add-character {
+	border: 1px solid #AAA;
+	background-color: rgba(255, 255, 255, 0.7);
+	padding: 0.5em;
+}
 
 body > footer {
 	height: 1.5em;

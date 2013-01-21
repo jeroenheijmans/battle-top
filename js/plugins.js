@@ -109,6 +109,19 @@
 			self.nextTurn();
 		};
 		
+		self.removeCharacter = function(character) {
+			self.characters.remove(character);
+		};
+		
+		self.characterToAdd = ko.observable(new characterViewModel());
+		
+		self.addCharacter = function() {
+			if (self.characterToAdd().name() !== "") {
+				self.characters.push(self.characterToAdd());
+				self.characterToAdd(new characterViewModel());
+			}
+		};
+		
 		self.initiativeSort();
 	};
 	
@@ -122,6 +135,17 @@
 			}
 		};
 		ko.mapping.fromJS(data, extraMappingInfo, self);
+		
+		if (!data) {
+			self.name = ko.observable("");
+			self.currentHitPoints = ko.observable();
+			self.maxHitPoints = ko.observable();
+			self.currentInitiative = ko.observable();
+			self.initiativeModifier = ko.observable();
+			self.initiativeState = ko.observable("normal");
+			self.isPlayerCharacter = ko.observable(false);
+			self.conditions = ko.observableArray();
+		}
 		
 		self.isExpanded = ko.observable(false);
 		
@@ -152,6 +176,9 @@
 		}, self);
 		
 		self.hitPoints = ko.computed(function() {
+			if (self.currentHitPoints() == undefined) {
+				return "n/a";
+			}
 			return self.currentHitPoints() + (!self.maxHitPoints() || '/' + self.maxHitPoints());
 		}, self);
 		
@@ -256,7 +283,7 @@
 				currentRound : 1,
 				activeCharacterName : 'Skaak'
 			},
-			isInSetupMode : false,
+			isInSetupMode : true,
 			isInInitiativeMode : true,
 			isInDmMode : false,
 			isInDebugMode : true

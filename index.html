@@ -73,6 +73,7 @@
 							<th>Character</th>
 							<th class="number">HP</th>
 							<th class="number">Init</th>
+							<th data-bind="visible: $root.isInSetupMode"></th>
 						</tr>
 					</thead>
 					<tbody data-bind="foreach: combat.characters">
@@ -156,13 +157,30 @@
 									</div>
 								</div>
 							</td>
+							<td data-bind="visible: $root.isInSetupMode">
+								<a href="#" data-bind="click: $root.combat.removeCharacter">✘</a>
+							</td>
 						</tr>
 					</tbody>
 				</table>
-					
+				
+				<div id="add-character" data-bind="visible: $root.isInSetupMode">
+					<form data-bind="with: combat.characterToAdd, submit: combat.addCharacter">
+						<input type="text" required placeholder="Name" data-bind="value: name" />
+						<input type="number" placeholder="hp" data-bind="value: currentHitPoints" />
+						/
+						<input type="number" placeholder="max" data-bind="value: maxHitPoints" />
+						<input type="number" required placeholder="init" data-bind="value: currentInitiative" />
+						/
+						<input type="number" required placeholder="mod" data-bind="value: initiativeModifier" />							
+						<button type="submit">Add</button>
+					</form>
+				</div>
+				
 				<button id="initiative-sort" 
 						title="Sort the initiative list again"
 						data-bind="click: combat.initiativeSort">Sort by initiative</button>
+
 			</section>
 		
 		</section>
