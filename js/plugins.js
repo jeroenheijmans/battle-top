@@ -21,15 +21,39 @@
     }
 }());
 
+ko.changedFlag = function(root) {
+    var result = function() {};
+    var initialState = ko.observable(ko.toJSON(root));
+
+    result.isChanged = ko.dependentObservable(function() {
+        var changed = initialState() !== ko.toJSON(root);
+        if (changed) result.reset();
+        return changed;
+    });
+
+    result.reset = function() {
+        initialState(ko.toJSON(root));
+    };
+
+    return result;
+};
+
+
 (function( $ ) {
 	var viewModel = {};
 	
 	var battleTopViewModel = function (data) {
 		var self = this;
-		ko.mapping.fromJS(data, {}, self);
+		var extraMappingInfo = {
+			'combat' : {
+				create : function(options) {
+					return new combatViewModel(options.data);
+				}
+			}
+		};
+		ko.mapping.fromJS(data, extraMappingInfo, self);
 		
-		// Augment view model:
-		// TODO
+		self.isDirty = ko.observable(false);
 	};
 	
 	var combatViewModel = function (data) {
@@ -305,13 +329,20 @@
 		init : function () {
 			var model = getModelData();
 			var extraMappingInfo = {
-				'combat' : {
-					create : function(options) {
-						return new combatViewModel(options.data);
-					}
+				create : function(options) {
+					return new battleTopViewModel(options.data);
 				}
 			};
 			viewModel = ko.mapping.fromJS(model, extraMappingInfo);
+			
+			// TODO: Refactor this. Feels very hackish to define the flag
+			// on the viewModel in *this* place (but it works for now and
+			// allows me to focus on the autosave feature).
+			viewModel.changedFlag = new ko.changedFlag(viewModel);
+			viewModel.changedFlag.isChanged.subscribe(function(isChanged) {
+				viewModel.isDirty(true);
+			});
+			
 			ko.applyBindings(viewModel);
 		},
 		

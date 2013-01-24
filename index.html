@@ -61,6 +61,9 @@
 						Round: 
 						<span id="initiative-current-round-number" data-bind="text: combat.currentRound"></span>
 					</div>
+					
+					<span data-bind="visible: isDirty()">Dirty!</span>
+					<span data-bind="visible: !isDirty()">Clean.</span>
 				</div>
 				
 				<table>
