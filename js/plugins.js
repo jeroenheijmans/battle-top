@@ -24,6 +24,20 @@
 (function( $ ) {
 	var viewModel = {};
 	
+	function rollDice(sides, number) {
+		var result = 0;
+		
+		if (!sides) {
+			sides = 20;
+		}
+		
+		for (i = 0; i < (number ? number : 1); i++) {
+			result += Math.floor(Math.random() * (sides + 1)) + 1;
+		}
+		
+		return result;
+	}
+	
 	var battleTopViewModel = function (data) {
 		var self = this;
 		ko.mapping.fromJS(data, {}, self);
@@ -41,7 +55,6 @@
 				}
 			}
 		};
-		ko.mapping.fromJS(data, extraMappingInfo, self);
 		
 		self.isExpanded = ko.observable(false);
 		
@@ -117,11 +130,18 @@
 		
 		self.addCharacter = function() {
 			if (self.characterToAdd().name() !== "") {
+				if (self.characterToAdd().initiativeModifier() === undefined) {
+					self.characterToAdd().initiativeModifier(0);
+				}
+				if (self.characterToAdd().currentInitiative() === undefined) {
+					self.characterToAdd().currentInitiative(rollDice(20));
+				}
 				self.characters.push(self.characterToAdd());
 				self.characterToAdd(new characterViewModel());
 			}
 		};
 		
+		ko.mapping.fromJS(data, extraMappingInfo, self);
 		self.initiativeSort();
 	};
 	
@@ -134,18 +154,15 @@
 				}
 			}
 		};
-		ko.mapping.fromJS(data, extraMappingInfo, self);
 		
-		if (!data) {
-			self.name = ko.observable("");
-			self.currentHitPoints = ko.observable();
-			self.maxHitPoints = ko.observable();
-			self.currentInitiative = ko.observable();
-			self.initiativeModifier = ko.observable();
-			self.initiativeState = ko.observable("normal");
-			self.isPlayerCharacter = ko.observable(false);
-			self.conditions = ko.observableArray();
-		}
+		self.name = ko.observable("");
+		self.currentHitPoints = ko.observable();
+		self.maxHitPoints = ko.observable();
+		self.currentInitiative = ko.observable();
+		self.initiativeModifier = ko.observable();
+		self.initiativeState = ko.observable("normal");
+		self.isPlayerCharacter = ko.observable(false);
+		self.conditions = ko.observableArray();
 		
 		self.isExpanded = ko.observable(false);
 		
@@ -176,10 +193,11 @@
 		}, self);
 		
 		self.hitPoints = ko.computed(function() {
-			if (self.currentHitPoints() == undefined) {
+			if (self.currentHitPoints() === undefined) {
 				return "n/a";
 			}
-			return self.currentHitPoints() + (!self.maxHitPoints() || '/' + self.maxHitPoints());
+			var maxHpString = self.maxHitPoints() === undefined ? "" : '/' + self.maxHitPoints().toString();
+			return self.currentHitPoints().toString() + maxHpString;
 		}, self);
 		
 		self.conditionToAdd = ko.observable(new conditionViewModel());
@@ -194,20 +212,21 @@
 		self.removeCondition = function(condition) {
 			self.conditions.remove(condition);
 		};
+		
+		ko.mapping.fromJS(data, extraMappingInfo, self);
 	};
 	
 	var conditionViewModel = function (data) {
 		var self = this;
-		ko.mapping.fromJS(data, {}, self);
 		
-		if (!data) {
-			self.name = ko.observable("");
-			self.roundsLeft = ko.observable(1);
-		}
+		self.name = ko.observable("");
+		self.roundsLeft = ko.observable(1);
 		
 		self.roundsLeftIndication = ko.computed(function() {
 			return '(' + self.roundsLeft() + '↺)';
 		}, self);
+		
+		ko.mapping.fromJS(data, {}, self);
 	};
 		
 
@@ -216,54 +235,51 @@
 		var model = {
 			combat : {	
 				characters : [
-					{ 	name : 'Skaak',
+					{ 	name : 'Mialee',
 						isPlayerCharacter : true,
 						currentHitPoints : 106,
 						maxHitPoints : 106,
 						currentInitiative : 12,
-						initiativeModifier : 5,
+						initiativeModifier : 3,
 						initiativeState : 'normal',
 						conditions : [
 							{ name : 'haste', roundsLeft : 16 }
 						]
 					},
-					{	name : 'Elcade',
+					{	name : 'Jozan',
 						isPlayerCharacter : true,
 						currentHitPoints : 24,
 						maxHitPoints : 89,
-						currentInitiative : 21,
-						initiativeModifier : 6,
-						initiativeState : 'delayed',
+						currentInitiative : 16,
+						initiativeModifier : 1,
+						initiativeState : 'normal',
 						conditions : [
 							{ name : 'frightened', roundsLeft : 2 },
 							{ name : 'dazed', roundsLeft : 1 }
 						]
 					},
-					{ 	name : 'Oscar',
+					{ 	name : 'Krusk',
 						isPlayerCharacter : true,
 						currentHitPoints : 66,
-						maxHitPoints : 105,
+						maxHitPoints : 165,
 						currentInitiative : 21,
-						initiativeModifier : 4,
+						initiativeModifier : 2,
 						initiativeState : 'normal',
-						conditions : []
 					},
 					{ 	name : 'Orc 3',
 						isPlayerCharacter : false,
 						currentHitPoints : -9,
-						maxHitPoints : undefined,
 						currentInitiative : 12,
 						initiativeModifier : 0,
 						initiativeState : 'normal',
-						conditions : []
 					},
-					{ 	name : 'Kagor',
+					{ 	name : 'Tordek',
 						isPlayerCharacter : true,
 						currentHitPoints : 82,
 						maxHitPoints : 82,
 						currentInitiative : -1,
 						initiativeModifier : -2,
-						initiativeState : 'readied',
+						initiativeState : 'normal',
 						conditions : [
 							{ name : 'frightened', roundsLeft : 1 }
 						]
@@ -271,7 +287,6 @@
 					{ 	name : 'Ancient red dragon',
 						isPlayerCharacter : false,
 						currentHitPoints : -25,
-						maxHitPoints : undefined,
 						currentInitiative : 12,
 						initiativeModifier : 1,
 						initiativeState : 'normal',
@@ -281,7 +296,7 @@
 					}
 				],
 				currentRound : 1,
-				activeCharacterName : 'Skaak'
+				activeCharacterName : 'Mialee'
 			},
 			isInSetupMode : true,
 			isInInitiativeMode : true,
@@ -290,6 +305,7 @@
 		};
 		return model;
 	}
+
 	
 	function animateCurrentRound() {
 		$('#current-round')
