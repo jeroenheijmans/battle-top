@@ -166,6 +166,7 @@
 				
 				<div id="add-character" data-bind="visible: $root.isInSetupMode">
 					<form data-bind="with: combat.characterToAdd, submit: combat.addCharacter">
+						<select data-bind="options: $root.combat.availableCharacterTypes, value: characterType"></select>
 						<input type="text" required placeholder="Name" data-bind="value: name" />
 						<input type="number" placeholder="hp" data-bind="value: currentHitPoints" />
 						/
