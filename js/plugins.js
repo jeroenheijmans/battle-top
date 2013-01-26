@@ -56,6 +56,8 @@
 			}
 		};
 		
+		self.availableCharacterTypes = ko.observableArray(['PC', 'Ally-NPC', 'Hostile-NPC', 'Environment']);
+		
 		self.isExpanded = ko.observable(false);
 		
 		self.toggleExpandedState = function() {
@@ -161,7 +163,7 @@
 		self.currentInitiative = ko.observable();
 		self.initiativeModifier = ko.observable();
 		self.initiativeState = ko.observable("normal");
-		self.isPlayerCharacter = ko.observable(false);
+		self.characterType = ko.observable("PC");
 		self.conditions = ko.observableArray();
 		
 		self.isExpanded = ko.observable(false);
@@ -186,7 +188,9 @@
 			// For now though, let's just do it here:
 			self.conditions.remove(function(item) { return item.roundsLeft() <= 0; });
 		};
-				
+		
+		self.isPlayerCharacter = ko.computed(function() { return self.characterType() === "PC"; });
+		
 		self.initiativeModifierAsAside = ko.computed(function() {
 			var plusOrMinus = self.initiativeModifier() >= 0 ? '+' : '';
 			return '(' + plusOrMinus + self.initiativeModifier() + ')';
@@ -236,7 +240,7 @@
 			combat : {	
 				characters : [
 					{ 	name : 'Mialee',
-						isPlayerCharacter : true,
+						characterType : 'PC',
 						currentHitPoints : 106,
 						maxHitPoints : 106,
 						currentInitiative : 12,
@@ -247,7 +251,7 @@
 						]
 					},
 					{	name : 'Jozan',
-						isPlayerCharacter : true,
+						characterType : 'PC',
 						currentHitPoints : 24,
 						maxHitPoints : 89,
 						currentInitiative : 16,
@@ -259,7 +263,7 @@
 						]
 					},
 					{ 	name : 'Krusk',
-						isPlayerCharacter : true,
+						characterType : 'PC',
 						currentHitPoints : 66,
 						maxHitPoints : 165,
 						currentInitiative : 21,
@@ -267,14 +271,14 @@
 						initiativeState : 'normal',
 					},
 					{ 	name : 'Orc 3',
-						isPlayerCharacter : false,
+						characterType : 'Hostile-NPC',
 						currentHitPoints : -9,
 						currentInitiative : 12,
 						initiativeModifier : 0,
 						initiativeState : 'normal',
 					},
 					{ 	name : 'Tordek',
-						isPlayerCharacter : true,
+						characterType : 'PC',
 						currentHitPoints : 82,
 						maxHitPoints : 82,
 						currentInitiative : -1,
@@ -285,7 +289,7 @@
 						]
 					},
 					{ 	name : 'Ancient red dragon',
-						isPlayerCharacter : false,
+						characterType : 'Hostile-NPC',
 						currentHitPoints : -25,
 						currentInitiative : 12,
 						initiativeModifier : 1,
