@@ -1,0 +1,3 @@
+﻿# robotstxt.org/
+
+User-agent: *

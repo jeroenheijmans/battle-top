@@ -1,0 +1,201 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>BattleTop</title>
+        <meta name="description" content="Bookkeeping enhancements for table-top battles">
+        <meta name="viewport" content="width=device-width">
+
+		<link href='http://fonts.googleapis.com/css?family=Risque' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+		
+		<header>
+			<h1 class="hidden">BattleTop!</h1>
+		
+			<nav>
+				<ul id="edit-mode">
+					<li id="setup-mode" data-bind="css: { active : isInSetupMode }">
+						<input type="checkbox" id="setup-mode-toggle" data-bind="checked: isInSetupMode" />
+						<label for="setup-mode-toggle">Setup</label>					
+					</li>
+					<li id="initiative-mode" data-bind="css: { active : isInInitiativeMode }">
+						<input type="checkbox" id="initiative-mode-toggle" data-bind="checked: isInInitiativeMode" />
+						<label for="initiative-mode-toggle">Init</label>					
+					</li>
+					<li id="dm-mode" data-bind="css: { active : isInDmMode }">
+						<input type="checkbox" id="dm-mode-toggle" data-bind="checked: isInDmMode" />
+						<label for="dm-mode-toggle">DM</label>
+					</li>
+				</ul>
+			</nav>
+		</header>
+		
+		<section id="main">
+		
+			<section id="initiative">
+				<div id="initiative-controls">
+					<button id="initiative-next" 
+							title="Finish current turn, go to next initiative"
+							data-bind="click: combat.nextTurn">Next</button>
+					Or:
+					<button id="initiative-ready" 
+							title="Take the 'Ready' action (finishes turn)"
+							data-bind="click: combat.readyTurn">Ready</button>
+							
+					<button id="initiative-delay" 
+							title="Take the 'Delay' action (go to next initiative)"
+							data-bind="click: combat.delayTurn">Delay</button>
+					
+					<div id="current-round">
+						Round: 
+						<span id="initiative-current-round-number" data-bind="text: combat.currentRound"></span>
+					</div>
+				</div>
+				
+				<table>
+					<thead>
+						<tr class="header">
+							<th>
+								<a href="#" data-bind="visible: !combat.isExpanded(), click: combat.toggleExpandedState">&#9658;</a>
+								<a href="#" data-bind="visible:  combat.isExpanded(), click: combat.toggleExpandedState">&#9660;</a>
+							</th>
+							<th>Character</th>
+							<th class="number">HP</th>
+							<th class="number">Init</th>
+							<th data-bind="visible: $root.isInSetupMode"></th>
+						</tr>
+					</thead>
+					<tbody data-bind="foreach: combat.characters">
+						<tr data-bind="css: { 'current-player' : $data == $root.combat.activeCharacter(),
+												readied : initiativeState() == 'readied',
+												delayed : initiativeState() == 'delayed',
+												'is-player-character' : isPlayerCharacter,
+												expanded : name() == $root.combat.activeCharacterName() || isExpanded()
+											}">
+							<td class="actions">
+								<a href="#" data-bind="visible: !($data == $root.combat.activeCharacter() || isExpanded()), click: toggleExpandedState">&#9655;</a>
+								<a href="#" data-bind="visible:  ($data == $root.combat.activeCharacter() || isExpanded()), click: toggleExpandedState">&#9661;</a>
+							</td>
+							<td class="character">
+								<span class="character-name" data-bind="text: name"></span>
+								<ul class="conditions">
+									<!-- ko foreach: conditions -->
+									<li>
+										<div class="condition-part">
+											<div class="readonly-pane">
+												<span data-bind="text: name"></span>
+											</div>
+											<div class="edit-pane hidden">
+												<input type="text" data-bind="value: name" />
+												<button class="finish-editing">&#10003;</button>
+											</div>
+										</div>
+										<div class="condition-part">
+											<div class="readonly-pane">
+												<span data-bind="text: roundsLeftIndication"></span>
+												<a href="#" data-bind="click: $parent.removeCondition">✘</a>
+											</div>
+											<div class="edit-pane hidden">
+												<input type="number" data-bind="value: roundsLeft" />
+												<button class="finish-editing">&#10003;</button>
+											</div>
+										</div>
+									</li>
+									<!-- /ko -->
+									<li class="add-condition">
+										<div class="edit-pane hidden">
+											<form data-bind="submit: addCondition">
+												<input type="text" required data-bind="value: conditionToAdd().name" />
+												<input type="number" required data-bind="value: conditionToAdd().roundsLeft" />
+												<button type="submit">Add</button>
+											</form>
+											<a href="#" class="finish-editing">Done...</a>
+										</div>
+										<div class="readonly-pane">
+											<a href="#">Add condition...</a>
+										</div>
+									</li>
+								</ul>
+							</td>
+							<td class="number hp">
+								<div class="readonly-pane">
+									<span data-bind="text: hitPoints"></span>
+								</div>
+								<div class="edit-pane hidden">
+									<input type="number" data-bind="value: currentHitPoints" />
+									<button class="finish-editing">&#10003;</button>
+								</div>
+							</td>
+							<td class="number initiative-total">
+								<div class="initiative-part">
+									<div class="readonly-pane">
+										<span data-bind="text: currentInitiative" />
+									</div>
+									<div class="edit-pane hidden">
+										<input type="number" data-bind="value: currentInitiative" />
+										<button class="finish-editing">&#10003;</button>
+									</div>
+								</div>
+								<div class="initiative-part">
+									<div class="readonly-pane">
+										<span data-bind="text: initiativeModifierAsAside"></span>
+									</div>
+									<div class="edit-pane hidden">
+										<input type="number" data-bind="value: initiativeModifier" />
+										<button class="finish-editing">&#10003;</button>
+									</div>
+								</div>
+							</td>
+							<td data-bind="visible: $root.isInSetupMode">
+								<a href="#" data-bind="click: $root.combat.removeCharacter">✘</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				
+				<div id="add-character" data-bind="visible: $root.isInSetupMode">
+					<form data-bind="with: combat.characterToAdd, submit: combat.addCharacter">
+						<select data-bind="options: $root.combat.availableCharacterTypes, value: characterType"></select>
+						<input type="text" required placeholder="Name" data-bind="value: name" />
+						<input type="number" placeholder="hp" data-bind="value: currentHitPoints" />
+						/
+						<input type="number" placeholder="max" data-bind="value: maxHitPoints" />
+						<input type="number" placeholder="init" data-bind="value: currentInitiative" />
+						<input type="number" placeholder="mod" data-bind="value: initiativeModifier" />							
+						<button type="submit">Add</button>
+					</form>
+				</div>
+				
+				<button id="initiative-sort" 
+						title="Sort the initiative list again"
+						data-bind="click: combat.initiativeSort">Sort by initiative</button>
+
+			</section>
+		
+		</section>
+		
+		<footer>
+			<ul>
+				<li><a href="http://code.google.com/p/battle-top/">More Info</a></li>		
+				<li>&copy; Copyright Jeroen Heijmans 2012.</li>
+			</li>
+		</footer>
+		
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+		<script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.0.js"></script>
+		<script src="js/vendor/knockout.mapping-2.3.5.js"></script>
+        <script src="js/plugins.js"></script>
+
+	</body>
+</html>
