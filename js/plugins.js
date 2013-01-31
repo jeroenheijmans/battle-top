@@ -321,34 +321,27 @@
 			.animate({ opacity: '1.0' }, 500);
 	}
 	
-	var methods = {
-		init : function () {
-			var model = getModelData();
-			var extraMappingInfo = {
-				'combat' : {
-					create : function(options) {
-						return new combatViewModel(options.data);
-					}
-				}
-			};
-			viewModel = ko.mapping.fromJS(model, extraMappingInfo);
-			ko.applyBindings(viewModel);
-		},
-		
-	};
+	$(document).on('click', '.readonly-pane', function() {
+		$(this).addClass('hidden');
+		$(this).siblings('.edit-pane').removeClass('hidden');
+	});	
 	
-	$.fn.battleTop = function(method) {
-		if ( methods[method] ) {
-			return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
-		} else if ( typeof method === 'object' || ! method ) {
-			return methods.init.apply( this, arguments );
-		} else {
-			$.error( 'Method ' +  method + ' does not exist on jQuery.battleTop' );
-		}  
-	};
+	$(document).on('click', '.edit-pane .finish-editing', function() {
+		$(this).parent('.edit-pane').addClass('hidden');
+		$(this).parent('.edit-pane').siblings('.readonly-pane').removeClass('hidden');
+	});
+	
+	$(document).ready(function () {
+		var model = getModelData();
+		var extraMappingInfo = {
+			'combat' : {
+				create : function(options) {
+					return new combatViewModel(options.data);
+				}
+			}
+		};
+		viewModel = ko.mapping.fromJS(model, extraMappingInfo);
+		ko.applyBindings(viewModel);
+	});
 	
 })( jQuery );
-
-
-
-
