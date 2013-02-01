@@ -67,7 +67,7 @@
 					}
 				],
 				currentRound : 1,
-				activeCharacterName : 'Mialee'
+				activeCharacterName : 'Krusk'
 			},
 			isInSetupMode : true,
 			isInInitiativeMode : true,

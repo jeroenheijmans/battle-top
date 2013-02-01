@@ -187,12 +187,13 @@ header aside {
 }
 
 
-#current-round {
+.currents {
 	display: inline-block;
 	float: right;
 	border: 1px solid #BBB;
-	background-color: rgba(255, 255, 255, 0.7);
+	background-color: rgba(242, 233, 107, 0.3);
 	padding: 0.2em 0.5em;
+	margin-left: 0.5em;
 }
 
 #main {

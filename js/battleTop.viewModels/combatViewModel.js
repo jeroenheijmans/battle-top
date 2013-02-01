@@ -11,6 +11,16 @@ var battleTop = (function (my) {
 			}
 		};
 		
+		self.roundStartDateTime = ko.observable(new Date());
+		
+		self.elapsedInTurn = ko.computed(function() {
+			var secondsElapsed = parseInt((new Date().getTime() / 1000) - (self.roundStartDateTime().getTime() / 1000));
+			var hours = Math.floor(secondsElapsed / 3600);
+			var mins = Math.floor((secondsElapsed - (hours * 3600)) / 60);
+			var secs = secondsElapsed % 60;
+			return (new Date(1,1,1,hours,mins,secs)).getFormattedTime();
+		});
+				
 		self.availableCharacterTypes = ko.observableArray(['PC', 'Ally-NPC', 'Hostile-NPC', 'Environment']);
 		
 		self.isExpanded = ko.observable(false);
@@ -65,6 +75,7 @@ var battleTop = (function (my) {
 			self.activeCharacter().endTurn();
 			if (nextCharacter.name() == self.characters()[0].name()) self.nextRound();
 			self.activeCharacterName(nextCharacter.name());
+			self.roundStartDateTime(new Date());
 			nextCharacter.beginTurn();
 		};
 		
