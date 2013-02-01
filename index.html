@@ -48,6 +48,9 @@
 		<section id="main">
 		
 			<section id="initiative">
+			
+				<!-- ----------------------------------------------------------------------------------------- -->
+				<!-- --------------------------------- Initiative Controls ----------------------------------- -->
 				<div id="initiative-controls">
 					<button id="initiative-next" 
 							title="Finish current turn, go to next initiative"
@@ -92,10 +95,18 @@
 												'is-player-character' : isPlayerCharacter,
 												expanded : isActive() || isExpanded()
 											}">
+											
+											
+							<!-- ----------------------------------------------------------------------------------------- -->
+							<!-- ----------------------------------- Collapse/Expand ------------------------------------- -->
 							<td class="actions">
 								<a href="#" data-bind="visible: !(isActive() || isExpanded()), click: toggleExpandedState">&#9655;</a>
 								<a href="#" data-bind="visible:  (isActive() || isExpanded()), click: toggleExpandedState">&#9661;</a>
 							</td>
+							
+							
+							<!-- ----------------------------------------------------------------------------------------- -->
+							<!-- -------------------------------------- Character ---------------------------------------- -->
 							<td class="character">
 								<span class="character-name" data-bind="text: name"></span>
 								<ul class="conditions">
@@ -137,6 +148,10 @@
 									</li>
 								</ul>
 							</td>
+							
+							
+							<!-- ----------------------------------------------------------------------------------------- -->
+							<!-- --------------------------------------- Hit Points -------------------------------------- -->
 							<td class="number hp">
 								<div class="readonly-pane">
 									<span data-bind="text: hitPoints"></span>
@@ -146,6 +161,10 @@
 									<button class="finish-editing">&#10003;</button>
 								</div>
 							</td>
+							
+							
+							<!-- ----------------------------------------------------------------------------------------- -->
+							<!-- -------------------------------------- Initiative --------------------------------------- -->
 							<td class="number initiative-total">
 								<div class="initiative-part">
 									<div class="readonly-pane">
@@ -166,13 +185,22 @@
 									</div>
 								</div>
 							</td>
+							
+							
+							<!-- ----------------------------------------------------------------------------------------- -->
+							<!-- -------------------------------- Remove Character Button -------------------------------- -->
 							<td data-bind="visible: $root.isInSetupMode">
 								<a href="#" data-bind="click: $root.combat.removeCharacter">✘</a>
 							</td>
+							
+							
 						</tr>
 					</tbody>
 				</table>
 				
+				
+				<!-- ----------------------------------------------------------------------------------------- -->
+				<!-- ----------------------------------- New Character Form ---------------------------------- -->
 				<div id="add-character" data-bind="visible: $root.isInSetupMode">
 					<form data-bind="with: combat.characterToAdd, submit: combat.addCharacter">
 						<select data-bind="options: $root.combat.availableCharacterTypes, value: characterType"></select>
@@ -186,6 +214,9 @@
 					</form>
 				</div>
 				
+				
+				<!-- ----------------------------------------------------------------------------------------- -->
+				<!-- ----------------------------------- Setup Mode Controls --------------------------------- -->
 				<div id="setup-controls"
 					 data-bind="visible: isInSetupMode">
 					<button title="Sort the initiative list again"
