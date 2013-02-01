@@ -62,7 +62,7 @@
 						initiativeModifier : 1,
 						initiativeState : 'normal',
 						conditions : [
-							{ name : 'slowed', roundsLeft : 0 }
+							{ name : 'slowed', roundsLeft : 1 }
 						]
 					}
 				],
