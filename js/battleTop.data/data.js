@@ -70,8 +70,6 @@
 				activeCharacterName : 'Krusk'
 			},
 			isInSetupMode : true,
-			isInInitiativeMode : true,
-			isInDebugMode : true,
 			showAboutInfo : false
 		};
 		return model;
