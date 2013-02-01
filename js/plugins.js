@@ -40,10 +40,19 @@
 	
 	var battleTopViewModel = function (data) {
 		var self = this;
-		ko.mapping.fromJS(data, {}, self);
+		var extraMappingInfo = {
+			'combat' : {
+				create : function(options) {
+					return new combatViewModel(options.data);
+				}
+			}
+		};
 		
-		// Augment view model:
-		// TODO
+		self.toggleAboutInfo = function() {
+			self.showAboutInfo(!self.showAboutInfo());
+		};
+		
+		ko.mapping.fromJS(data, extraMappingInfo, self);
 	};
 	
 	var combatViewModel = function (data) {
@@ -304,7 +313,8 @@
 			},
 			isInSetupMode : true,
 			isInInitiativeMode : true,
-			isInDebugMode : true
+			isInDebugMode : true,
+			showAboutInfo : false
 		};
 		return model;
 	}
@@ -323,14 +333,7 @@
 	var methods = {
 		init : function () {
 			var model = getModelData();
-			var extraMappingInfo = {
-				'combat' : {
-					create : function(options) {
-						return new combatViewModel(options.data);
-					}
-				}
-			};
-			viewModel = ko.mapping.fromJS(model, extraMappingInfo);
+			viewModel = ko.mapping.fromJS(model, {}, new battleTopViewModel());
 			ko.applyBindings(viewModel);
 		},
 		
