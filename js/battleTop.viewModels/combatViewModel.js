@@ -85,7 +85,7 @@ var battleTop = (function (my) {
 		self.characterToAdd = ko.observable(new my.viewModels.characterViewModel());
 		
 		self.addCharacter = function() {
-			if (self.characterToAdd().name() !== "") {
+			if (self.characterToAdd().name() !== "" && /^-?[\d]+$/.test(self.characterToAdd().initiativeModifier())) {
 				if (self.characterToAdd().initiativeModifier() === undefined) {
 					self.characterToAdd().initiativeModifier(0);
 				}

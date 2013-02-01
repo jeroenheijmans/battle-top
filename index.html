@@ -176,11 +176,11 @@
 					<form data-bind="with: combat.characterToAdd, submit: combat.addCharacter">
 						<select data-bind="options: $root.combat.availableCharacterTypes, value: characterType"></select>
 						<input type="text" required placeholder="Name" data-bind="value: name" />
-						<input type="number" placeholder="hp" data-bind="value: currentHitPoints" />
+						<input type="number" step="1" placeholder="hp" data-bind="value: currentHitPoints" />
 						/
-						<input type="number" placeholder="max" data-bind="value: maxHitPoints" />
-						<input type="number" placeholder="init" data-bind="value: currentInitiative" />
-						<input type="number" placeholder="mod" data-bind="value: initiativeModifier" />							
+						<input type="number" step="1" placeholder="max" data-bind="value: maxHitPoints" />
+						<input type="number" step="1" placeholder="init" data-bind="value: currentInitiative" />
+						<input type="number" step="1" placeholder="mod" data-bind="value: initiativeModifier" />							
 						<button type="submit">Add</button>
 					</form>
 				</div>
