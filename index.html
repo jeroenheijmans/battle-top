@@ -22,6 +22,18 @@
 		
 		<header>
 			<h1 class="hidden">BattleTop!</h1>
+			
+			<aside>
+				<span id="about-trigger"
+					  data-bind="click: toggleAboutInfo">
+					?
+				</span>
+				<span id="about-info"
+					  data-bind="visible: showAboutInfo">
+					&copy; Copyright Jeroen Heijmans 2012. 
+					<a href="http://code.google.com/p/battle-top/">More Info</a>
+				</span>
+			</aside>
 		
 			<nav>
 				<ul id="edit-mode">
@@ -184,12 +196,6 @@
 		
 		</section>
 		
-		<footer>
-			<ul>
-				<li><a href="http://code.google.com/p/battle-top/">More Info</a></li>		
-				<li>&copy; Copyright Jeroen Heijmans 2012.</li>
-			</li>
-		</footer>
 		
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 		<script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.0.js"></script>
