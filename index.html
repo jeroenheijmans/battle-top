@@ -192,10 +192,16 @@
 			</li>
 		</footer>
 		
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-		<script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.0.js"></script>
+		<!-- TODO: Minify and smash together (RequireJS perhaps?) -->
+		<script src="js/vendor/jquery-1.8.3.min.js"></script>
+		<script src="js/vendor/knockout-2.2.1.js"></script>
 		<script src="js/vendor/knockout.mapping-2.3.5.js"></script>
-        <script src="js/main.js"></script>
+        <script src="js/battleTop.util/dice.js"></script>
+        <script src="js/battleTop.data/data.js"></script>
+        <script src="js/battleTop.viewModels/conditionViewModel.js"></script>
+        <script src="js/battleTop.viewModels/characterViewModel.js"></script>
+        <script src="js/battleTop.viewModels/combatViewModel.js"></script>
+        <script src="js/battleTop.js"></script>
 
 	</body>
 </html>
