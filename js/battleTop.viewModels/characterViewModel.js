@@ -1,8 +1,9 @@
 ﻿var battleTop = (function (my) {
 	my.viewModels = my.viewModels || {};
 	
-	my.viewModels.characterViewModel = function (data) {
+	my.viewModels.characterViewModel = function (data, combat) {
 		var self = this;
+		
 		var extraMappingInfo = {
 			'conditions' : {
 				create : function(options) {
@@ -11,6 +12,7 @@
 			}
 		};
 		
+		self.id = ko.observable(0);
 		self.name = ko.observable("");
 		self.currentHitPoints = ko.observable();
 		self.maxHitPoints = ko.observable();
@@ -21,6 +23,7 @@
 		self.conditions = ko.observableArray();
 		
 		self.isExpanded = ko.observable(false);
+		self.isActive = ko.computed(function() { return self == combat.activeCharacter(); });
 		
 		self.toggleExpandedState = function() {
 			self.isExpanded(!self.isExpanded());
