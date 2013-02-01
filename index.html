@@ -22,6 +22,18 @@
 		
 		<header>
 			<h1 class="hidden">BattleTop!</h1>
+			
+			<aside>
+				<span id="about-trigger"
+					  data-bind="click: toggleAboutInfo">
+					?
+				</span>
+				<span id="about-info"
+					  data-bind="visible: showAboutInfo">
+					&copy; Copyright Jeroen Heijmans 2012. 
+					<a href="http://code.google.com/p/battle-top/">More Info</a>
+				</span>
+			</aside>
 		
 			<nav>
 				<ul id="edit-mode">
@@ -32,10 +44,6 @@
 					<li id="initiative-mode" data-bind="css: { active : isInInitiativeMode }">
 						<input type="checkbox" id="initiative-mode-toggle" data-bind="checked: isInInitiativeMode" />
 						<label for="initiative-mode-toggle">Init</label>					
-					</li>
-					<li id="dm-mode" data-bind="css: { active : isInDmMode }">
-						<input type="checkbox" id="dm-mode-toggle" data-bind="checked: isInDmMode" />
-						<label for="dm-mode-toggle">DM</label>
 					</li>
 				</ul>
 			</nav>
@@ -177,20 +185,17 @@
 					</form>
 				</div>
 				
-				<button id="initiative-sort" 
-						title="Sort the initiative list again"
-						data-bind="click: combat.initiativeSort">Sort by initiative</button>
-
+				<div id="setup-controls"
+					 data-bind="visible: isInSetupMode">
+					<button id="initiative-sort" 
+							title="Sort the initiative list again"
+							data-bind="click: combat.initiativeSort">Sort by initiative</button>
+				</div>
+				
 			</section>
 		
 		</section>
 		
-		<footer>
-			<ul>
-				<li><a href="http://code.google.com/p/battle-top/">More Info</a></li>		
-				<li>&copy; Copyright Jeroen Heijmans 2012.</li>
-			</li>
-		</footer>
 		
 		<!-- TODO: Minify and smash together (RequireJS perhaps?) -->
 		<script src="js/vendor/jquery-1.8.3.min.js"></script>
@@ -201,6 +206,7 @@
         <script src="js/battleTop.viewModels/conditionViewModel.js"></script>
         <script src="js/battleTop.viewModels/characterViewModel.js"></script>
         <script src="js/battleTop.viewModels/combatViewModel.js"></script>
+        <script src="js/battleTop.viewModels/battleTopViewModel.js"></script>
         <script src="js/battleTop.js"></script>
 
 	</body>

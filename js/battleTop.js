@@ -35,14 +35,7 @@
 	
 	$(document).ready(function () {
 		var model = battleTop.data.getModelData();
-		var extraMappingInfo = {
-			'combat' : {
-				create : function(options) {
-					return new battleTop.viewModels.combatViewModel(options.data);
-				}
-			}
-		};
-		var viewModel = ko.mapping.fromJS(model, extraMappingInfo);
+		var viewModel = ko.mapping.fromJS(model, {}, new battleTop.viewModels.battleTopViewModel());
 		ko.applyBindings(viewModel);
 	});
 	
