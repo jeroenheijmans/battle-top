@@ -173,10 +173,13 @@
 					</form>
 				</div>
 				
-				<button id="initiative-sort" 
-						title="Sort the initiative list again"
-						data-bind="click: combat.initiativeSort">Sort by initiative</button>
-
+				<div id="setup-controls"
+					 data-bind="visible: isInSetupMode">
+					<button id="initiative-sort" 
+							title="Sort the initiative list again"
+							data-bind="click: combat.initiativeSort">Sort by initiative</button>
+				</div>
+				
 			</section>
 		
 		</section>
