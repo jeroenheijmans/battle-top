@@ -37,6 +37,9 @@
 		var model = battleTop.data.getModelData();
 		var viewModel = ko.mapping.fromJS(model, {}, new battleTop.viewModels.battleTopViewModel());
 		ko.applyBindings(viewModel);
+		
+		// Cannot force an update on the "computed" elapsedInTurn directly, so forcing update on the observable it depends upon:
+		setInterval(function() { viewModel.combat.roundStartDateTime.valueHasMutated() }, 1000);
 	});
 	
 })( jQuery );
