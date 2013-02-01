@@ -71,8 +71,8 @@
 			},
 			isInSetupMode : true,
 			isInInitiativeMode : true,
-			isInDmMode : false,
-			isInDebugMode : true
+			isInDebugMode : true,
+			showAboutInfo : false
 		};
 		return model;
 	}
