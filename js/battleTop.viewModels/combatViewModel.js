@@ -5,8 +5,11 @@ var battleTop = (function (my) {
 		var self = this;
 		var extraMappingInfo = {
 			'characters' : {
+				key : function(data) {
+					return ko.utils.unwrapObservable(data.id);
+				},
 				create : function(options) {
-					return new my.viewModels.characterViewModel(options.data);
+					return new my.viewModels.characterViewModel(options.data, self);
 				}
 			}
 		};
@@ -31,12 +34,12 @@ var battleTop = (function (my) {
 		};
 		
 		self.activeCharacter = ko.computed(function() {
-			var activeCharacters = self.characters().filter(function(item) { return item.name() == self.activeCharacterName(); });
+			var activeCharacters = self.characters().filter(function(item) { return item.id() == self.activeCharacterId(); });
 			if (activeCharacters.length === 1) {
 				return activeCharacters[0];
 			}
 			return undefined;
-		}, self);
+		});
 		
 		self.nextCharacter = ko.computed(function() {
 			// TODO: Refactor this ugly, ugly bit of code:
@@ -44,7 +47,7 @@ var battleTop = (function (my) {
 			var nextCharacter = undefined;
 			var currentCharacterIndex = undefined;
 			for (i = 0; i <  characters.length; i++) {
-				if (characters[i].name() == self.activeCharacter().name()) {
+				if (characters[i].id() == self.activeCharacter().id()) {
 					currentCharacterIndex = i;
 				}
 			}
@@ -56,7 +59,7 @@ var battleTop = (function (my) {
 				nextCharacter = characters[currentCharacterIndex+1];
 			}
 			return nextCharacter;
-		}, self);
+		});
 		
 		self.resetToParty = function () {
 			self.characters.remove(function (character) {
@@ -80,7 +83,7 @@ var battleTop = (function (my) {
 			var nextCharacter = self.nextCharacter();
 			self.activeCharacter().endTurn();
 			if (nextCharacter.name() == self.characters()[0].name()) self.nextRound();
-			self.activeCharacterName(nextCharacter.name());
+			self.activeCharacterId(nextCharacter.id());
 			self.roundStartDateTime(new Date());
 			nextCharacter.beginTurn();
 		};
@@ -99,7 +102,13 @@ var battleTop = (function (my) {
 			self.characters.remove(character);
 		};
 		
-		self.characterToAdd = ko.observable(new my.viewModels.characterViewModel());
+		self.characterToAdd = ko.observable(new my.viewModels.characterViewModel(null, self));
+		
+		function generateNextCharacterId() {
+			seed = self.nextIdSeed();
+			self.nextIdSeed(seed + 1);
+			return seed;
+		}
 		
 		self.addCharacter = function() {			
 			if (self.characterToAdd().initiativeModifier() === undefined) {
@@ -111,8 +120,10 @@ var battleTop = (function (my) {
 					// TODO: "RollInitiative" should be a method on the character view model
 					self.characterToAdd().currentInitiative(my.util.dice.rollDice(20));
 				}
+				
+				self.characterToAdd().id(generateNextCharacterId());
 				self.characters.push(self.characterToAdd());
-				self.characterToAdd(new my.viewModels.characterViewModel());
+				self.characterToAdd(new my.viewModels.characterViewModel(null, self));
 			}
 		};
 		

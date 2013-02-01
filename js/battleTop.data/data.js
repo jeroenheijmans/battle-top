@@ -6,7 +6,8 @@
 		var model = {
 			combat : {	
 				characters : [
-					{ 	name : 'Mialee',
+					{ 	id : 1,
+						name : 'Mialee',
 						characterType : 'PC',
 						currentHitPoints : 106,
 						maxHitPoints : 106,
@@ -17,7 +18,8 @@
 							{ name : 'haste', roundsLeft : 16 }
 						]
 					},
-					{	name : 'Jozan',
+					{	id : 2,
+						name : 'Jozan',
 						characterType : 'PC',
 						currentHitPoints : 24,
 						maxHitPoints : 89,
@@ -29,7 +31,8 @@
 							{ name : 'dazed', roundsLeft : 1 }
 						]
 					},
-					{ 	name : 'Krusk',
+					{ 	id : 3,
+						name : 'Krusk',
 						characterType : 'PC',
 						currentHitPoints : 66,
 						maxHitPoints : 165,
@@ -37,14 +40,16 @@
 						initiativeModifier : 2,
 						initiativeState : 'normal',
 					},
-					{ 	name : 'Orc 3',
+					{ 	id : 4,
+						name : 'Orc 3',
 						characterType : 'Hostile-NPC',
 						currentHitPoints : -9,
 						currentInitiative : 12,
 						initiativeModifier : 0,
 						initiativeState : 'normal',
 					},
-					{ 	name : 'Tordek',
+					{ 	id : 5,
+						name : 'Tordek',
 						characterType : 'PC',
 						currentHitPoints : 82,
 						maxHitPoints : 82,
@@ -55,7 +60,8 @@
 							{ name : 'frightened', roundsLeft : 1 }
 						]
 					},
-					{ 	name : 'Ancient red dragon',
+					{ 	id : 6,
+						name : 'Ancient red dragon',
 						characterType : 'Hostile-NPC',
 						currentHitPoints : -25,
 						currentInitiative : 12,
@@ -67,7 +73,8 @@
 					}
 				],
 				currentRound : 1,
-				activeCharacterName : 'Krusk'
+				activeCharacterId : 3,
+				nextIdSeed : 7
 			},
 			isInSetupMode : true,
 			showAboutInfo : false
