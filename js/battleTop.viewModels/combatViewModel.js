@@ -57,7 +57,13 @@ var battleTop = (function (my) {
 			}
 			return nextCharacter;
 		}, self);
-				
+		
+		self.resetToParty = function () {
+			self.characters.remove(function (character) {
+				return !character.isPlayerCharacter();
+			});
+		};
+		
 		self.initiativeSort = function () {
 			self.characters.sort(function(a,b) { 
 				return b.currentInitiative() == a.currentInitiative() ?
@@ -95,11 +101,12 @@ var battleTop = (function (my) {
 		
 		self.characterToAdd = ko.observable(new my.viewModels.characterViewModel());
 		
-		self.addCharacter = function() {
+		self.addCharacter = function() {			
+			if (self.characterToAdd().initiativeModifier() === undefined) {
+				self.characterToAdd().initiativeModifier(0);
+			}
+			
 			if (self.characterToAdd().name() !== "" && /^-?[\d]+$/.test(self.characterToAdd().initiativeModifier())) {
-				if (self.characterToAdd().initiativeModifier() === undefined) {
-					self.characterToAdd().initiativeModifier(0);
-				}
 				if (self.characterToAdd().currentInitiative() === undefined) {
 					// TODO: "RollInitiative" should be a method on the character view model
 					self.characterToAdd().currentInitiative(my.util.dice.rollDice(20));

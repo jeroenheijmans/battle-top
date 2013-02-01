@@ -41,10 +41,6 @@
 						<input type="checkbox" id="setup-mode-toggle" data-bind="checked: isInSetupMode" />
 						<label for="setup-mode-toggle">Setup</label>					
 					</li>
-					<li id="initiative-mode" data-bind="css: { active : isInInitiativeMode }">
-						<input type="checkbox" id="initiative-mode-toggle" data-bind="checked: isInInitiativeMode" />
-						<label for="initiative-mode-toggle">Init</label>					
-					</li>
 				</ul>
 			</nav>
 		</header>
@@ -120,7 +116,7 @@
 												<a href="#" data-bind="click: $parent.removeCondition">✘</a>
 											</div>
 											<div class="edit-pane hidden">
-												<input type="number" data-bind="value: roundsLeft" />
+												<input type="number" step="1" min="0" data-bind="value: roundsLeft" />
 												<button class="finish-editing">&#10003;</button>
 											</div>
 										</div>
@@ -130,7 +126,7 @@
 										<div class="edit-pane hidden">
 											<form data-bind="submit: addCondition">
 												<input type="text" required data-bind="value: conditionToAdd().name" />
-												<input type="number" required data-bind="value: conditionToAdd().roundsLeft" />
+												<input type="number" step="1" min="0" required data-bind="value: conditionToAdd().roundsLeft" />
 												<button type="submit">Add</button>
 											</form>
 											<a href="#" class="finish-editing">Done...</a>
@@ -146,7 +142,7 @@
 									<span data-bind="text: hitPoints"></span>
 								</div>
 								<div class="edit-pane hidden">
-									<input type="number" data-bind="value: currentHitPoints" />
+									<input type="number" step="1" data-bind="value: currentHitPoints" />
 									<button class="finish-editing">&#10003;</button>
 								</div>
 							</td>
@@ -156,7 +152,7 @@
 										<span data-bind="text: currentInitiative" />
 									</div>
 									<div class="edit-pane hidden">
-										<input type="number" data-bind="value: currentInitiative" />
+										<input type="number" step="1" data-bind="value: currentInitiative" />
 										<button class="finish-editing">&#10003;</button>
 									</div>
 								</div>
@@ -165,7 +161,7 @@
 										<span data-bind="text: initiativeModifierAsAside"></span>
 									</div>
 									<div class="edit-pane hidden">
-										<input type="number" data-bind="value: initiativeModifier" />
+										<input type="number" step="1" data-bind="value: initiativeModifier" />
 										<button class="finish-editing">&#10003;</button>
 									</div>
 								</div>
@@ -192,9 +188,11 @@
 				
 				<div id="setup-controls"
 					 data-bind="visible: isInSetupMode">
-					<button id="initiative-sort" 
-							title="Sort the initiative list again"
-							data-bind="click: combat.initiativeSort">Sort by initiative</button>
+					<button title="Sort the initiative list again"
+							data-bind="click: combat.initiativeSort">Sort by Initiative</button>
+					
+					<button title="Remove all non-party memebers"
+							data-bind="click: combat.resetToParty">Reset to Party</button>
 				</div>
 				
 			</section>
