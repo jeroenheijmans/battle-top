@@ -118,13 +118,10 @@ input[type="number"] {
 }
 
 html {
-	background-color: #FFF;
+	background: url('../img/bg.jpg') #EEE repeat;
 }
 
 body {
-	min-height: 32em;
-	border-bottom: 1px solid #BBB;
-	background: url('../img/bg.jpg') #EEE repeat;
 	font: 13px / 17px 'Arial', sans-serif;
 	padding-bottom: 2em;
 	position: relative;
