@@ -99,6 +99,7 @@ var battleTop = (function (my) {
 		};
 		
 		self.removeCharacter = function(character) {
+			self.nextTurn();
 			self.characters.remove(character);
 		};
 		
