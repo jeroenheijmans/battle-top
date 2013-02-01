@@ -304,7 +304,6 @@
 			},
 			isInSetupMode : true,
 			isInInitiativeMode : true,
-			isInDmMode : false,
 			isInDebugMode : true
 		};
 		return model;
