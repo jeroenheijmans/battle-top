@@ -166,24 +166,29 @@
 							<!-- ----------------------------------------------------------------------------------------- -->
 							<!-- -------------------------------------- Initiative --------------------------------------- -->
 							<td class="number initiative-total">
-								<div class="initiative-part">
-									<div class="readonly-pane">
-										<span data-bind="text: currentInitiative" />
+								<div data-bind="visible: initiativeState() == 'normal'">
+									<div class="initiative-part">
+										<div class="readonly-pane">
+											<span data-bind="text: currentInitiative" />
+										</div>
+										<div class="edit-pane hidden">
+											<input type="number" step="1" data-bind="value: currentInitiative" />
+											<button class="finish-editing">&#10003;</button>
+										</div>
 									</div>
-									<div class="edit-pane hidden">
-										<input type="number" step="1" data-bind="value: currentInitiative" />
-										<button class="finish-editing">&#10003;</button>
+									<div class="initiative-part">
+										<div class="readonly-pane">
+											<span data-bind="text: initiativeModifierAsAside"></span>
+										</div>
+										<div class="edit-pane hidden">
+											<input type="number" step="1" data-bind="value: initiativeModifier" />
+											<button class="finish-editing">&#10003;</button>
+										</div>
 									</div>
 								</div>
-								<div class="initiative-part">
-									<div class="readonly-pane">
-										<span data-bind="text: initiativeModifierAsAside"></span>
-									</div>
-									<div class="edit-pane hidden">
-										<input type="number" step="1" data-bind="value: initiativeModifier" />
-										<button class="finish-editing">&#10003;</button>
-									</div>
-								</div>
+								<a href="#" data-bind="visible: initiativeState() != 'normal', click: $root.combat.activateInitiative">
+									☜
+								</a>
 							</td>
 							
 							

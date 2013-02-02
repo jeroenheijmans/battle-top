@@ -98,6 +98,23 @@ var battleTop = (function (my) {
 			self.nextTurn();
 		};
 		
+		self.activateInitiative = function(character) {
+			self.characters.remove(character);
+			var activeCharacterIndex = self.characters.indexOf(self.activeCharacter());
+			
+			if (character.initiativeState() == 'readied') {
+				newIndex = activeCharacterIndex;
+			}
+			
+			if (character.initiativeState() == 'delayed') {
+				newIndex = activeCharacterIndex + 1;
+			}
+			
+			self.characters.splice(newIndex, 0, character);
+			character.initiativeState('normal');
+			character.currentInitiative(self.activeCharacter().currentInitiative());
+		};
+		
 		self.removeCharacter = function(character) {
 			self.nextTurn();
 			self.characters.remove(character);
