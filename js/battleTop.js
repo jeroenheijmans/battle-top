@@ -22,6 +22,23 @@
 }());
 
 (function( $ ) {
+
+	ko.changedFlag = function(root) {
+		var result = function() {};
+		var initialState = ko.observable(ko.toJSON(root));
+
+		result.isChanged = ko.dependentObservable(function() {
+			var changed = initialState() !== ko.toJSON(root);
+			if (changed) result.reset();
+			return changed;
+		});
+
+		result.reset = function() {
+			initialState(ko.toJSON(root));
+		};
+
+		return result;
+	};
 	
 	$(document).on('click', '.readonly-pane', function() {
 		$(this).addClass('hidden');
@@ -36,6 +53,17 @@
 	$(document).ready(function () {
 		var model = battleTop.data.getModelData();
 		var viewModel = ko.mapping.fromJS(model, {}, new battleTop.viewModels.battleTopViewModel());
+		
+		// TODO: Refactor this. Feels very hackish to define the flag
+		// on the viewModel in *this* place (but it works for now and
+		// allows me to focus on the autosave feature).
+		// TODO: This is to eager, it seems to trigger when the turn
+		// timer increases by one secons.
+		viewModel.changedFlag = new ko.changedFlag(viewModel);
+		viewModel.changedFlag.isChanged.subscribe(function(isChanged) {
+			viewModel.isDirty(true);
+		});
+		
 		ko.applyBindings(viewModel);
 		
 		// Cannot force an update on the "computed" elapsedInTurn directly, so forcing update on the observable it depends upon:

@@ -16,6 +16,8 @@ var battleTop = (function (my) {
 		};
 		
 		ko.mapping.fromJS(data, extraMappingInfo, self);
+		
+		self.isDirty = ko.observable(false);
 	};
 	
 	return my;
