@@ -40,6 +40,9 @@
 		
 		// Cannot force an update on the "computed" elapsedInTurn directly, so forcing update on the observable it depends upon:
 		setInterval(function() { viewModel.combat.roundStartDateTime.valueHasMutated() }, 1000);
+		
+		// TODO: Integrate this hack with the KnockoutDirtyFlag feature branch (save upon the VM getting dirty)
+		setInterval(function() { battleTop.data.saveModelData(viewModel); }, 5000);
 	});
 	
 })( jQuery );

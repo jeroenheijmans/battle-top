@@ -1,7 +1,25 @@
 ﻿var battleTop = (function (my) {
 	my.data = my.data || {};
 	
+	var localStorageViewModelKey = "battleTopViewModel";
+	
+	my.data.saveModelData = function(viewModel) {
+		$("#saving-indicator").fadeIn(750);
+		
+		// TODO: New instances of viewModels (extra characters, conditions, etc) aren't saved correctly.
+		var json = ko.mapping.toJSON(viewModel);
+		localStorage.setItem(localStorageViewModelKey, json);
+		
+		$("#saving-indicator").fadeOut(2000);
+	}
+	
+	
 	my.data.getModelData = function() {
+		var model = JSON.parse(localStorage.getItem(localStorageViewModelKey));
+		if (model) {
+			return model;
+		}
+	
 		// TODO This function should get data from a server, storage, or whatever (as opposed to hard-coding it :D)
 		var model = {
 			combat : {	
