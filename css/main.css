@@ -139,6 +139,7 @@ body > header  h1 {
 }
 
 nav {
+	float: left;
 }
 
 nav ul {
@@ -165,6 +166,17 @@ nav #setup-mode		{ background-color: #8EC6C9; }
 nav #initiative-mode	{ background-color: #F2E96B; }
 nav #mode-xxxxxx		{ background-color: #F2C894; }
 nav #mode-xxxxxx		{ background-color: #F29877; }
+
+#saving-indicator {
+	display: none;
+	padding: 0.2em 0.4em;
+	border: 1px solid #BBB;
+	border-radius: 2px;
+	background-color: #F29877;	
+	margin-left: 1em;
+	font-variant: small-caps;
+	float: left;
+}
 
 header aside {
 	display: inline-block;
