@@ -116,7 +116,9 @@ var battleTop = (function (my) {
 		};
 		
 		self.removeCharacter = function(character) {
-			self.nextTurn();
+			if (character == self.activeCharacter()) {
+				self.nextTurn();
+			}
 			self.characters.remove(character);
 		};
 		
