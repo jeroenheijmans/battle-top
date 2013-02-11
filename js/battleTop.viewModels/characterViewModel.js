@@ -12,16 +12,21 @@
 			}
 		};
 		
-		self.id = ko.observable(0);
-		self.name = ko.observable("");
-		self.currentHitPoints = ko.observable();
-		self.maxHitPoints = ko.observable();
-		self.currentInitiative = ko.observable();
-		self.initiativeModifier = ko.observable();
-		self.initiativeState = ko.observable("normal");
-		self.characterType = ko.observable("PC");
-		self.conditions = ko.observableArray();
+		// Generate defaults.
+		data = data || {};
+		data.id = data.id || 0;
+		data.name = data.name || "";
+		data.currentHitPoints = data.currentHitPoints || '';
+		data.maxHitPoints = data.maxHitPoints || '';
+		data.currentInitiative = data.currentInitiative || '';
+		data.initiativeModifier = data.initiativeModifier || '';
+		data.initiativeState = data.initiativeState || "normal";
+		data.characterType = data.characterType || "PC";
+		data.conditions = data.conditions || [];
 		
+		ko.mapping.fromJS(data, extraMappingInfo, self);
+		
+		// Add additional viewmodel properties.
 		self.isExpanded = ko.observable(false);
 		self.isActive = ko.computed(function() { return self == combat.activeCharacter(); });
 		
@@ -73,8 +78,6 @@
 		self.removeCondition = function(condition) {
 			self.conditions.remove(condition);
 		};
-		
-		ko.mapping.fromJS(data, extraMappingInfo, self);
 	};
 	
 	return my;
