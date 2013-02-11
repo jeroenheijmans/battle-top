@@ -10,12 +10,15 @@ var battleTop = (function (my) {
 				}
 			}
 		};
+		
+		// Generate defaults.
+		data = data || {};
+		
+		ko.mapping.fromJS(data, extraMappingInfo, self);
 	
 		self.toggleAboutInfo = function() {
 			self.showAboutInfo(!self.showAboutInfo());
 		};
-		
-		ko.mapping.fromJS(data, extraMappingInfo, self);
 	};
 	
 	return my;

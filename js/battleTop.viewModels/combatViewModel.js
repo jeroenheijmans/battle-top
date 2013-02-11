@@ -14,6 +14,11 @@ var battleTop = (function (my) {
 			}
 		};
 		
+		// Generate defaults.
+		data = data || {};
+		
+		ko.mapping.fromJS(data, extraMappingInfo, self);
+		
 		self.roundStartDateTime = ko.observable(new Date());
 		
 		self.elapsedInTurn = ko.computed(function() {
@@ -147,7 +152,6 @@ var battleTop = (function (my) {
 			}
 		};
 		
-		ko.mapping.fromJS(data, extraMappingInfo, self);
 		self.initiativeSort();
 	};
 	
