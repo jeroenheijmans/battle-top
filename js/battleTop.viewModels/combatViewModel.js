@@ -160,6 +160,8 @@ var battleTop = (function (my) {
 			self.characters.remove(function (character) {
 				return !character.isPlayerCharacter();
 			});
+			self.currentRound(1);
+			self.activeCharacterId(self.characters()[0].id());
 		};
 		
 		self.resetToBasic = function() {
