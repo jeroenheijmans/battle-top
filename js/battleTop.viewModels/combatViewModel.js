@@ -133,13 +133,14 @@ var battleTop = (function (my) {
 			return seed;
 		}
 		
-		self.addCharacter = function() {			
-			if (self.characterToAdd().initiativeModifier() === undefined) {
+		self.addCharacter = function() {
+			console.log(self.characterToAdd().initiativeModifier());
+			if (!self.characterToAdd().initiativeModifier()) {
 				self.characterToAdd().initiativeModifier(0);
 			}
 			
-			if (self.characterToAdd().name() !== "" && /^-?[\d]+$/.test(self.characterToAdd().initiativeModifier())) {
-				if (self.characterToAdd().currentInitiative() === undefined) {
+			if (self.characterToAdd().name() !== "" && /^-?[\d]+$/.test(self.characterToAdd().initiativeModifier())) {		
+				if (!self.characterToAdd().currentInitiative()) {
 					// TODO: "RollInitiative" should be a method on the character view model
 					self.characterToAdd().currentInitiative(my.util.dice.rollDice(20));
 				}
