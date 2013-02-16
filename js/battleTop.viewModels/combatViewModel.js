@@ -147,11 +147,12 @@ var battleTop = (function (my) {
 			if (self.characterToAdd().name() !== "" && /^-?[\d]+$/.test(self.characterToAdd().initiativeModifier())) {		
 				if (!self.characterToAdd().currentInitiative()) {
 					// TODO: "RollInitiative" should be a method on the character view model
-					self.characterToAdd().currentInitiative(my.util.dice.rollDice(20));
+					self.characterToAdd().currentInitiative(my.util.dice.rollDice(20) + parseInt(self.characterToAdd().initiativeModifier(), 10));
 				}
 				
 				self.characterToAdd().id(generateNextCharacterId());
 				self.characters.push(self.characterToAdd());
+				self.initiativeSort();
 				self.characterToAdd(new my.viewModels.characterViewModel(null, self));
 			}
 		};
