@@ -1,4 +1,6 @@
 var battleTop = (function (my) {
+	"use strict";
+	
 	my.viewModels = my.viewModels || {};
 	
 	my.viewModels.battleTopViewModel = function (data) {

@@ -1,4 +1,6 @@
 ﻿var battleTop = (function (my) {
+	"use strict";
+
 	my.viewModels = my.viewModels || {};
 	
 	my.viewModels.characterViewModel = function (data, combat) {
@@ -26,7 +28,7 @@
 		ko.mapping.fromJS(data, extraMappingInfo, self);
 		
 		self.isExpanded = ko.observable(false);
-		self.isActive = ko.computed(function() { return self == combat.activeCharacter(); });
+		self.isActive = ko.computed(function() { return self === combat.activeCharacter(); });
 		
 		self.toggleExpandedState = function() {
 			self.isExpanded(!self.isExpanded());
@@ -34,7 +36,7 @@
 		
 		self.beginTurn = function() {
 			var conditions = self.conditions();
-			for (i = conditions.length-1; i >= 0; i--) {
+			for (var i = conditions.length-1; i >= 0; i--) {
 				conditions[i].roundsLeft(conditions[i].roundsLeft() - 1);
 			}
 			

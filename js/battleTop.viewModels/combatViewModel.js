@@ -1,4 +1,6 @@
 var battleTop = (function (my) {
+	"use strict";
+	
 	my.viewModels = my.viewModels || {};
 	
 	my.viewModels.combatViewModel = function (data) {
@@ -21,7 +23,7 @@ var battleTop = (function (my) {
 		self.roundStartDateTime = ko.observable(new Date());
 		
 		self.elapsedInTurn = ko.computed(function() {
-			var secondsElapsed = parseInt((new Date().getTime() / 1000) - (self.roundStartDateTime().getTime() / 1000));
+			var secondsElapsed = parseInt((new Date().getTime() / 1000) - (self.roundStartDateTime().getTime() / 1000), 10);
 			var hours = Math.floor(secondsElapsed / 3600);
 			var mins = Math.floor((secondsElapsed - (hours * 3600)) / 60);
 			var secs = secondsElapsed % 60;
@@ -38,7 +40,7 @@ var battleTop = (function (my) {
 		};
 		
 		self.activeCharacter = ko.computed(function() {
-			var activeCharacters = self.characters().filter(function(item) { return item.id() == self.activeCharacterId(); });
+			var activeCharacters = self.characters().filter(function(item) { return item.id() === self.activeCharacterId(); });
 			if (activeCharacters.length === 1) {
 				return activeCharacters[0];
 			}
@@ -53,15 +55,15 @@ var battleTop = (function (my) {
 		self.nextCharacter = ko.computed(function() {
 			// TODO: Refactor this ugly, ugly bit of code:
 			var characters = self.characters();
-			var nextCharacter = undefined;
-			var currentCharacterIndex = undefined;
-			for (i = 0; i <  characters.length; i++) {
-				if (self.activeCharacter() && characters[i].id() == self.activeCharacter().id()) {
+			var nextCharacter = null;
+			var currentCharacterIndex = -1;
+			for (var i = 0; i <  characters.length; i++) {
+				if (self.activeCharacter() && characters[i].id() === self.activeCharacter().id()) {
 					currentCharacterIndex = i;
 				}
 			}
 			
-			if (currentCharacterIndex == undefined || currentCharacterIndex == characters.length-1) {
+			if (currentCharacterIndex === -1 || currentCharacterIndex === characters.length-1) {
 				nextCharacter = characters[0];
 			}
 			else {
@@ -72,7 +74,7 @@ var battleTop = (function (my) {
 		
 		self.initiativeSort = function () {
 			self.characters.sort(function(a,b) { 
-				return b.currentInitiative() == a.currentInitiative() ?
+				return b.currentInitiative() === a.currentInitiative() ?
 						b.initiativeModifier() - a.initiativeModifier() :
 						b.currentInitiative() - a.currentInitiative();
 			});
@@ -85,7 +87,9 @@ var battleTop = (function (my) {
 		self.nextTurn = function() {
 			var nextCharacter = self.nextCharacter();
 			self.activeCharacter().endTurn();
-			if (nextCharacter.name() == self.characters()[0].name()) self.nextRound();
+			if (nextCharacter.id() === self.characters()[0].id()) {
+				self.nextRound();
+			}
 			self.activeCharacterId(nextCharacter.id());
 			self.roundStartDateTime(new Date());
 			nextCharacter.beginTurn();
@@ -105,11 +109,13 @@ var battleTop = (function (my) {
 			self.characters.remove(character);
 			var activeCharacterIndex = self.characters.indexOf(self.activeCharacter());
 			
-			if (character.initiativeState() == 'readied') {
+			var newIndex = self.characters.indexOf(character);
+			
+			if (character.initiativeState() === 'readied') {
 				newIndex = activeCharacterIndex;
 			}
 			
-			if (character.initiativeState() == 'delayed') {
+			if (character.initiativeState() === 'delayed') {
 				newIndex = activeCharacterIndex + 1;
 			}
 			
@@ -119,7 +125,7 @@ var battleTop = (function (my) {
 		};
 		
 		self.removeCharacter = function(character) {
-			if (character == self.activeCharacter()) {
+			if (character === self.activeCharacter()) {
 				self.nextTurn();
 			}
 			self.characters.remove(character);
@@ -128,13 +134,12 @@ var battleTop = (function (my) {
 		self.characterToAdd = ko.observable(new my.viewModels.characterViewModel(null, self));
 		
 		function generateNextCharacterId() {
-			seed = self.nextIdSeed();
+			var seed = self.nextIdSeed();
 			self.nextIdSeed(seed + 1);
 			return seed;
 		}
 		
 		self.addCharacter = function() {
-			console.log(self.characterToAdd().initiativeModifier());
 			if (!self.characterToAdd().initiativeModifier()) {
 				self.characterToAdd().initiativeModifier(0);
 			}
