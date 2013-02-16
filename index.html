@@ -112,7 +112,14 @@
 							<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
 							<!-- –––––––––––––––––––––––––––––––––––––– Character –––––––––––––––––––––––––––––––––––––––- -->
 							<td class="character">
-								<span class="character-name" data-bind="text: name"></span>
+								<div class="readonly-pane">
+									<span class="character-name" data-bind="text: name"></span>
+								</div>
+								<div class="edit-pane hidden">
+									<input type="text" data-bind="value: name" />
+									<button class="finish-editing">&#10003;</button>
+								</div>
+								
 								<ul class="conditions">
 									<!-- ko foreach: conditions -->
 									<li>
