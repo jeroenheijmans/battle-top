@@ -60,8 +60,7 @@
 			if (self.currentHitPoints() === undefined) {
 				return "n/a";
 			}
-			var maxHpString = self.maxHitPoints() === undefined ? "" : '/' + self.maxHitPoints().toString();
-			return self.currentHitPoints().toString() + maxHpString;
+			return self.currentHitPoints();
 		}, self);
 		
 		self.conditionToAdd = ko.observable(new my.viewModels.conditionViewModel());
