@@ -5,7 +5,6 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>BattleTop</title>
         <meta name="description" content="Bookkeeping enhancements for table-top battles">
         <meta name="viewport" content="width=device-width">
@@ -54,8 +53,8 @@
 		
 			<section id="initiative">
 			
-				<!-- ----------------------------------------------------------------------------------------- -->
-				<!-- --------------------------------- Initiative Controls ----------------------------------- -->
+				<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
+				<!-- ––––––––––––––––––––––––––––––––– Initiative Controls ––––––––––––––––––––––––––––––––––– -->
 				<div id="initiative-controls">
 					<button id="initiative-next" 
 							title="Finish current turn, go to next initiative"
@@ -102,16 +101,16 @@
 											}">
 											
 											
-							<!-- ----------------------------------------------------------------------------------------- -->
-							<!-- ----------------------------------- Collapse/Expand ------------------------------------- -->
+							<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
+							<!-- ––––––––––––––––––––––––––––––––––– Collapse/Expand ––––––––––––––––––––––––––––––––––––- -->
 							<td class="actions">
 								<a href="#" data-bind="visible: !(isActive() || isExpanded()), click: toggleExpandedState">&#9655;</a>
 								<a href="#" data-bind="visible:  (isActive() || isExpanded()), click: toggleExpandedState">&#9661;</a>
 							</td>
 							
 							
-							<!-- ----------------------------------------------------------------------------------------- -->
-							<!-- -------------------------------------- Character ---------------------------------------- -->
+							<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
+							<!-- –––––––––––––––––––––––––––––––––––––– Character –––––––––––––––––––––––––––––––––––––––- -->
 							<td class="character">
 								<span class="character-name" data-bind="text: name"></span>
 								<ul class="conditions">
@@ -155,8 +154,8 @@
 							</td>
 							
 							
-							<!-- ----------------------------------------------------------------------------------------- -->
-							<!-- --------------------------------------- Hit Points -------------------------------------- -->
+							<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
+							<!-- ––––––––––––––––––––––––––––––––––––––– Hit Points –––––––––––––––––––––––––––––––––––––– -->
 							<td class="number hp">
 								<div class="readonly-pane">
 									<span data-bind="text: hitPoints"></span>
@@ -168,13 +167,13 @@
 							</td>
 							
 							
-							<!-- ----------------------------------------------------------------------------------------- -->
-							<!-- -------------------------------------- Initiative --------------------------------------- -->
+							<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
+							<!-- –––––––––––––––––––––––––––––––––––––– Initiative ––––––––––––––––––––––––––––––––––––––– -->
 							<td class="number initiative-total">
 								<div data-bind="visible: initiativeState() == 'normal'">
 									<div class="initiative-part">
 										<div class="readonly-pane">
-											<span data-bind="text: currentInitiative" />
+											<span data-bind="text: currentInitiative"></span>
 										</div>
 										<div class="edit-pane hidden">
 											<input type="number" step="1" data-bind="value: currentInitiative" />
@@ -197,8 +196,8 @@
 							</td>
 							
 							
-							<!-- ----------------------------------------------------------------------------------------- -->
-							<!-- -------------------------------- Remove Character Button -------------------------------- -->
+							<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
+							<!-- –––––––––––––––––––––––––––––––– Remove Character Button –––––––––––––––––––––––––––––––– -->
 							<td data-bind="visible: $root.isInSetupMode">
 								<a href="#" data-bind="click: $root.combat.removeCharacter">✘</a>
 							</td>
@@ -209,8 +208,8 @@
 				</table>
 				
 				
-				<!-- ----------------------------------------------------------------------------------------- -->
-				<!-- ----------------------------------- New Character Form ---------------------------------- -->
+				<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
+				<!-- ––––––––––––––––––––––––––––––––––– New Character Form –––––––––––––––––––––––––––––––––- -->
 				<div id="add-character" data-bind="visible: $root.isInSetupMode">
 					<form data-bind="with: combat.characterToAdd, submit: combat.addCharacter">
 						<select data-bind="options: $root.combat.availableCharacterTypes, value: characterType"></select>
@@ -223,8 +222,8 @@
 				</div>
 				
 				
-				<!-- ----------------------------------------------------------------------------------------- -->
-				<!-- ----------------------------------- Setup Mode Controls --------------------------------- -->
+				<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
+				<!-- ––––––––––––––––––––––––––––––––––– Setup Mode Controls ––––––––––––––––––––––––––––––––– -->
 				<div id="setup-controls"
 					 data-bind="visible: isInSetupMode">
 					<button title="Sort the initiative list again"
