@@ -15,7 +15,13 @@
 	
 	
 	my.data.getModelData = function() {
-		var model = JSON.parse(localStorage.getItem(localStorageViewModelKey));
+		var storageItem = localStorage.getItem(localStorageViewModelKey);
+		
+		// Check for NULL, defeat Android bug 11973 (http://code.google.com/p/android/issues/detail?id=11973)
+		if (storageItem != null) {
+			var model = JSON.parse(storageItem);
+		}
+			
 		if (model) {
 			return model;
 		}
