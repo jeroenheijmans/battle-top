@@ -29,11 +29,19 @@
 	$(document).on('click', '.readonly-pane', function() {
 		$(this).addClass('hidden');
 		$(this).siblings('.edit-pane').removeClass('hidden');
-	});	
+	});
 	
-	$(document).on('click', '.edit-pane .finish-editing', function() {
-		$(this).parent('.edit-pane').addClass('hidden');
-		$(this).parent('.edit-pane').siblings('.readonly-pane').removeClass('hidden');
+	var finishEditing = function(region) {
+		$(region).parent('.edit-pane').addClass('hidden');
+		$(region).parent('.edit-pane').siblings('.readonly-pane').removeClass('hidden');
+	};
+	
+	$(document).on('click', '.edit-pane .finish-editing', function() { finishEditing(this); });
+	
+	$(document).on('keypress', '.edit-pane input', function(e) {
+		if (e.which === 13) {
+			finishEditing(this);
+		}
 	});
 	
 	$(document).ready(function () {
