@@ -1,5 +1,7 @@
 ﻿// Avoid `console` errors in browsers that lack a console.
 (function() {
+	"use strict";
+
     var method;
     var noop = function () {};
     var methods = [
@@ -22,6 +24,7 @@
 }());
 
 (function( $ ) {
+	"use strict";
 	
 	$(document).on('click', '.readonly-pane', function() {
 		$(this).addClass('hidden');
@@ -39,7 +42,7 @@
 		ko.applyBindings(viewModel);
 		
 		// Cannot force an update on the "computed" elapsedInTurn directly, so forcing update on the observable it depends upon:
-		setInterval(function() { viewModel.combat.roundStartDateTime.valueHasMutated() }, 1000);
+		setInterval(function() { viewModel.combat.roundStartDateTime.valueHasMutated(); }, 1000);
 		
 		// TODO: Integrate this hack with the KnockoutDirtyFlag feature branch (save upon the VM getting dirty)
 		setInterval(function() { battleTop.data.saveModelData(viewModel); }, 5000);

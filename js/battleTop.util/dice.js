@@ -1,4 +1,6 @@
 ﻿var battleTop = (function (my) {
+	"use strict";
+	
 	my.util = my.util || {};
 	my.util.dice = my.util.dice || {};
 
@@ -9,7 +11,7 @@
 			sides = 20;
 		}
 		
-		for (i = 0; i < (number ? number : 1); i++) {
+		for (var i = 0; i < (number ? number : 1); i++) {
 			result += Math.floor(Math.random() * (sides + 1)) + 1;
 		}
 		

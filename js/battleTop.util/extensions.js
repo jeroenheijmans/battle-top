@@ -1,4 +1,6 @@
 ﻿var battleTop = (function (my) {
+	"use strict";
+
 	my.util = my.util || {};
 	my.util.dice = my.util.dice || {};
 
