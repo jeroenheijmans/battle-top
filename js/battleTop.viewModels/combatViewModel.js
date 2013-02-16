@@ -14,7 +14,6 @@ var battleTop = (function (my) {
 			}
 		};
 		
-		// Generate defaults.
 		data = data || {};
 		
 		ko.mapping.fromJS(data, extraMappingInfo, self);
@@ -46,13 +45,18 @@ var battleTop = (function (my) {
 			return undefined;
 		});
 		
+		self.activeCharacterName = ko.computed(function() {
+			var character = self.activeCharacter();
+			return character ? character.name() : "no-one";
+		});
+		
 		self.nextCharacter = ko.computed(function() {
 			// TODO: Refactor this ugly, ugly bit of code:
 			var characters = self.characters();
 			var nextCharacter = undefined;
 			var currentCharacterIndex = undefined;
 			for (i = 0; i <  characters.length; i++) {
-				if (characters[i].id() == self.activeCharacter().id()) {
+				if (self.activeCharacter() && characters[i].id() == self.activeCharacter().id()) {
 					currentCharacterIndex = i;
 				}
 			}
@@ -65,12 +69,6 @@ var battleTop = (function (my) {
 			}
 			return nextCharacter;
 		});
-		
-		self.resetToParty = function () {
-			self.characters.remove(function (character) {
-				return !character.isPlayerCharacter();
-			});
-		};
 		
 		self.initiativeSort = function () {
 			self.characters.sort(function(a,b) { 
@@ -150,6 +148,19 @@ var battleTop = (function (my) {
 				self.characters.push(self.characterToAdd());
 				self.characterToAdd(new my.viewModels.characterViewModel(null, self));
 			}
+		};
+		
+		self.resetToParty = function () {
+			self.characters.remove(function (character) {
+				return !character.isPlayerCharacter();
+			});
+		};
+		
+		self.resetToBasic = function() {
+			self.characters.removeAll();
+			var newPlayer = new my.viewModels.characterViewModel({ name: 'Player 1', initiativeModifier: 10, currentInitiative: 10, currentHitPoints: 10, maxHitPoints: 10 }, self);
+			self.characters.push(newPlayer);
+			self.activeCharacterId(newPlayer.id());
 		};
 		
 		self.initiativeSort();

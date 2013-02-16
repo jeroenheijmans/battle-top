@@ -11,7 +11,6 @@ var battleTop = (function (my) {
 			}
 		};
 		
-		// Generate defaults.
 		data = data || {};
 		
 		ko.mapping.fromJS(data, extraMappingInfo, self);
