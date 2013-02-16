@@ -75,7 +75,7 @@
 					</div>
 					
 					<div id="current-turn" class="currents">
-						<span data-bind="text: combat.activeCharacter().name()"></span>:
+						<span data-bind="text: combat.activeCharacterName"></span>:
 						<span data-bind="text: combat.elapsedInTurn"></span>
 					</div>
 				</div>
@@ -234,6 +234,9 @@
 					
 					<button title="Remove all non-party memebers"
 							data-bind="click: combat.resetToParty">Reset to Party</button>
+							
+					<button title="Reset to small basic setup"
+							data-bind="click: combat.resetToBasic">Complete Reset</button>
 				</div>
 				
 			</section>

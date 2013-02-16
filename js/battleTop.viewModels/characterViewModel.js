@@ -12,7 +12,6 @@
 			}
 		};
 		
-		// Generate defaults.
 		data = data || {};
 		data.id = data.id || 0;
 		data.name = data.name || "";
@@ -26,7 +25,6 @@
 		
 		ko.mapping.fromJS(data, extraMappingInfo, self);
 		
-		// Add additional viewmodel properties.
 		self.isExpanded = ko.observable(false);
 		self.isActive = ko.computed(function() { return self == combat.activeCharacter(); });
 		
