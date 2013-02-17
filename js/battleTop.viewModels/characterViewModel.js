@@ -77,6 +77,23 @@
 		self.removeCondition = function(condition) {
 			self.conditions.remove(condition);
 		};
+		
+		self.isUpdatingHitPoints = ko.observable(false);
+		
+		self.hpChange = ko.observable(new my.viewModels.hpChangeViewModel());
+		
+		self.changeHitPoints = function() {
+			self.currentHitPoints(self.currentHitPoints() + self.hpChange().hpChangeTotal());
+			self.hpChange(new my.viewModels.hpChangeViewModel());
+			self.toggleUpdatingHitPoints();
+		};
+		
+		self.toggleUpdatingHitPoints = function() {
+			// TODO: Move jQuery hack to ViewModel logic:
+			$('#overlay').toggleClass("hidden");
+			
+			self.isUpdatingHitPoints(!self.isUpdatingHitPoints()); 
+		};
 	};
 	
 	return my;
