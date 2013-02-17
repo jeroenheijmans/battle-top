@@ -274,10 +274,77 @@ header aside {
 }
 
 
+.hp-change {
+	margin: 2em 0;
+	padding: 0;
+	text-align: center;	
+}
+
+.hp-change label {
+	display: inline-block;
+	background-color: #EEE;
+	border: 1px solid #CCC;
+	padding: 0.5em 1em;
+	cursor: pointer;
+}
+
+.hp-change label > * { 
+	vertical-align: middle;
+}
+
+.hp-change label.damage { background-color: #FFCCCC; }
+.hp-change label.healing { background-color: #CCFFCC; }
+
+.hp-change .change-type {
+	margin-bottom: 2em;
+}
 
 
+#overlay {
+	background: rgba(0, 0, 0, 0.2);
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
 
+.dialog {
+	border: 1px solid #CCC;
+	background-color: #FFF;
+	box-shadow: 2px 2px 4px #AAA;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: 18em;
+	height: auto;
+	margin-top: -4em;
+	margin-left: -9em;
+	padding: 0.2em;
+	z-index: 100;
+}
 
+.dialog-title {
+	background-color: #EEE;
+	border: 1px solid #CCC;
+	padding: 0.5em 0.5em;
+	text-align: center;
+	font-weight: bold;
+}
+
+.dialog-title .close {
+	float: right;
+	vertical-align: center;
+	width: 1.4em;
+	height: 1.4em;
+	border: 1px solid #CCC;
+	background-color: #DDD;
+	cursor: pointer;
+}
+
+.dialog-content {
+	padding: 2em 0.5em;
+}
 
 
 
