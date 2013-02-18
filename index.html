@@ -86,9 +86,9 @@
 								<a href="#" data-bind="visible: !combat.isExpanded(), click: combat.toggleExpandedState">&#9658;</a>
 								<a href="#" data-bind="visible:  combat.isExpanded(), click: combat.toggleExpandedState">&#9660;</a>
 							</th>
+							<th class="number">Init</th>
 							<th>Character</th>
 							<th class="number">HP</th>
-							<th class="number">Init</th>
 							<th data-bind="visible: $root.isInSetupMode"></th>
 						</tr>
 					</thead>
@@ -106,6 +106,35 @@
 							<td class="actions">
 								<a href="#" data-bind="visible: !(isActive() || isExpanded()), click: toggleExpandedState">&#9655;</a>
 								<a href="#" data-bind="visible:  (isActive() || isExpanded()), click: toggleExpandedState">&#9661;</a>
+							</td>
+							
+							
+							<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
+							<!-- –––––––––––––––––––––––––––––––––––––– Initiative ––––––––––––––––––––––––––––––––––––––– -->
+							<td class="number initiative-total">
+								<div data-bind="visible: initiativeState() == 'normal'">
+									<div class="initiative-part">
+										<div class="readonly-pane">
+											<span data-bind="text: currentInitiative"></span>
+										</div>
+										<div class="edit-pane hidden">
+											<input type="number" step="1" data-bind="value: currentInitiative" />
+											<button class="finish-editing">&#10003;</button>
+										</div>
+									</div>
+									<div class="initiative-part">
+										<div class="readonly-pane">
+											<span data-bind="text: initiativeModifierAsAside"></span>
+										</div>
+										<div class="edit-pane hidden">
+											<input type="number" step="1" data-bind="value: initiativeModifier" />
+											<button class="finish-editing">&#10003;</button>
+										</div>
+									</div>
+								</div>
+								<a href="#" data-bind="visible: initiativeState() != 'normal', click: $root.combat.activateInitiative">
+									ACT!
+								</a>
 							</td>
 							
 							
@@ -195,37 +224,8 @@
 							
 							
 							<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
-							<!-- –––––––––––––––––––––––––––––––––––––– Initiative ––––––––––––––––––––––––––––––––––––––– -->
-							<td class="number initiative-total">
-								<div data-bind="visible: initiativeState() == 'normal'">
-									<div class="initiative-part">
-										<div class="readonly-pane">
-											<span data-bind="text: currentInitiative"></span>
-										</div>
-										<div class="edit-pane hidden">
-											<input type="number" step="1" data-bind="value: currentInitiative" />
-											<button class="finish-editing">&#10003;</button>
-										</div>
-									</div>
-									<div class="initiative-part">
-										<div class="readonly-pane">
-											<span data-bind="text: initiativeModifierAsAside"></span>
-										</div>
-										<div class="edit-pane hidden">
-											<input type="number" step="1" data-bind="value: initiativeModifier" />
-											<button class="finish-editing">&#10003;</button>
-										</div>
-									</div>
-								</div>
-								<a href="#" data-bind="visible: initiativeState() != 'normal', click: $root.combat.activateInitiative">
-									☜
-								</a>
-							</td>
-							
-							
-							<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
 							<!-- –––––––––––––––––––––––––––––––– Remove Character Button –––––––––––––––––––––––––––––––– -->
-							<td data-bind="visible: $root.isInSetupMode">
+							<td class="remove" data-bind="visible: $root.isInSetupMode">
 								<a href="#" data-bind="click: $root.combat.removeCharacter">✘</a>
 							</td>
 							
