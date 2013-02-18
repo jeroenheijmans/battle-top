@@ -253,6 +253,18 @@ header aside {
 	vertical-align: top;
 }
 
+
+#initiative td.character {
+	width: 100%;
+}
+
+#initiative td.actions,
+#initiative td.initiative-total,
+#initiative td.initiative-total,
+#initiative td.remove {
+	white-space: nowrap;
+}
+
 #initiative .number {
 	white-space: nowrap;
 	text-align: right;
