@@ -1,19 +1,4 @@
-﻿/* Based on HTML5 Boilerplate */
-
-html,
-button,
-input,
-select,
-textarea {
-    color: #222;
-}
-
-body {
-    font-size: 1em;
-    line-height: 1.4;
-}
-
-/*
+﻿/*
  * Remove text-shadow in selection highlight: h5bp.com/i
  * These selection declarations have to be separate.
  * Customize the background color to match your design.
@@ -91,6 +76,10 @@ textarea {
 	#593831 Brown
 */
 
+.edit-in-place-trigger {
+    cursor: pointer;
+}
+
 a {
 	text-decoration: none;
 	color: #034769;
@@ -98,10 +87,6 @@ a {
 
 a:hover {
 	color: #63ADD0;
-}
-
-button {
-	padding: 0.2em 0.5em;
 }
 
 input[type="number"] {
@@ -126,7 +111,7 @@ html {
 }
 
 body {
-	font: 13px / 17px 'Arial', sans-serif;
+	font: 16px / 20px 'Arial', sans-serif;
 	padding-bottom: 2em;
 	position: relative;
 }
@@ -137,49 +122,25 @@ body > header {
 	background-color: rgba(240, 240, 240, 1.0);
 }
 
-body > header  h1 {
-	display: inline-block;
-	margin: 0;
-}
-
-nav {
+#setup-mode, #saving-indicator {
 	float: left;
-}
-
-nav ul {
-	margin: 0;
-	padding: 0;
-}
-
-nav li {
+	font-variant: small-caps;
+	cursor: pointer;
+	background-color: #8EC6C9;
 	display: inline-block;
 	padding: 0.2em 0.4em;
 	border: 1px solid #BBB;
 	border-radius: 2px;
-	background-color: #EEE;
-	opacity: 0.6;
-	cursor: pointer;
+	opacity: 0.5;
 }
 
-nav li.active,
-nav li:hover {
+#setup-mode.active {
 	opacity: 1.0;
 }
 
-nav #setup-mode		{ background-color: #8EC6C9; }
-nav #initiative-mode	{ background-color: #F2E96B; }
-nav #mode-xxxxxx		{ background-color: #F2C894; }
-nav #mode-xxxxxx		{ background-color: #F29877; }
-
 #saving-indicator {
-	display: none;
-	padding: 0.2em 0.4em;
-	border: 1px solid #BBB;
-	border-radius: 2px;
 	background-color: #F29877;	
 	margin-left: 1em;
-	font-variant: small-caps;
-	float: left;
 }
 
 header aside {
@@ -193,7 +154,7 @@ header aside {
 	width: 1.6em;
 	height: 1.6em;
 	line-height: 1.6em;
-	border-radius: 0.8em;
+	border-radius: 50%;
 	color: #FFF;
 	background-color: #8EC6C9;
 	cursor: pointer;
@@ -205,7 +166,7 @@ header aside {
 	float: right;
 	border: 1px solid #BBB;
 	background-color: rgba(242, 233, 107, 0.3);
-	padding: 0.2em 0.5em;
+	padding: 0.1em 0.4em;
 	margin-left: 0.5em;
 }
 
@@ -213,82 +174,80 @@ header aside {
 	padding: 0.5em 0.5em 0;
 }
 
-#initiative table  {
+#main table  {
 	width: 100%;
 	padding: 0;
 	margin: 0.5em 0;
 }
 
-#initiative th {
-	background-color: rgba(128, 128, 128, 0.7);
+#main th {
+	background-color: rgba(128, 128, 128, 0.5);
 	text-align: left;
 }
 
-#initiative tr {
+#main tr {
 	border: 1px solid #AAA;
 	padding: 0.5em;
 	background-color: rgba(255, 255, 255, 0.7);
 }
 
-#initiative tr:not(.is-player-character):not(.header) {
+#main tr:not(.is-player-character):not(.header) {
 	font-family: 'Risque';
 }
 
-#initiative tr.readied {
-	background-color: rgba(200, 255, 200, 0.7);
+#main tr.readied {
+	background-color: rgba(200, 200, 200, 0.7);
 }
 
-#initiative tr.delayed {
+#main tr.delayed {
 	color: #AAA;
 	background-color: rgba(226, 226, 226, 0.7);
 }
 
-#initiative tr.current-player {
+#main tr.current-player {
 	background-color: rgba(242, 233, 107, 0.7);
 }
 
-#initiative td,
-#initiative th {
+#main td,
+#main th {
 	padding: 0.25em 0.5em;
 	vertical-align: top;
 }
 
-
-#initiative td.character {
+#main td.character {
 	width: 100%;
 }
 
-#initiative td.actions,
-#initiative td.initiative-total,
-#initiative td.initiative-total,
-#initiative td.remove {
+#main td.actions,
+#main td.initiative-total,
+#main td.initiative-total,
+#main td.remove {
 	white-space: nowrap;
 }
 
-#initiative .number {
+#main .number {
 	white-space: nowrap;
 	text-align: right;
 }
 
-#initiative .readonly-pane,
-#initiative .initiative-part,
-#initiative .condition-part {
+#main .readonly-pane,
+#main .initiative-part,
+#main .condition-part {
 	display: inline-block;
 }
 
-#initiative .conditions { display: none; }
-#initiative tr.expanded .conditions { display: block; }
+#main .conditions { display: none; }
+#main tr.expanded .conditions { display: block; }
 
 #add-character {
 	border: 1px solid #AAA;
 	background-color: rgba(255, 255, 255, 0.7);
 	padding: 0.5em;
+    margin-bottom: 0.5em;
 }
 
 
 .hp-change {
-	margin: 2em 0;
-	padding: 0;
 	text-align: center;	
 }
 
@@ -326,20 +285,16 @@ header aside {
 	background-color: #FFF;
 	box-shadow: 2px 2px 4px #AAA;
 	position: fixed;
-	top: 50%;
-	left: 50%;
-	width: 18em;
-	height: auto;
-	margin-top: -4em;
-	margin-left: -9em;
-	padding: 0.2em;
+	top: 3em;
+    left: 15%;
+    width: 70%;
 	z-index: 100;
 }
 
 .dialog-title {
 	background-color: #EEE;
-	border: 1px solid #CCC;
-	padding: 0.5em 0.5em;
+	border-bottom: 1px solid #CCC;
+	padding: 0.25em 0.5em;
 	text-align: center;
 	font-weight: bold;
 }
@@ -347,10 +302,7 @@ header aside {
 .dialog-title .close {
 	float: right;
 	vertical-align: center;
-	width: 1.4em;
-	height: 1.4em;
-	border: 1px solid #CCC;
-	background-color: #DDD;
+	color: #AAA;
 	cursor: pointer;
 }
 
