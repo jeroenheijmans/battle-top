@@ -13,18 +13,21 @@
 				}
 			}
 		};
-		
-		data = data || {};
-		data.id = data.id || 0;
-		data.name = data.name || "";
-		data.currentHitPoints = data.currentHitPoints || '';
-		data.maxHitPoints = data.maxHitPoints || '';
-		data.currentInitiative = data.currentInitiative || '';
-		data.initiativeModifier = data.initiativeModifier || '';
-		data.initiativeState = data.initiativeState || "normal";
-		data.characterType = data.characterType || "PC";
-		data.conditions = data.conditions || [];
-		
+        
+        var defaults = {
+            id: 0,
+            name: "",
+            currentHitPoints: '',
+            maxHitPoints: '',
+            currentInitiative: '',
+            initiativeModifier: '',
+            initiativeState: "normal",
+            characterType: "PC",
+            conditions: []
+		};
+        
+        data = $.extend({}, defaults, data);
+        
 		ko.mapping.fromJS(data, extraMappingInfo, self);
 		
 		self.isExpanded = ko.observable(false);
