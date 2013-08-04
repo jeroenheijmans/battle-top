@@ -6,9 +6,12 @@
 	my.viewModels.hpChangeViewModel = function (data) {
 		var self = this;
 		
-		data = data || {};
-		data.hpChangeType = data.hpChangeType || 'damage';
-		data.hpChangeAbsolute = data.hpChangeAbsolute || 1;
+		var defaults = { 
+            hpChangeType: "damage",
+            hpChangeAbsolute: 1
+        };
+        
+        data = $.extend({}, defaults, data);
 		
 		ko.mapping.fromJS(data, null, self);
 		

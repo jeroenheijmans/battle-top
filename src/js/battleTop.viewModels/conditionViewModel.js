@@ -4,10 +4,13 @@
 	my.viewModels.conditionViewModel = function (data) {
 		var self = this;
 		
-		data = data || {};
-		data.name = data.name || "";
-		data.roundsLeft = data.roundsLeft || 1;
+		var defaults = { 
+            name: "",
+            roundsLeft: 1
+        };
 		
+        data = $.extend({}, defaults, data);
+        
 		ko.mapping.fromJS(data, {}, self);
 		
 		self.roundsLeftIndication = ko.computed(function() {
