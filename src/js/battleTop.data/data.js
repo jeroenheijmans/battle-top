@@ -29,8 +29,12 @@
 			return model;
 		}
 	
-		// TODO This function should get data from a server, storage, or whatever (as opposed to hard-coding it :D)
-		model = {
+        // Demo model:
+		return my.data.getDemoModel();
+	};
+    
+    my.data.getDemoModel = function() {
+        return {
 			combat : {	
 				characters : [
 					{	id : 1,
@@ -98,12 +102,9 @@
 				currentRound : 1,
 				activeCharacterId : 3,
 				nextIdSeed : 7
-			},
-			isInSetupMode : true,
-			showAboutInfo : false
-		};
-		return model;
-	};
+			}
+		}
+    };
 	
 	return my;
 }(battleTop || {}));

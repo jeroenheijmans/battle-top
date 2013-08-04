@@ -15,6 +15,7 @@ var battleTop = (function (my) {
 		
 		var defaults = {
             showAboutInfo: false,
+            isInSetupMode: true,
             combat: {}
         };
         
@@ -24,6 +25,10 @@ var battleTop = (function (my) {
 	
 		self.toggleAboutInfo = function() {
 			self.showAboutInfo(!self.showAboutInfo());
+		};
+        
+		self.toggleSetupMode = function() {
+			self.isInSetupMode(!self.isInSetupMode());
 		};
 	};
 	

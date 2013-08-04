@@ -34,14 +34,9 @@
 				</span>
 			</aside>
 		
-			<nav>
-				<ul id="edit-mode">
-					<li id="setup-mode" data-bind="css: { active : isInSetupMode }">
-						<input type="checkbox" id="setup-mode-toggle" data-bind="checked: isInSetupMode" />
-						<label for="setup-mode-toggle">Setup</label>					
-					</li>
-				</ul>
-			</nav>
+            <div id="setup-mode" data-bind="css: { active : isInSetupMode }, click: toggleSetupMode">
+                Setup Mode
+            </div>
 
 			<div id="saving-indicator">saving</div>
 			
@@ -50,221 +45,219 @@
 		</header>
 		
 		<section id="main">
-		
-			<section id="initiative">
-			
-				<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
-				<!-- ––––––––––––––––––––––––––––––––– Initiative Controls ––––––––––––––––––––––––––––––––––– -->
-				<div id="initiative-controls">
-					<button id="initiative-next" 
-							title="Finish current turn, go to next initiative"
-							data-bind="click: combat.nextTurn">Next</button>
-					Or:
-					<button id="initiative-ready" 
-							title="Take the 'Ready' action (finishes turn)"
-							data-bind="click: combat.readyTurn">Ready</button>
-							
-					<button id="initiative-delay" 
-							title="Take the 'Delay' action (go to next initiative)"
-							data-bind="click: combat.delayTurn">Delay</button>
 					
-					<div id="current-round" class="currents">
-						Round: 
-						<span id="initiative-current-round-number" data-bind="text: combat.currentRound"></span>
-					</div>
-					
-					<div id="current-turn" class="currents">
-						<span data-bind="text: combat.activeCharacterName"></span>:
-						<span data-bind="text: combat.elapsedInTurn"></span>
-					</div>
-				</div>
-				
-				<table>
-					<thead>
-						<tr class="header">
-							<th>
-								<a href="#" data-bind="visible: !combat.isExpanded(), click: combat.toggleExpandedState">&#9658;</a>
-								<a href="#" data-bind="visible:  combat.isExpanded(), click: combat.toggleExpandedState">&#9660;</a>
-							</th>
-							<th class="number">Init</th>
-							<th>Character</th>
-							<th class="number">HP</th>
-							<th data-bind="visible: $root.isInSetupMode"></th>
-						</tr>
-					</thead>
-					<tbody data-bind="foreach: combat.characters">
-						<tr data-bind="css: { 'current-player' : $data == $root.combat.activeCharacter(),
-												readied : initiativeState() == 'readied',
-												delayed : initiativeState() == 'delayed',
-												'is-player-character' : isPlayerCharacter,
-												expanded : isActive() || isExpanded()
-											}">
-											
-											
-							<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
-							<!-- ––––––––––––––––––––––––––––––––––– Collapse/Expand ––––––––––––––––––––––––––––––––––––- -->
-							<td class="actions">
-								<a href="#" data-bind="visible: !(isActive() || isExpanded()), click: toggleExpandedState">&#9655;</a>
-								<a href="#" data-bind="visible:  (isActive() || isExpanded()), click: toggleExpandedState">&#9661;</a>
-							</td>
-							
-							
-							<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
-							<!-- –––––––––––––––––––––––––––––––––––––– Initiative ––––––––––––––––––––––––––––––––––––––– -->
-							<td class="number initiative-total">
-								<div data-bind="visible: initiativeState() == 'normal'">
-									<div class="initiative-part">
-										<div class="readonly-pane">
-											<span data-bind="text: currentInitiative"></span>
-										</div>
-										<div class="edit-pane hidden">
-											<input type="number" step="1" data-bind="value: currentInitiative" />
-											<button class="finish-editing">&#10003;</button>
-										</div>
-									</div>
-									<div class="initiative-part">
-										<div class="readonly-pane">
-											<span data-bind="text: initiativeModifierAsAside"></span>
-										</div>
-										<div class="edit-pane hidden">
-											<input type="number" step="1" data-bind="value: initiativeModifier" />
-											<button class="finish-editing">&#10003;</button>
-										</div>
-									</div>
-								</div>
-								<a href="#" data-bind="visible: initiativeState() != 'normal', click: $root.combat.activateInitiative">
-									ACT!
-								</a>
-							</td>
-							
-							
-							<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
-							<!-- –––––––––––––––––––––––––––––––––––––– Character –––––––––––––––––––––––––––––––––––––––- -->
-							<td class="character">
-								<div class="readonly-pane">
-									<span class="character-name" data-bind="text: name"></span>
-								</div>
-								<div class="edit-pane hidden">
-									<input type="text" data-bind="value: name" />
-									<button class="finish-editing">&#10003;</button>
-								</div>
-								
-								<ul class="conditions">
-									<!-- ko foreach: conditions -->
-									<li>
-										<div class="condition-part">
-											<div class="readonly-pane">
-												<span data-bind="text: name"></span>
-											</div>
-											<div class="edit-pane hidden">
-												<input type="text" data-bind="value: name" />
-												<button class="finish-editing">&#10003;</button>
-											</div>
-										</div>
-										<div class="condition-part">
-											<div class="readonly-pane">
-												<span data-bind="text: roundsLeftIndication"></span>
-												<a href="#" data-bind="click: $parent.removeCondition">✘</a>
-											</div>
-											<div class="edit-pane hidden">
-												<input type="number" step="1" min="0" data-bind="value: roundsLeft" />
-												<button class="finish-editing">&#10003;</button>
-											</div>
-										</div>
-									</li>
-									<!-- /ko -->
-									<li class="add-condition">
-										<div class="edit-pane hidden">
-											<form data-bind="submit: addCondition">
-												<input type="text" required data-bind="value: conditionToAdd().name" />
-												<input type="number" step="1" min="0" required data-bind="value: conditionToAdd().roundsLeft" />
-												<button type="submit">Add</button>
-											</form>
-											<a href="#" class="finish-editing">Done...</a>
-										</div>
-										<div class="readonly-pane">
-											<a href="#">Add condition...</a>
-										</div>
-									</li>
-								</ul>
-							</td>
-							
-							
-							<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
-							<!-- ––––––––––––––––––––––––––––––––––––––– Hit Points –––––––––––––––––––––––––––––––––––––– -->
-							<td class="number hp">
-								<div class="current-hp" data-bind="click: toggleUpdatingHitPoints">
-									<span data-bind="text: hitPoints"></span>
-								</div>
-								
-								<div class="hp-change dialog" data-bind="visible: isUpdatingHitPoints">
-									<div class="dialog-title">
-										Update Hit Points
-										<span class="close" data-bind="click: toggleUpdatingHitPoints">x</span>
-									</div>
-									<div class="dialog-content">
-										<form data-bind="with: hpChange, submit: changeHitPoints">
-											<div class="change-type">
-												<label class="damage">
-													<input type="radio" name="type" value="damage" data-bind="checked: hpChangeType" />
-													Damage
-												</label>
-												<label class="healing">
-													<input type="radio" name="type" value="healing" data-bind="checked: hpChangeType" />
-													Healing
-												</label>
-											</div>
-											<input type="number" min="1" step="1" data-bind="value: hpChangeAbsolute" />
-											<button type="submit">GO!</button>
-										</form>
-									</div>
-								</div>
-								
-							</td>
-							
-							
-							<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
-							<!-- –––––––––––––––––––––––––––––––– Remove Character Button –––––––––––––––––––––––––––––––– -->
-							<td class="remove" data-bind="visible: $root.isInSetupMode">
-								<a href="#" data-bind="click: $root.combat.removeCharacter">✘</a>
-							</td>
-							
-							
-						</tr>
-					</tbody>
-				</table>
-				
-				
-				<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
-				<!-- ––––––––––––––––––––––––––––––––––– New Character Form –––––––––––––––––––––––––––––––––- -->
-				<div id="add-character" data-bind="visible: $root.isInSetupMode">
-					<form data-bind="with: combat.characterToAdd, submit: combat.addCharacter">
-						<select data-bind="options: $root.combat.availableCharacterTypes, value: characterType"></select>
-						<input type="text" required placeholder="Name" data-bind="value: name" />
-						<input type="number" step="1" placeholder="hp" data-bind="value: currentHitPoints" />
-						<input type="number" step="1" placeholder="init" data-bind="value: currentInitiative" />
-						<input type="number" step="1" placeholder="mod" data-bind="value: initiativeModifier" />							
-						<button type="submit">Add</button>
-					</form>
-				</div>
-				
-				
-				<!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
-				<!-- ––––––––––––––––––––––––––––––––––– Setup Mode Controls ––––––––––––––––––––––––––––––––– -->
-				<div id="setup-controls"
-					 data-bind="visible: isInSetupMode">
-					<button title="Sort the initiative list again"
-							data-bind="click: combat.initiativeSort">Sort by Initiative</button>
-					
-					<button title="Remove all non-party memebers"
-							data-bind="click: combat.resetToParty">Reset to Party</button>
-							
-					<button title="Reset to small basic setup"
-							data-bind="click: combat.resetToBasic">Complete Reset</button>
-				</div>
-				
-			</section>
-			
+            <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
+            <!-- ––––––––––––––––––––––––––––––––– Initiative Controls ––––––––––––––––––––––––––––––––––– -->
+            <div id="initiative-controls">
+                <button id="initiative-next" 
+                        title="Finish current turn, go to next initiative"
+                        data-bind="click: combat.nextTurn">Next</button>
+                Or:
+                <button id="initiative-ready" 
+                        title="Take the 'Ready' action (finishes turn)"
+                        data-bind="click: combat.readyTurn">Ready</button>
+                        
+                <button id="initiative-delay" 
+                        title="Take the 'Delay' action (go to next initiative)"
+                        data-bind="click: combat.delayTurn">Delay</button>
+                
+                <div id="current-round" class="currents">
+                    Round: 
+                    <span id="initiative-current-round-number" data-bind="text: combat.currentRound"></span>
+                </div>
+                
+                <div id="current-turn" class="currents">
+                    <span data-bind="text: combat.activeCharacterName"></span>:
+                    <span data-bind="text: combat.elapsedInTurn"></span>
+                </div>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr class="header">
+                        <th>
+                            <a href="#" data-bind="visible: !combat.isExpanded(), click: combat.toggleExpandedState">&#9658;</a>
+                            <a href="#" data-bind="visible:  combat.isExpanded(), click: combat.toggleExpandedState">&#9660;</a>
+                        </th>
+                        <th class="number">Init</th>
+                        <th>Character</th>
+                        <th class="number">HP</th>
+                        <th data-bind="visible: $root.isInSetupMode"></th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: combat.characters">
+                    <tr data-bind="css: { 'current-player' : $data == $root.combat.activeCharacter(),
+                                            readied : initiativeState() == 'readied',
+                                            delayed : initiativeState() == 'delayed',
+                                            'is-player-character' : isPlayerCharacter,
+                                            expanded : isActive() || isExpanded()
+                                        }">
+                                        
+                                        
+                        <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
+                        <!-- ––––––––––––––––––––––––––––––––––– Collapse/Expand ––––––––––––––––––––––––––––––––––––- -->
+                        <td class="actions">
+                            <div data-bind="visible: !isActive()">
+                                <a href="#" data-bind="visible: !isExpanded(), click: toggleExpandedState">&#9655;</a>
+                                <a href="#" data-bind="visible: isExpanded(), click: toggleExpandedState">&#9661;</a>
+                            </div>
+                        </td>
+                        
+                        
+                        <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
+                        <!-- –––––––––––––––––––––––––––––––––––––– Initiative ––––––––––––––––––––––––––––––––––––––– -->
+                        <td class="number initiative-total">
+                            <div data-bind="visible: initiativeState() == 'normal'">
+                                <div class="initiative-part">
+                                    <div class="readonly-pane edit-in-place-trigger">
+                                        <span data-bind="text: currentInitiative"></span>
+                                    </div>
+                                    <div class="edit-pane hidden">
+                                        <input type="number" step="1" data-bind="value: currentInitiative" />
+                                        <button class="finish-editing">&#10003;</button>
+                                    </div>
+                                </div>
+                                <div class="initiative-part">
+                                    <div class="readonly-pane edit-in-place-trigger">
+                                        <span data-bind="text: initiativeModifierAsAside"></span>
+                                    </div>
+                                    <div class="edit-pane hidden">
+                                        <input type="number" step="1" data-bind="value: initiativeModifier" />
+                                        <button class="finish-editing">&#10003;</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#" data-bind="visible: initiativeState() != 'normal', click: $root.combat.activateInitiative">
+                                ACT!
+                            </a>
+                        </td>
+                        
+                        
+                        <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
+                        <!-- –––––––––––––––––––––––––––––––––––––– Character –––––––––––––––––––––––––––––––––––––––- -->
+                        <td class="character">
+                            <div class="readonly-pane edit-in-place-trigger">
+                                <span data-bind="visible:  isPlayerCharacter">♘</span>
+                                <span data-bind="visible: !isPlayerCharacter()">♟</span>
+                                <span class="character-name" data-bind="text: name"></span>
+                            </div>
+                            <div class="edit-pane hidden">
+                                <input type="text" data-bind="value: name" />
+                                <button class="finish-editing">&#10003;</button>
+                            </div>
+                            
+                            <ul class="conditions">
+                                <!-- ko foreach: conditions -->
+                                <li>
+                                    <div class="condition-part">
+                                        <div class="readonly-pane">
+                                            <span data-bind="text: name"></span>
+                                        </div>
+                                        <div class="edit-pane hidden">
+                                            <input type="text" data-bind="value: name" />
+                                            <button class="finish-editing">&#10003;</button>
+                                        </div>
+                                    </div>
+                                    <div class="condition-part">
+                                        <div class="readonly-pane">
+                                            <span data-bind="text: roundsLeftIndication"></span>
+                                            <a href="#" data-bind="click: $parent.removeCondition">✘</a>
+                                        </div>
+                                        <div class="edit-pane hidden">
+                                            <input type="number" step="1" min="0" data-bind="value: roundsLeft" />
+                                            <button class="finish-editing">&#10003;</button>
+                                        </div>
+                                    </div>
+                                </li>
+                                <!-- /ko -->
+                                <li class="add-condition">
+                                    <div class="edit-pane hidden">
+                                        <form data-bind="submit: addCondition">
+                                            <input type="text" required data-bind="value: conditionToAdd().name" />
+                                            <input type="number" step="1" min="0" required data-bind="value: conditionToAdd().roundsLeft" />
+                                            <button type="submit">Add</button>
+                                        </form>
+                                        <a href="#" class="finish-editing">Done...</a>
+                                    </div>
+                                    <div class="readonly-pane">
+                                        <a href="#">Add condition...</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </td>
+                        
+                        
+                        <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
+                        <!-- ––––––––––––––––––––––––––––––––––––––– Hit Points –––––––––––––––––––––––––––––––––––––– -->
+                        <td class="number hp">
+                            <div class="current-hp edit-in-place-trigger" data-bind="click: toggleUpdatingHitPoints">
+                                <span data-bind="text: hitPoints"></span>
+                            </div>
+                            
+                            <div class="hp-change dialog" data-bind="visible: isUpdatingHitPoints">
+                                <div class="dialog-title">
+                                    Update Hit Points
+                                    <span class="close" data-bind="click: toggleUpdatingHitPoints">x</span>
+                                </div>
+                                <div class="dialog-content">
+                                    <form data-bind="with: hpChange, submit: changeHitPoints">
+                                        <div class="change-type">
+                                            <label class="damage">
+                                                <input type="radio" name="type" value="damage" data-bind="checked: hpChangeType" />
+                                                Damage
+                                            </label>
+                                            <label class="healing">
+                                                <input type="radio" name="type" value="healing" data-bind="checked: hpChangeType" />
+                                                Healing
+                                            </label>
+                                        </div>
+                                        <input type="number" min="1" step="1" data-bind="value: hpChangeAbsolute" />
+                                        <button type="submit">GO!</button>
+                                    </form>
+                                </div>
+                            </div>
+                            
+                        </td>
+                        
+                        
+                        <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
+                        <!-- –––––––––––––––––––––––––––––––– Remove Character Button –––––––––––––––––––––––––––––––– -->
+                        <td class="remove" data-bind="visible: $root.isInSetupMode">
+                            <a href="#" data-bind="click: $root.combat.removeCharacter">✘</a>
+                        </td>
+                        
+                        
+                    </tr>
+                </tbody>
+            </table>
+            
+            
+            <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
+            <!-- ––––––––––––––––––––––––––––––––––– New Character Form –––––––––––––––––––––––––––––––––- -->
+            <div id="add-character" data-bind="visible: $root.isInSetupMode">
+                <form data-bind="with: combat.characterToAdd, submit: combat.addCharacter">
+                    <select data-bind="options: $root.combat.availableCharacterTypes, value: characterType"></select>
+                    <input type="text" required placeholder="Name" data-bind="value: name" />
+                    <input type="number" step="1" placeholder="hp" data-bind="value: currentHitPoints" />
+                    <input type="number" step="1" placeholder="init" data-bind="value: currentInitiative" />
+                    <input type="number" step="1" placeholder="mod" data-bind="value: initiativeModifier" />							
+                    <button type="submit">Add</button>
+                </form>
+            </div>
+            
+            
+            <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
+            <!-- ––––––––––––––––––––––––––––––––––– Setup Mode Controls ––––––––––––––––––––––––––––––––– -->
+            <div id="setup-controls"
+                 data-bind="visible: isInSetupMode">
+                
+                <button title="Remove all non-party memebers"
+                        data-bind="click: combat.resetToParty">Reset to Party</button>
+                        
+                <button title="Reset to small basic setup"
+                        data-bind="click: combat.resetToBasic">Complete Reset</button>
+            </div>
+            			
 			
 		</section>
 		
