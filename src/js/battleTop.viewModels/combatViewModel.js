@@ -16,7 +16,9 @@ var battleTop = (function (my) {
 			}
 		};
 		
-		data = data || {};
+		var defaults = { characters: [] };
+        
+        data = $.extend({}, defaults, data);
 		
 		ko.mapping.fromJS(data, extraMappingInfo, self);
 		
