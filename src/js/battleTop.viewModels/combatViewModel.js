@@ -78,15 +78,37 @@ var battleTop = (function (my) {
 			}
 			return nextCharacter;
 		});
-		
-		self.initiativeSort = function () {
-			self.characters.sort(function(a,b) { 
-				return b.currentInitiative() === a.currentInitiative() ?
-						b.initiativeModifier() - a.initiativeModifier() :
-						b.currentInitiative() - a.currentInitiative();
-			});
-		};
-
+        
+        var sorting = false;
+        function initiativeSort() {
+            if (!sorting) {
+                sorting = true;
+                self.characters.sort(function(a,b) { 
+                    return b.currentInitiative() === a.currentInitiative() ?
+                            b.initiativeModifier() - a.initiativeModifier() :
+                            b.currentInitiative() - a.currentInitiative();
+                });
+                sorting = false;
+            }
+        }
+        
+        function refreshInitiativeSubscriptions() {
+            var chars = self.characters();
+            for (var i = 0; i < chars.length; i++) {
+                chars[i].currentInitiative.subscribe(initiativeSort);
+                chars[i].initiativeModifier.subscribe(initiativeSort);
+            }
+        }
+        
+        self.characters.subscribe(function() {
+            if (!sorting) {
+                initiativeSort();
+                refreshInitiativeSubscriptions();
+            }
+        });
+        
+        refreshInitiativeSubscriptions();
+        
 		self.nextRound = function() {
 			self.currentRound(self.currentRound() + 1);
 		};
@@ -159,7 +181,6 @@ var battleTop = (function (my) {
 				
 				self.characterToAdd().id(generateNextCharacterId());
 				self.characters.push(self.characterToAdd());
-				self.initiativeSort();
 				self.characterToAdd(new my.viewModels.characterViewModel(null, self));
 			}
 		};
@@ -181,9 +202,9 @@ var battleTop = (function (my) {
 			self.characters.push(newPlayer);
 			self.activeCharacterId(newPlayer.id());
 		};
-		
-		self.initiativeSort();
+        
+        initiativeSort();
 	};
-	
+    
 	return my;
 }(battleTop || {}));
