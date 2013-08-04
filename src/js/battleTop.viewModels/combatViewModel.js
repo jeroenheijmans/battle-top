@@ -168,6 +168,9 @@ var battleTop = (function (my) {
 			self.characters.remove(function (character) {
 				return !character.isPlayerCharacter();
 			});
+            
+            self.characters().forEach(function (character) { character.conditions.removeAll(); });
+            
 			self.currentRound(1);
 			self.activeCharacterId(self.characters()[0].id());
 		};
