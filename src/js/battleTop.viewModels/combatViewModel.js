@@ -16,7 +16,12 @@ var battleTop = (function (my) {
 			}
 		};
 		
-		var defaults = { characters: [] };
+		var defaults = { 
+            activeCharacterId: null, 
+            characters: [],
+            currentRound: 1,
+            nextIdSeed: 1
+        };
         
         data = $.extend({}, defaults, data);
 		
