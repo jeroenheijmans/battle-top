@@ -86,20 +86,29 @@ test( "Starts sorted by initiative", function() {
 });
 
 
-test( "Can sort by initiative on demand", function() {
+test( "Changing character's initiative sorts the characters", function() {
     var viewModel = new battleTop.viewModels.combatViewModel({
-        characters: []
+        characters: [{currentInitiative: 15}, {currentInitiative: 5}, {currentInitiative: 10}]
     });
     
-    viewModel.characters.push(new battleTop.viewModels.characterViewModel({currentInitiative: 5}, viewModel));
-    viewModel.characters.push(new battleTop.viewModels.characterViewModel({currentInitiative: 10}, viewModel));
-    viewModel.characters.push(new battleTop.viewModels.characterViewModel({currentInitiative: 15}, viewModel));
+    viewModel.characters()[2].currentInitiative(20);
     
-    viewModel.initiativeSort();
+    deepEqual(viewModel.characters()[0].currentInitiative(), 20);
+    deepEqual(viewModel.characters()[1].currentInitiative(), 15);
+    deepEqual(viewModel.characters()[2].currentInitiative(), 10);    
+});
 
-    deepEqual(viewModel.characters()[0].currentInitiative(), 15);
-    deepEqual(viewModel.characters()[1].currentInitiative(), 10);
-    deepEqual(viewModel.characters()[2].currentInitiative(), 5);
+
+test( "Changing character's initiative modifier sorts the characters", function() {
+    var viewModel = new battleTop.viewModels.combatViewModel({
+        characters: [{id: 1, currentInitiative: 15, initiativeModifier: 2}, 
+                     {id: 2, currentInitiative: 15, initiativeModifier: 2}]
+    });
+    
+    viewModel.characters()[1].initiativeModifier(3);
+    
+    deepEqual(viewModel.characters()[0].id(), 2);
+    deepEqual(viewModel.characters()[1].id(), 1);  
 });
 
 
