@@ -245,6 +245,19 @@ test( "Reset to party will discard monsters, npc's and environment factors, keep
     deepEqual(viewModel.characters()[1].name(), 'Krusk');
 });
 
+test( "Reset to party will remove conditions", function() {
+    var viewModel = new battleTop.viewModels.combatViewModel({
+        characters: [{characterType: 'PC', 
+                      name:'Mialee', 
+                      conditions: [{}]
+                    }]
+    });
+    
+    viewModel.resetToParty();
+    
+    deepEqual(viewModel.characters()[0].conditions().length, 0);
+});
+
 
 test( "Reset to basic will go back to just 1 player character", function() {
     var viewModel = new battleTop.viewModels.combatViewModel({

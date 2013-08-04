@@ -134,7 +134,6 @@
         deepEqual(viewModel.conditions().length, 0);
     });
     
-    
     test( "Change Hit Points will update hit points with current change view model", function() {
         var viewModel = new battleTop.viewModels.characterViewModel({currentHitPoints: 8}, combat);
         
