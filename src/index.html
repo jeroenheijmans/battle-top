@@ -18,6 +18,27 @@
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
 
+        <div id="overlay"></div>
+
+        <div class="dialog status-warning">
+            <div class="dialog-title">
+                Project Status
+                <span class="close" data-bind="click: closeProjectStatusWarning">x</span>
+            </div>
+            <div class="dialog-content" style="padding: 0.5em 1em;">
+                <p>
+                    <strong>Warning:</strong> this project has never left beta status, and may never will.
+                </p>
+                <p>
+                    Even though the app is (dog-food-style) tested and functional, it is rough around the edges. Dog-food-testing this app has always felt required to get the UX right, however... I currently have max <em>one</em> RPG session per year: not enough to test the app, or to stay motivated in keeping in active development.
+                </p>
+                <p>
+                    So: use at your own pleasure, and risk! For more info, check <a href="http://code.google.com/p/battle-top/">the project site</a>.
+                </p>
+                <button data-bind="click: closeProjectStatusWarning">Got it!</button>
+            </div>
+        </div>
+
 		
 		<header>
 			<h1 class="hidden">BattleTop!</h1>
@@ -258,8 +279,6 @@
             </table>            			
 			
 		</section>
-		
-		<div id="overlay" class="hidden"></div>
 		
 		<!-- TODO: Minify and smash together (RequireJS perhaps?) -->
 		<script src="js/vendor/jquery-1.8.3.min.js"></script>

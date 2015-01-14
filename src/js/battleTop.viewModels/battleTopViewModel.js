@@ -30,6 +30,12 @@ var battleTop = (function (my) {
 		self.toggleSetupMode = function() {
 			self.isInSetupMode(!self.isInSetupMode());
 		};
+
+		self.closeProjectStatusWarning = function() {
+			// TODO: Move jQuery hacks to ViewModel logic:
+			$('#overlay').toggleClass("hidden");
+			$('.status-warning').hide();
+		}
 	};
 	
 	return my;
