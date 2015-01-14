@@ -41,7 +41,33 @@
 			<div id="saving-indicator">saving</div>
 			
 			<div class="clearfix"></div>
-			
+
+            <div id="setup-controls" data-bind="visible: isInSetupMode">
+                <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
+                <!-- ––––––––––––––––––––––––––––––––––– New Character Form –––––––––––––––––––––––––––––––––- -->
+                <div id="add-character">
+                    <form data-bind="with: combat.characterToAdd, submit: combat.addCharacter">
+                        <select data-bind="options: $root.combat.availableCharacterTypes, value: characterType"></select>
+                        <input type="text" required placeholder="Name" data-bind="value: name" />
+                        <input type="number" step="1" placeholder="hp" data-bind="value: currentHitPoints" />
+                        <input type="number" step="1" placeholder="init" data-bind="value: currentInitiative" />
+                        <input type="number" step="1" placeholder="mod" data-bind="value: initiativeModifier" />                            
+                        <button type="submit">Add</button>
+                    </form>
+                </div>
+                
+                
+                <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
+                <!-- ––––––––––––––––––––––––––––––––––– Setup Mode Controls ––––––––––––––––––––––––––––––––– -->
+                <div id="setup-controls">
+                    
+                    <button title="Remove all non-party memebers"
+                            data-bind="click: combat.resetToParty">Reset to Party</button>
+                            
+                    <button title="Reset to small basic setup"
+                            data-bind="click: combat.resetToBasic">Complete Reset</button>
+                </div>
+            </div>
 		</header>
 		
 		<section id="main">
@@ -229,35 +255,7 @@
                         
                     </tr>
                 </tbody>
-            </table>
-            
-            
-            <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
-            <!-- ––––––––––––––––––––––––––––––––––– New Character Form –––––––––––––––––––––––––––––––––- -->
-            <div id="add-character" data-bind="visible: $root.isInSetupMode">
-                <form data-bind="with: combat.characterToAdd, submit: combat.addCharacter">
-                    <select data-bind="options: $root.combat.availableCharacterTypes, value: characterType"></select>
-                    <input type="text" required placeholder="Name" data-bind="value: name" />
-                    <input type="number" step="1" placeholder="hp" data-bind="value: currentHitPoints" />
-                    <input type="number" step="1" placeholder="init" data-bind="value: currentInitiative" />
-                    <input type="number" step="1" placeholder="mod" data-bind="value: initiativeModifier" />							
-                    <button type="submit">Add</button>
-                </form>
-            </div>
-            
-            
-            <!-- ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– -->
-            <!-- ––––––––––––––––––––––––––––––––––– Setup Mode Controls ––––––––––––––––––––––––––––––––– -->
-            <div id="setup-controls"
-                 data-bind="visible: isInSetupMode">
-                
-                <button title="Remove all non-party memebers"
-                        data-bind="click: combat.resetToParty">Reset to Party</button>
-                        
-                <button title="Reset to small basic setup"
-                        data-bind="click: combat.resetToBasic">Complete Reset</button>
-            </div>
-            			
+            </table>            			
 			
 		</section>
 		

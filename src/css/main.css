@@ -138,6 +138,10 @@ body > header {
 	opacity: 1.0;
 }
 
+#setup-controls {
+	margin-top: 0.5em;
+}
+
 #saving-indicator {
 	background-color: #F29877;	
 	margin-left: 1em;
